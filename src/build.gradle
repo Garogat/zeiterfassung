@@ -3,7 +3,6 @@ plugins {
 }
 
 apply plugin: 'application'
-//mainClassName = 'java.main.zeiterfassung.Main'
 mainClassName = 'zeiterfassung.Main'
 
 group 'de.fh_kiel_iue.pij.team_1'
