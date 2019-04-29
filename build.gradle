@@ -1,0 +1,20 @@
+plugins {
+    id 'java'
+}
+
+apply plugin: 'application'
+//mainClassName = 'java.main.zeiterfassung.Main'
+mainClassName = 'zeiterfassung.Main'
+
+group 'de.fh_kiel_iue.pij.team_1'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}
