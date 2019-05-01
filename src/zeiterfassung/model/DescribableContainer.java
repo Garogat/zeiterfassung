@@ -1,3 +1,5 @@
+package zeiterfassung.model;
+
 public interface DescribableContainer {
     String getName();
     void setName(String name);

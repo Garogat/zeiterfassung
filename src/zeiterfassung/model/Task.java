@@ -1,3 +1,5 @@
+package zeiterfassung.model;
+
 import java.time.Duration;
 import java.util.List;
 import java.math.BigDecimal;

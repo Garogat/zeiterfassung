@@ -1,3 +1,5 @@
+package zeiterfassung.model;
+
 import java.util.Currency;
 import java.math.BigDecimal;
 import java.math.RoundingMode;

@@ -1,3 +1,5 @@
+package zeiterfassung.model;
+
 import java.time.Duration;
 
 public interface TimeableWork {

@@ -1,3 +1,5 @@
+package zeiterfassung.model;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.lang.IllegalArgumentException;
@@ -82,7 +84,7 @@ public class Project extends SubProject {
 		return null;
 	}
 	@Override
-	Duration getDuration() {
+	public Duration getDuration() {
 		Duration duration = super.getDuration();
 		for(SubProject sp: subProjectList) {
 			duration.plus(sp.getDuration());
@@ -90,7 +92,7 @@ public class Project extends SubProject {
 		return duration;
 	}
 	@Override
-	Money getCosts() {
+	public Money getCosts() {
 		BigDecimal costs = super.getCosts().getAmount();
 
 		for(SubProject sp: subProjectList) {
