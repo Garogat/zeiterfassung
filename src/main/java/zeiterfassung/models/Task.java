@@ -1,3 +1,5 @@
+package zeiterfassung.models;
+
 import java.time.Duration;
 import java.util.List;
 import java.math.BigDecimal;
@@ -10,74 +12,83 @@ public class Task implements TimeableWork, DescribableContainer {
     private LocalDateTime workStartTime;
     private LocalDateTime workEndTime;
     private String workDescription;
-    private Role  role;
+    private Role role;
     private String name;
     private String description;
 
 
     public String getName() {
-	    return name;
+        return name;
     }
+
     public void setName(String name) {
-	    this.name = name;
+        this.name = name;
     }
+
     public Role getRole() {
-	    return role;
+        return role;
     }
+
     public void setRole(Role role) {
-	    this.role = role;
+        this.role = role;
     }
+
     public String getDescription() {
-	     return description;
+        return description;
     }
+
     public void setDescription(String description) {
-	     this.description = description;
+        this.description = description;
     }
 
     public boolean hasWorkStarted() {
-	    return workStartTime != null;
-    } 
+        return workStartTime != null;
+    }
+
     public boolean hasWorkEnded() {
-	    return workEndTime != null;
-    } 
+        return workEndTime != null;
+    }
+
     public void setWorkDescription(String description) {
-	    this.workDescription = description;
+        this.workDescription = description;
     }
+
     public String getWorkDescription() {
-	    return workDescription;
+        return workDescription;
     }
+
     public Money getCosts() {
-	    BigDecimal payment = getRole().getHourlyWage().getAmount();
-	    BigDecimal hours = new BigDecimal(getDuration().toHours()); 
-	    BigDecimal costs = payment.multiply(hours);
-	    return new Money(costs);
+        BigDecimal payment = getRole().getHourlyWage().getAmount();
+        BigDecimal hours = new BigDecimal(getDuration().toHours());
+        BigDecimal costs = payment.multiply(hours);
+        return new Money(costs);
 
     }
+
     /**
-     *
-     * throws IllegalStateException 
+     * throws IllegalStateException
      */
     public void start() {
 
-	if(hasWorkStarted()) {
-		throw new IllegalStateException("Task already started");
-	} else {
-        	workStartTime = LocalDateTime.now();
-	}
+        if (hasWorkStarted()) {
+            throw new IllegalStateException("Task already started");
+        } else {
+            workStartTime = LocalDateTime.now();
+        }
     }
+
     /**
-     *
-     * throws IllegalStateException 
+     * throws IllegalStateException
      */
     public void stop() {
-	if(! hasWorkStarted()) {
-		throw new IllegalStateException("Task can't be stopped, without being started");
-	}
-	if(hasWorkEnded()) {
-		throw new IllegalStateException("Task already ended");
-	}
+        if (!hasWorkStarted()) {
+            throw new IllegalStateException("Task can't be stopped, without being started");
+        }
+        if (hasWorkEnded()) {
+            throw new IllegalStateException("Task already ended");
+        }
         workEndTime = LocalDateTime.now();
-	WorkChunk newWork = new WorkChunk(workStartTime, workEndTime, workDescription);
+        WorkChunk newWork = new WorkChunk(workStartTime, workEndTime, workDescription);
         workList.add(newWork);
     }
 

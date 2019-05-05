@@ -1,3 +1,5 @@
+package zeiterfassung.models;
+
 import java.util.Currency;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -9,7 +11,7 @@ public class Money {
     private static final RoundingMode DEFAULT_ROUNDING = RoundingMode.HALF_EVEN;
 
     private final BigDecimal amount;
-    private final Currency currency;   
+    private final Currency currency;
 
     public static Money euros(BigDecimal amount) {
         return new Money(amount, EURO);
@@ -18,15 +20,17 @@ public class Money {
     Money(String amount) {
         this(new BigDecimal(amount), EURO, DEFAULT_ROUNDING);
     }
+
     Money(BigDecimal amount) {
         this(amount, EURO, DEFAULT_ROUNDING);
     }
+
     Money(BigDecimal amount, Currency currency) {
         this(amount, currency, DEFAULT_ROUNDING);
     }
 
     Money(BigDecimal amount, Currency currency, RoundingMode rounding) {
-        this.currency = currency;      
+        this.currency = currency;
         this.amount = amount.setScale(currency.getDefaultFractionDigits(), rounding);
     }
 
