@@ -7,8 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Project extends SubProject {
-    List<Role> roleList = new ArrayList<Role>();
-    List<SubProject> subProjectList = new ArrayList<SubProject>();
+    List<Role> roleList = new ArrayList<>();
+    List<SubProject> subProjectList = new ArrayList<>();
 
     /**
      * @throws IllegalArgumentException
