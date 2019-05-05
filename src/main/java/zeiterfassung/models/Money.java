@@ -21,7 +21,7 @@ public class Money {
         this(new BigDecimal(amount), EURO, DEFAULT_ROUNDING);
     }
 
-    Money(BigDecimal amount) {
+    public Money(BigDecimal amount) {
         this(amount, EURO, DEFAULT_ROUNDING);
     }
 

@@ -1,6 +1,6 @@
 package zeiterfassung.models;
 
-import java.util.ArrayList;
+
 import java.util.List;
 import java.lang.IllegalArgumentException;
 import java.time.Duration;
@@ -11,22 +11,31 @@ public class SubProject implements DescribableContainer, TimeableWork {
     private String name;
     private String description;
 
+    public void getTasks(Listable<Task> tasks){
+        tasks.getList(taskList);
+    }
+
+    @Override
     public String getName() {
         return name;
     }
 
+    @Override
     public void setName(String name) {
         this.name = name;
     }
 
+    @Override
     public String getDescription() {
         return description;
     }
 
+    @Override
     public void setDescription(String description) {
         this.description = description;
     }
 
+    @Override
     public Duration getDuration() {
         Duration duration = Duration.ofSeconds(0);
         for (Task task : taskList) {
@@ -35,6 +44,7 @@ public class SubProject implements DescribableContainer, TimeableWork {
         return duration;
     }
 
+    @Override
     public Money getCosts() {
         BigDecimal costs = new BigDecimal(0);
         for (Task task : taskList) {

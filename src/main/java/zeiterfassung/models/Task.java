@@ -1,6 +1,7 @@
 package zeiterfassung.models;
 
 import java.time.Duration;
+import java.util.ArrayList;
 import java.util.List;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -16,13 +17,45 @@ public class Task implements TimeableWork, DescribableContainer {
     private String name;
     private String description;
 
+    public void getWorkList(Listable<WorkChunk> workList){
+        workList.getList(this.workList);
+    }
 
+    @Override
     public String getName() {
         return name;
     }
 
+    @Override
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public String getDescription() {
+        return description;
+    }
+
+    @Override
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    @Override
+    public Money getCosts() {
+        BigDecimal payment = getRole().getHourlyWage().getAmount();
+        BigDecimal hours = new BigDecimal(getDuration().toHours());
+        BigDecimal costs = payment.multiply(hours);
+        return new Money(costs);
+    }
+
+    @Override
+    public Duration getDuration() {
+        Duration duration = Duration.ofSeconds(0);
+        for (WorkChunk w : workList) {
+            duration.plus(w.getDuration());
+        }
+        return duration;
     }
 
     public Role getRole() {
@@ -33,13 +66,6 @@ public class Task implements TimeableWork, DescribableContainer {
         this.role = role;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
 
     public boolean hasWorkStarted() {
         return workStartTime != null;
@@ -57,13 +83,6 @@ public class Task implements TimeableWork, DescribableContainer {
         return workDescription;
     }
 
-    public Money getCosts() {
-        BigDecimal payment = getRole().getHourlyWage().getAmount();
-        BigDecimal hours = new BigDecimal(getDuration().toHours());
-        BigDecimal costs = payment.multiply(hours);
-        return new Money(costs);
-
-    }
 
     /**
      * throws IllegalStateException
@@ -92,11 +111,10 @@ public class Task implements TimeableWork, DescribableContainer {
         workList.add(newWork);
     }
 
-    public Duration getDuration() {
-        Duration duration = Duration.ofSeconds(0);
-        for (WorkChunk w : workList) {
-            duration.plus(w.getDuration());
-        }
-        return duration;
+    public Task(){
+        workList = new ArrayList<>();
+
     }
+
+
 }

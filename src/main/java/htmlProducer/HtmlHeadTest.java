@@ -1,7 +1,8 @@
 package htmlProducer;
 
 import static htmlProducer.HtmlFactory.*;
-import static org.junit.Assert.*;
+import static junit.framework.TestCase.assertNotNull;
+
 
 public class HtmlHeadTest {
 
@@ -22,9 +23,6 @@ public class HtmlHeadTest {
 
         String html = tr.getHTMLCode();
         assertNotNull(html.charAt(0) == '<');
-
-
-
 
         HtmlTagElement testHtml =
                 HTML.build().addElement(

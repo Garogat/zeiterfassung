@@ -10,6 +10,15 @@ public class Project extends SubProject {
     List<Role> roleList = new ArrayList<>();
     List<SubProject> subProjectList = new ArrayList<>();
 
+
+    void getRoles(Listable<Role> roles){
+        roles.getList(roleList);
+    }
+
+    void getSubProjects(Listable<SubProject> subProjects){
+        subProjects.getList(subProjectList);
+    }
+
     /**
      * @throws IllegalArgumentException
      */

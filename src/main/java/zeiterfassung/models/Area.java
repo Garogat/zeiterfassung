@@ -10,6 +10,10 @@ public class Area implements DescribableContainer {
     private String description;
     private List<Project> projectsList = new ArrayList<Project>();
 
+    public void getProjectList(Listable<Project> projectsList){
+        projectsList.getList(this.projectsList);
+    }
+
     public String getName() {
         return name;
     }
