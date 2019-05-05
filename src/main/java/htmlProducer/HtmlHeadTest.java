@@ -1,7 +1,5 @@
 package htmlProducer;
 
-import sun.plugin.dom.html.HTMLElement;
-
 import static htmlProducer.HtmlFactory.*;
 import static org.junit.Assert.*;
 
