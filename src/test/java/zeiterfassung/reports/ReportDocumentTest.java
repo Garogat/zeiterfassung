@@ -1,13 +1,11 @@
 package zeiterfassung.reports;
 
-import zeiterfassung.models.Money;
 import zeiterfassung.models.Role;
 import zeiterfassung.models.Task;
 import zeiterfassung.models.WorkChunk;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.time.temporal.TemporalAmount;
 
 import static org.junit.Assert.*;
 
@@ -23,7 +21,7 @@ public class ReportDocumentTest {
     public void getContentString() {
 
         Role myRole = new Role();
-        myRole.setHourlyWage(Money.euros(new BigDecimal("9.50")));
+        myRole.setHourlyWage(9.50);
 
         Task myTask = new Task();
         myTask.setRole(myRole);

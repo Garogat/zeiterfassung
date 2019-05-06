@@ -105,12 +105,11 @@ public class Project extends SubProject {
     }
 
     @Override
-    public Money getCosts() {
-        BigDecimal costs = super.getCosts().getAmount();
-
+    public double getCosts() {
+        double costs = super.getCosts();
         for (SubProject sp : subProjectList) {
-            costs = costs.add(sp.getCosts().getAmount());
+            costs += sp.getCosts();
         }
-        return new Money(costs);
+        return costs;
     }
 }

@@ -45,12 +45,12 @@ public class SubProject implements DescribableContainer, TimeableWork {
     }
 
     @Override
-    public Money getCosts() {
-        BigDecimal costs = new BigDecimal(0);
+    public double getCosts() {
+        double costs = 0;
         for (Task task : taskList) {
-            costs = costs.add(task.getCosts().getAmount());
+            costs += task.getCosts();
         }
-        return new Money(costs);
+        return costs;
     }
 
     /**

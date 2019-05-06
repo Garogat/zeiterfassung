@@ -3,17 +3,17 @@ package zeiterfassung.models;
 public class Role {
     private String name;
     private String description;
-    private Money hourlyWage;
+    private double hourlyWage;
 
     public String getName() {
         return name;
     }
 
-    public Money getHourlyWage() {
+    public double getHourlyWage() {
         return hourlyWage;
     }
 
-    public void setHourlyWage(Money hourlyWage) {
+    public void setHourlyWage(double hourlyWage) {
         this.hourlyWage = hourlyWage;
     }
 

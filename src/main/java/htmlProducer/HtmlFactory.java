@@ -1,7 +1,7 @@
 package htmlProducer;
 
 public enum HtmlFactory implements HtmlBuilder{
-    TD(() -> {return new HtmlTagElement("td");}),
+    TD(()->{return new HtmlTagElement("td");}),
     TR(()->{return new HtmlTagElement("tr");}),
     TH(()->{return new HtmlTagElement("th");}),
     TABLE(()->{return new HtmlTagElement("table");}),

@@ -42,11 +42,9 @@ public class Task implements TimeableWork, DescribableContainer {
     }
 
     @Override
-    public Money getCosts() {
-        BigDecimal payment = getRole().getHourlyWage().getAmount();
-        BigDecimal hours = new BigDecimal(getDuration().toHours());
-        BigDecimal costs = payment.multiply(hours);
-        return new Money(costs);
+    public double getCosts() {
+        return getRole().getHourlyWage() *  getDuration().toHours();
+
     }
 
     @Override
