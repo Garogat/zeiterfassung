@@ -23,8 +23,12 @@ public class SubProjectContent implements Reportable{
                 list.addElement(LI.build().addElement(new TaskContent(iter).getHtmlNode()));
             }
         });
-        
-        root.addElement(list);
+
+
+        root.addElement(list)
+                .addText("Kosten Gesamt: "+subProject.getCosts())
+                .addElement(BR.build())
+                .addText("Zeit Gesamt: "+subProject.getDuration().toString());
 
         return root;
     }

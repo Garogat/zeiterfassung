@@ -11,11 +11,11 @@ public class Project extends SubProject {
     List<SubProject> subProjectList = new ArrayList<>();
 
 
-    void getRoles(Listable<Role> roles){
+    public void getRoles(Listable<Role> roles){
         roles.getList(roleList);
     }
 
-    void getSubProjects(Listable<SubProject> subProjects){
+    public void getSubProjects(Listable<SubProject> subProjects){
         subProjects.getList(subProjectList);
     }
 

@@ -4,7 +4,7 @@ import java.util.*;
 
 public class HtmlTagElement implements HtmlElement {
 
-    private Map<String, String> properties;
+    private List<HtmlValuePair> properties;
 
     private List<HtmlElement> content;
 
@@ -18,18 +18,21 @@ public class HtmlTagElement implements HtmlElement {
 
         StringBuilder result = new StringBuilder("<"+getTag());
 
-        Iterator it = properties.entrySet().iterator();
-        while (it.hasNext()) {
-            Map.Entry pair = (Map.Entry)it.next();
-            result.append(" " + pair.getKey() + " =\"" + pair.getValue() + "\"");
-            it.remove();
+        for (HtmlValuePair iter: properties){
+            result.append(" " + iter.getKey() + " =\"" + iter.getValue() + "\"");
         }
-        result.append(">\n");
+
+        // Close Tag with "/>" if there is no content
+        if (content.size() == 0){
+            result.append(" />\n");
+        }else {
+            result.append(">\n");
+        }
         return result.toString();
     }
 
     private String getEndTag(){
-       return "</"+getTag()+">\n";
+        return "</"+getTag()+">\n";
     }
 
     private String getContentString() {
@@ -42,10 +45,15 @@ public class HtmlTagElement implements HtmlElement {
 
 
     public HtmlTagElement addProperty(String key, String value){
-        properties.put(key, value);
+        properties.add(new HtmlValuePair(key, value));
         return this;
     }
 
+    public HtmlTagElement addProperty(HtmlValuePair pair) {
+        properties.add(pair);
+        return this;
+
+    }
     public HtmlTagElement addElement(HtmlElement... elements){
         Collections.addAll(content, elements);
         return this;
@@ -59,12 +67,16 @@ public class HtmlTagElement implements HtmlElement {
     @Override
     public String getHTMLCode() {
         {
-            return getStartTag() + getContentString() + getEndTag();
+            if (content.size() == 0){
+                return getStartTag();
+            }else {
+                return getStartTag() + getContentString() + getEndTag();
+            }
         }
     }
 
     private HtmlTagElement(){
-        properties = new HashMap<>();
+        properties = new ArrayList<>();
         content = new ArrayList<>();
     }
 

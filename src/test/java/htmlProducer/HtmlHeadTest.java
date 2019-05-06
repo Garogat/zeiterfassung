@@ -2,6 +2,7 @@ package htmlProducer;
 
 import static htmlProducer.HtmlFactory.*;
 import static junit.framework.TestCase.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 
 public class HtmlHeadTest {
@@ -14,7 +15,7 @@ public class HtmlHeadTest {
     }
 
     @org.junit.Test
-    public void getTaskTest() {
+    public void testSomeHtml() {
 
         HtmlTagElement th1 = TH.build().addText("Title 1");
         HtmlTagElement th2 = TH.build().addText("Title 2");
@@ -23,7 +24,7 @@ public class HtmlHeadTest {
 
         String html = tr.getHTMLCode();
 
-        assertNotNull(html.charAt(0) == '<');
+        assertTrue(html.charAt(0) == '<');
 
         HtmlTagElement testHtml =
                 HTML.build().addElement(
@@ -39,6 +40,6 @@ public class HtmlHeadTest {
 
         html = testHtml.getHTMLCode();
 
-        assertNotNull(html.charAt(0) == '<');
+        assertTrue(html.charAt(0) == '<');
     }
 }

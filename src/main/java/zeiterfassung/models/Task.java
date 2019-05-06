@@ -49,7 +49,7 @@ public class Task implements TimeableWork, DescribableContainer {
 
     @Override
     public Duration getDuration() {
-        Duration duration = Duration.ofSeconds(0);
+        Duration duration = Duration.ZERO;// Duration.ofSeconds(0);
         for (WorkChunk w : workList) {
             duration.plus(w.getDuration());
         }

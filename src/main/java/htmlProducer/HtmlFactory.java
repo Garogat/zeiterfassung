@@ -11,9 +11,12 @@ public enum HtmlFactory implements HtmlBuilder{
     BODY(()->{return new HtmlTagElement("body");}),
     HEAD(()->{return new HtmlTagElement("head");}),
     H1(()->{return new HtmlTagElement("h1");}),
+    H2(()->{return new HtmlTagElement("h2");}),
     H3(()->{return new HtmlTagElement("h3");}),
+    H4(()->{return new HtmlTagElement("h4");}),
     UL(()->{return new HtmlTagElement("ul");}),
-    LI(()->{return new HtmlTagElement("li");});;
+    LI(()->{return new HtmlTagElement("li");}),
+    BR(()->{return new HtmlTagElement("br");});
 
     private HtmlBuilder attribute;
 

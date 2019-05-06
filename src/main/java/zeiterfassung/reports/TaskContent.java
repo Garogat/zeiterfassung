@@ -8,6 +8,8 @@ import htmlProducer.HtmlTagElement;
 import zeiterfassung.models.Task;
 import zeiterfassung.models.WorkChunk;
 
+import java.time.format.DateTimeFormatter;
+
 public class TaskContent implements Reportable {
 
     Task task;
@@ -27,22 +29,24 @@ public class TaskContent implements Reportable {
                 )
         );
 
+        DateTimeFormatter frm = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
+
         task.getWorkList(list -> {
             for (WorkChunk workChunk: list){
                 rootTable.addElement(
                         TR.build().addElement(
-                                TD.build().addText(workChunk.getStartTime().toString()),
-                                TD.build().addText(workChunk.getEndTime().toString()),
+                                TD.build().addText(workChunk.getStartTime().format(frm)),
+                                TD.build().addText(workChunk.getEndTime().format(frm)),
                                 TD.build().addText(workChunk.getDescription())
                         )
                 );
             }
         });
 
-        root.addElement(rootTable);
-
-        root.addText("Kosten Gesamt: "+task.getCosts());
-        root.addText("Zeit Gesamt: "+task.getDuration().toString());
+        root.addElement(rootTable)
+                .addText("Kosten Gesamt: "+task.getCosts())
+                .addElement(BR.build())
+                .addText("Zeit Gesamt: "+task.getDuration().toString());
 
         return root;
     }
