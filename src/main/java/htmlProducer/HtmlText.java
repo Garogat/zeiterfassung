@@ -14,12 +14,8 @@ public class HtmlText implements HtmlElement {
         this.text = text;
     }
 
-    public HtmlText(String value){
+    protected HtmlText(String value){
         text = value;
-    }
-
-    public HtmlText(){
-        text = "";
     }
 
 }

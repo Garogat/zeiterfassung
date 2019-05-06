@@ -23,77 +23,28 @@ public class Project extends SubProject {
      * @throws IllegalArgumentException
      */
     public void addSubProject(SubProject newSubProject) {
-        if (hasSubProject(newSubProject.getName())) {
-            String exceptionExplanation;
-            exceptionExplanation = "Project with name "
-                    + getName()
-                    + " already has a SubProject named "
-                    + newSubProject.getName();
-            throw new IllegalArgumentException(exceptionExplanation);
-        }
         subProjectList.add(newSubProject);
     }
 
-    public SubProject getSubProject(String subProjectName) {
-        for (SubProject sp : subProjectList) {
-            if (sp.getName().equals(subProjectName)) {
-                return sp;
-            }
-        }
-        return null;
-    }
-
-    public boolean removeSubProject(String subProjectName) {
-        SubProject subProject = getSubProject(subProjectName);
-        if (subProject == null) return false;
+    public boolean removeSubProject(SubProject subProject) {
         return subProjectList.remove(subProject);
     }
 
-    public boolean hasSubProject(String subProjectName) {
-        for (SubProject sb : subProjectList) {
-            if (sb.getName().equals(subProjectName)) {
-                return true;
-            }
-        }
-        return false;
-    }
 
     public boolean hasSubProject(SubProject subProject) {
         return subProjectList.contains(subProject);
     }
 
-    /**
-     * @throws IllegalArgumentException
-     */
     public void addRole(Role newRole) {
-        if (hasRole(newRole.getName())) {
-            String exceptionExplanation;
-            exceptionExplanation = "Project with name "
-                    + getName()
-                    + " already has a Role named "
-                    + newRole.getName();
-            throw new IllegalArgumentException(exceptionExplanation);
-        }
         roleList.add(newRole);
     }
 
-    public boolean hasRole(String roleName) {
-        for (Role role : roleList) {
-            if (role.getName().equals(roleName)) {
-                return true;
-            }
-        }
-        return false;
+    public boolean hasRole(Role role) {
+
+        return roleList.contains(role);
     }
 
-    public Role getRole(String roleName) {
-        for (Role role : roleList) {
-            if (role.getName().equals(roleName)) {
-                return role;
-            }
-        }
-        return null;
-    }
+
 
     @Override
     public Duration getDuration() {

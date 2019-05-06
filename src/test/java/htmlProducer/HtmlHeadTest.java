@@ -14,7 +14,7 @@ public class HtmlHeadTest {
     }
 
     @org.junit.Test
-    public void getContentString() {
+    public void getTaskTest() {
 
         HtmlTagElement th1 = TH.build().addText("Title 1");
         HtmlTagElement th2 = TH.build().addText("Title 2");
@@ -22,6 +22,7 @@ public class HtmlHeadTest {
         HtmlTagElement tr = TR.build().addElement(th1, th2);
 
         String html = tr.getHTMLCode();
+
         assertNotNull(html.charAt(0) == '<');
 
         HtmlTagElement testHtml =

@@ -10,14 +10,13 @@ import zeiterfassung.models.WorkChunk;
 
 public class TaskContent implements Reportable {
 
-
     Task task;
 
     @Override
     public HtmlTagElement getHtmlNode() {
 
         HtmlTagElement root = SPAN.build().addElement(
-                        H1.build().addText(task.getName())
+                H3.build().addText(task.getName())
         );
 
         HtmlTagElement rootTable = TABLE.build().addElement(

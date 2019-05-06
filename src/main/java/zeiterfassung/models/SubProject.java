@@ -1,6 +1,7 @@
 package zeiterfassung.models;
 
 
+import java.util.ArrayList;
 import java.util.List;
 import java.lang.IllegalArgumentException;
 import java.time.Duration;
@@ -57,37 +58,20 @@ public class SubProject implements DescribableContainer, TimeableWork {
      * @throws IllegalArgumentException
      */
     public void addTask(Task newTask) {
-        if (hasTask(newTask.getName())) {
-            String exceptionExplanation;
-            exceptionExplanation = "Project " + getName()
-                    + "already has a Task named " + newTask.getName();
-            throw new IllegalArgumentException(exceptionExplanation);
-        }
-        taskList.add(newTask);
+            taskList.add(newTask);
     }
 
-    public boolean hasTask(String taskToFind) {
-        for (Task task : taskList) {
-            if (taskToFind.equals(task.getName())) {
-                return true;
-            }
-        }
-        return false;
+    public boolean hasTask(Task taskToFind) {
+        return taskList.contains(taskToFind);
     }
 
-    public Task getTask(String taskToFind) {
-        for (Task task : taskList) {
-            if (taskToFind.equals(task.getName())) {
-                return task;
-            }
-        }
-        return null;
-    }
-
-    public boolean removeTask(String taskName) {
-        Task task = getTask(taskName);
-        if (task == null) return false;
+    public boolean removeTask(Task task) {
         return taskList.remove(task);
     }
+
+    public SubProject(){
+        taskList = new ArrayList<>();
+    }
+
 
 }
