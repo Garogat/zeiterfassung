@@ -101,8 +101,8 @@ public class ReportDocumentTest {
 
 
     @org.junit.Test
-    public void testTimeTest() {
+    public void testTaskDuration() {
+        assertTrue(myTask.getDuration(LocalDateTime.MIN, LocalDateTime.MAX).toMinutes() != 0);
 
-        assertTrue(LocalDateTime.now().compareTo(LocalDateTime.now().plusHours(1)) == -1);
     }
 }

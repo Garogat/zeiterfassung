@@ -51,7 +51,7 @@ public class Project extends SubProject {
     public Duration getDuration(LocalDateTime start, LocalDateTime stop) {
         Duration duration = super.getDuration(start, stop);
         for (SubProject sp : subProjectList) {
-            duration.plus(sp.getDuration(start, stop));
+            duration = duration.plus(sp.getDuration(start, stop));
         }
         return duration;
     }

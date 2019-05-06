@@ -41,7 +41,7 @@ public class SubProject implements DescribableContainer, TimeableWork {
     public Duration getDuration(LocalDateTime start, LocalDateTime stop) {
         Duration duration = Duration.ofSeconds(0);
         for (Task task : taskList) {
-            duration.plus(task.getDuration(start, stop));
+            duration = duration.plus(task.getDuration(start, stop));
         }
         return duration;
     }

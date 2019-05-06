@@ -49,10 +49,10 @@ public class Task implements TimeableWork, DescribableContainer {
 
     @Override
     public Duration getDuration(LocalDateTime start, LocalDateTime stop) {
-        Duration duration = Duration.ZERO;// Duration.ofSeconds(0);
+        Duration duration = Duration.ofSeconds(0);
         for (WorkChunk w : workList) {
-            if (w.getStartTime().compareTo(start) >= 0 && w.getStartTime().compareTo(stop) == -1) {
-                duration.plus(w.getDuration());
+            if (w.getStartTime().compareTo(start) >= 0 && w.getStartTime().compareTo(stop) < 0) {
+                duration = duration.plus(w.getDuration());
             }
         }
         return duration;

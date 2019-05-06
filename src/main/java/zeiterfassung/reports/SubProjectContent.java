@@ -32,7 +32,7 @@ public class SubProjectContent implements Reportable{
         root.addElement(list)
                 .addText("Kosten Gesamt: "+subProject.getCosts(start, stop))
                 .addElement(BR.build())
-                .addText("Zeit Gesamt: "+subProject.getDuration(start, stop).toString());
+                .addText("Zeit Gesamt: "+subProject.getDuration(start, stop).getSeconds()/(double)3600);
 
         return root;
     }

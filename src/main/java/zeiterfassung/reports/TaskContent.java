@@ -49,7 +49,7 @@ public class TaskContent implements Reportable {
         root.addElement(rootTable)
                 .addText("Kosten Gesamt: "+task.getCosts(start, stop))
                 .addElement(BR.build())
-                .addText("Zeit Gesamt: "+task.getDuration(start, stop).toString());
+                .addText("Zeit Gesamt: "+task.getDuration(start, stop).getSeconds()/(double)3600);
 
         return root;
     }
