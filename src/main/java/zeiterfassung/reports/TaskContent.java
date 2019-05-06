@@ -8,11 +8,14 @@ import htmlProducer.HtmlTagElement;
 import zeiterfassung.models.Task;
 import zeiterfassung.models.WorkChunk;
 
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class TaskContent implements Reportable {
 
     Task task;
+    LocalDateTime start;
+    LocalDateTime stop;
 
     @Override
     public HtmlTagElement getHtmlNode() {
@@ -44,15 +47,17 @@ public class TaskContent implements Reportable {
         });
 
         root.addElement(rootTable)
-                .addText("Kosten Gesamt: "+task.getCosts())
+                .addText("Kosten Gesamt: "+task.getCosts(start, stop))
                 .addElement(BR.build())
-                .addText("Zeit Gesamt: "+task.getDuration().toString());
+                .addText("Zeit Gesamt: "+task.getDuration(start, stop).toString());
 
         return root;
     }
 
-    TaskContent(Task task){
+    TaskContent(Task task, LocalDateTime start, LocalDateTime stop){
         this.task = task;
+        this.start = start;
+        this.stop = stop;
     }
 
 }

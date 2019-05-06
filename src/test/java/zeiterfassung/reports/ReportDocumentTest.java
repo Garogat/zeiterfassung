@@ -18,8 +18,14 @@ public class ReportDocumentTest {
 
     Area myArea;
 
+    LocalDateTime start;
+    LocalDateTime stop;
+
     @org.junit.Before
     public void setUp() throws Exception {
+
+        start = LocalDateTime.now().minusDays(1);
+        stop  = LocalDateTime.now().plusDays(5);
 
         Role myRole = new Role();
         myRole.setHourlyWage(9.50);
@@ -62,7 +68,7 @@ public class ReportDocumentTest {
 
     @org.junit.Test
     public void testTask() {
-        ReportDocument test = new ReportDocument("Test Task", new TaskContent(myTask), new TaskContent(myTask));
+        ReportDocument test = new ReportDocument("Test Task", new TaskContent(myTask, start, stop), new TaskContent(myTask, start, stop));
 
         String html = test.getHtmlNode().getHTMLCode();
         assertTrue(html.charAt(0) == '<');
@@ -70,7 +76,7 @@ public class ReportDocumentTest {
 
     @org.junit.Test
     public void testSubProject() {
-        ReportDocument test = new ReportDocument("Test Subproject", new SubProjectContent(mySubproject), new SubProjectContent(mySubproject));
+        ReportDocument test = new ReportDocument("Test Subproject", new SubProjectContent(mySubproject, start, stop), new SubProjectContent(mySubproject, start, stop));
 
         String html = test.getHtmlNode().getHTMLCode();
         assertTrue(html.charAt(0) == '<');
@@ -78,7 +84,7 @@ public class ReportDocumentTest {
 
     @org.junit.Test
     public void testProject() {
-        ReportDocument test = new ReportDocument("Test Project", new ProjectContent(myProject));
+        ReportDocument test = new ReportDocument("Test Project", new ProjectContent(myProject, start, stop));
 
         String html = test.getHtmlNode().getHTMLCode();
         assertTrue(html.charAt(0) == '<');
@@ -87,9 +93,16 @@ public class ReportDocumentTest {
 
     @org.junit.Test
     public void testArea() {
-        ReportDocument test = new ReportDocument("Test Area", new AreaContent(myArea));
+        ReportDocument test = new ReportDocument("Test Area", new AreaContent(myArea, start, stop));
 
         String html = test.getHtmlNode().getHTMLCode();
         assertTrue(html.charAt(0) == '<');
+    }
+
+
+    @org.junit.Test
+    public void testTimeTest() {
+
+        assertTrue(LocalDateTime.now().compareTo(LocalDateTime.now().plusHours(1)) == -1);
     }
 }

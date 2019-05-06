@@ -7,6 +7,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.lang.IllegalStateException;
 
+
 public class Task implements TimeableWork, DescribableContainer {
     private List<WorkChunk> workList;
 
@@ -42,16 +43,17 @@ public class Task implements TimeableWork, DescribableContainer {
     }
 
     @Override
-    public double getCosts() {
-        return getRole().getHourlyWage() *  getDuration().toHours();
-
+    public double getCosts(LocalDateTime start, LocalDateTime stop) {
+        return getRole().getHourlyWage() *  ((double)getDuration(start, stop).toMinutes()/60);
     }
 
     @Override
-    public Duration getDuration() {
+    public Duration getDuration(LocalDateTime start, LocalDateTime stop) {
         Duration duration = Duration.ZERO;// Duration.ofSeconds(0);
         for (WorkChunk w : workList) {
-            duration.plus(w.getDuration());
+            if (w.getStartTime().compareTo(start) >= 0 && w.getStartTime().compareTo(stop) == -1) {
+                duration.plus(w.getDuration());
+            }
         }
         return duration;
     }

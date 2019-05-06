@@ -3,6 +3,7 @@ package zeiterfassung.models;
 import java.lang.IllegalArgumentException;
 import java.time.Duration;
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,19 +48,19 @@ public class Project extends SubProject {
 
 
     @Override
-    public Duration getDuration() {
-        Duration duration = super.getDuration();
+    public Duration getDuration(LocalDateTime start, LocalDateTime stop) {
+        Duration duration = super.getDuration(start, stop);
         for (SubProject sp : subProjectList) {
-            duration.plus(sp.getDuration());
+            duration.plus(sp.getDuration(start, stop));
         }
         return duration;
     }
 
     @Override
-    public double getCosts() {
-        double costs = super.getCosts();
+    public double getCosts(LocalDateTime start, LocalDateTime stop) {
+        double costs = super.getCosts(start, stop);
         for (SubProject sp : subProjectList) {
-            costs += sp.getCosts();
+            costs += sp.getCosts(start, stop);
         }
         return costs;
     }

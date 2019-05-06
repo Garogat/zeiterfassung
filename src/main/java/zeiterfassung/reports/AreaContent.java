@@ -7,11 +7,14 @@ import static htmlProducer.HtmlFactory.*;
 import zeiterfassung.models.Area;
 import zeiterfassung.models.Project;
 
+import java.time.LocalDateTime;
+
 
 public class AreaContent implements Reportable  {
 
     Area area;
-
+    LocalDateTime start;
+    LocalDateTime stop;
     @Override
     public HtmlElement getHtmlNode() {
         HtmlTagElement root = SPAN.build();
@@ -24,7 +27,7 @@ public class AreaContent implements Reportable  {
         HtmlTagElement ul = UL.build();
         area.getProjectList(list -> {
             for (Project iter: list) {
-                ul.addElement(LI.build().addElement(new ProjectContent(iter).getHtmlNode()));
+                ul.addElement(LI.build().addElement(new ProjectContent(iter, start, stop).getHtmlNode()));
             }
         });
 
@@ -34,8 +37,10 @@ public class AreaContent implements Reportable  {
     }
 
 
-    public AreaContent(Area area){
+    public AreaContent(Area area, LocalDateTime start, LocalDateTime stop){
         this.area = area;
+        this.start = start;
+        this.stop = stop;
 
     }
 

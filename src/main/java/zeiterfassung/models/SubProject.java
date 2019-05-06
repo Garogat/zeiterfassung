@@ -1,6 +1,7 @@
 package zeiterfassung.models;
 
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.lang.IllegalArgumentException;
@@ -37,19 +38,19 @@ public class SubProject implements DescribableContainer, TimeableWork {
     }
 
     @Override
-    public Duration getDuration() {
+    public Duration getDuration(LocalDateTime start, LocalDateTime stop) {
         Duration duration = Duration.ofSeconds(0);
         for (Task task : taskList) {
-            duration.plus(task.getDuration());
+            duration.plus(task.getDuration(start, stop));
         }
         return duration;
     }
 
     @Override
-    public double getCosts() {
+    public double getCosts(LocalDateTime start, LocalDateTime stop) {
         double costs = 0;
         for (Task task : taskList) {
-            costs += task.getCosts();
+            costs += task.getCosts(start, stop);
         }
         return costs;
     }

@@ -5,11 +5,16 @@ import htmlProducer.HtmlTagElement;
 import zeiterfassung.models.SubProject;
 import zeiterfassung.models.Task;
 
+import java.time.LocalDateTime;
+
 import static htmlProducer.HtmlFactory.*;
 
 public class SubProjectContent implements Reportable{
 
     private SubProject subProject;
+    LocalDateTime start;
+    LocalDateTime stop;
+
 
     @Override
     public HtmlElement getHtmlNode() {
@@ -20,21 +25,22 @@ public class SubProjectContent implements Reportable{
 
         subProject.getTasks(tasks -> {
             for (Task iter: tasks){
-                list.addElement(LI.build().addElement(new TaskContent(iter).getHtmlNode()));
+                list.addElement(LI.build().addElement(new TaskContent(iter, start, stop).getHtmlNode()));
             }
         });
 
-
         root.addElement(list)
-                .addText("Kosten Gesamt: "+subProject.getCosts())
+                .addText("Kosten Gesamt: "+subProject.getCosts(start, stop))
                 .addElement(BR.build())
-                .addText("Zeit Gesamt: "+subProject.getDuration().toString());
+                .addText("Zeit Gesamt: "+subProject.getDuration(start, stop).toString());
 
         return root;
     }
 
-    public SubProjectContent(SubProject subProject){
+    public SubProjectContent(SubProject subProject, LocalDateTime start, LocalDateTime stop){
         this.subProject = subProject;
+        this.start = start;
+        this.stop = stop;
     }
 
 

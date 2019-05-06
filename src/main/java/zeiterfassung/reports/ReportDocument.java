@@ -4,6 +4,7 @@ package zeiterfassung.reports;
 import static htmlProducer.HtmlFactory.*;
 import htmlProducer.HtmlTagElement;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -12,6 +13,7 @@ public class ReportDocument implements Reportable {
 
     String title;
     List<Reportable> items;
+
 
     @Override
     public HtmlTagElement getHtmlNode() {
@@ -34,6 +36,7 @@ public class ReportDocument implements Reportable {
         this.title = title;
         this.items = new ArrayList<>();
         Collections.addAll(this.items, items);
+
 
     }
 
