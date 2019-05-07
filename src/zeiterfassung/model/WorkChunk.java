@@ -72,6 +72,15 @@ public class WorkChunk {
     }
 
     /**
+     * Method that tests if the start time is valid
+     */
+    public boolean isValidStartTime(LocalDateTime time) {
+    }
+
+    public boolean isValidEndTime() {
+    }
+
+    /**
      * Method that tests if the input description is valid
      */
     public boolean isValidDescription(String description) {
