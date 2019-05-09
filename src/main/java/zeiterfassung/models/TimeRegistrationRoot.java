@@ -12,12 +12,15 @@ public class TimeRegistrationRoot {
         areaList.add(newArea);
     }
 
-
     public boolean removeArea(Area area) {
         return areaList.remove(area);
     }
 
     public boolean hasArea(Area area) {
         return areaList.contains(area);
+    }
+
+    public void getAreas(Listable<Area> areas){
+        areas.getList(areaList);
     }
 }

@@ -4,6 +4,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import zeiterfassung.controllers.Base;
 
 import java.io.IOException;
 
@@ -15,17 +16,22 @@ public class ZeitErfassung {
         this.stage = stage;
 
         // init data store
-        this.store = new DataStore();
+        this.store = new TestStore();
+        // this.store = new DataStore(); // production store with xml backend
         this.store.load();
 
         // load scene
-
         Parent page = null;
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/zeiterfassung/views/Base.fxml"));
         try {
-            page = FXMLLoader.load(getClass().getResource("/zeiterfassung/views/Base.fxml"));
+            page = loader.load();
         } catch(IOException e) {
             e.printStackTrace();
         }
+
+        Base baseController = loader.getController();
+        baseController.setDataStore(this.store);
+
         stage.setScene(new Scene(page));
         stage.setTitle("Zeiterfassung");
         stage.setMaximized(true);
@@ -36,6 +42,8 @@ public class ZeitErfassung {
      * stop ZeitErfassung (unload data initstore)
      */
     public void stop() {
-        store.unload();
+        if (this.store != null) {
+            this.store.unload();
+        }
     }
 }

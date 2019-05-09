@@ -7,6 +7,8 @@ import javafx.scene.control.MenuBar;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.TreeView;
 import javafx.scene.layout.AnchorPane;
+import zeiterfassung.DataStore;
+import zeiterfassung.models.TimeRegistrationRoot;
 
 import java.io.IOException;
 
@@ -24,6 +26,8 @@ public class Base {
     @FXML
     private SplitPane splitPane;
 
+    private DataStore store;
+
     @FXML
     public void initialize() {
         System.out.println("running");
@@ -35,12 +39,18 @@ public class Base {
 
         // TODO: add resize listener to correctly set divider position
         splitPane.setDividerPositions(0.3);
-
-        // TODO: load projectTree
     }
 
     public void setContent(String view) throws IOException {
         Node node = FXMLLoader.load(getClass().getResource("/zeiterfassung/views/" + view + ".fxml"));
         content.getChildren().setAll(node);
+    }
+
+    public void setDataStore(DataStore store) {
+        this.store = store;
+
+        // TODO: load projectTree
+        TimeRegistrationRoot root = this.store.getRoot();
+        root.toString();
     }
 }
