@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.VBox?>
+
+
+<VBox xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <Label text="Willkommen"/>
+        <Button mnemonicParsing="false" text="Neues Projekt erstellen"/>
+        <Button mnemonicParsing="false" text="Projekt importieren"/>
+        <Button mnemonicParsing="false" text="Letztes Projekt öffnen"/>
+    </children>
+</VBox>
