@@ -1,5 +1,9 @@
 package zeiterfassung.models;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.lang.IllegalArgumentException;
 import java.time.Duration;
 import java.math.BigDecimal;
@@ -7,10 +11,25 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlRootElement
 public class Project extends SubProject {
-    List<Role> roleList = new ArrayList<>();
-    List<SubProject> subProjectList = new ArrayList<>();
+    private String name;
+    private String description;
+    @XmlElement(name = "Role")
+    List<Role> roleList = new ArrayList<Role>();
+    @XmlElement(name = "SubProject")
+    List<SubProject> subProjectList = new ArrayList<SubProject>();
 
+    public Project(){
+        this.setName("Cool Project name");
+        this.setDescription("My interesting description");
+    }
+
+    public Project(String name, String description){
+        this.setName(name);
+        this.setDescription(description);
+    }
 
     public void getRoles(Listable<Role> roles){
         roles.getList(roleList);

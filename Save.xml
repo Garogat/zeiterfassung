@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Root>
+    <Area>
+        <name>My custom Area</name>
+        <description>My custom Area descr</description>
+        <Project>
+            <SubProject>
+                <name>SubProject name</name>
+                <description>SubProject desc</description>
+            </SubProject>
+        </Project>
+        <Project>
+            <SubProject>
+                <name>SubProject name</name>
+                <description>SubProject desc</description>
+            </SubProject>
+        </Project>
+    </Area>
+</Root>

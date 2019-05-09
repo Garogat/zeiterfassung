@@ -1,14 +1,31 @@
 package zeiterfassung.models;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.ArrayList;
 import java.util.List;
 import java.lang.IllegalArgumentException;
 
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlRootElement
 public class Area implements DescribableContainer {
 
     private String name;
     private String description;
+    @XmlElement(name = "Project")
     private List<Project> projectsList = new ArrayList<Project>();
+
+    public Area(){
+        this.name = "Any name";
+        this.description = "Generic projects";
+    }
+
+    public Area(String name, String description){
+        setName(name);
+        setDescription(description);
+    }
 
     public void getProjectList(Listable<Project> projectsList){
         projectsList.getList(this.projectsList);
