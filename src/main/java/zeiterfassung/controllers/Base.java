@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.SplitPane;
+import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.scene.layout.AnchorPane;
 import zeiterfassung.DataStore;
@@ -18,7 +19,7 @@ public class Base {
     private MenuBar menu;
 
     @FXML
-    private TreeView<?> projectTree;
+    private TreeView<String> projectTree;
 
     @FXML
     private AnchorPane content;
@@ -52,5 +53,15 @@ public class Base {
         // TODO: load projectTree
         TimeRegistrationRoot root = this.store.getRoot();
         root.toString();
+        updateTreeView();
+    }
+
+    public void updateTreeView() {
+        Tree tree = new Tree(this.store.getRoot());
+        TreeItem<String> root = tree.getTree();
+        this.projectTree.setRoot(root);
+
+        // Hide the root Item.
+        this.projectTree.setShowRoot(false);
     }
 }
