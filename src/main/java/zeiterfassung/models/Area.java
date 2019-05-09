@@ -10,6 +10,10 @@ public class Area implements DescribableContainer {
     private String description;
     private List<Project> projectsList = new ArrayList<Project>();
 
+    public void getProjectList(Listable<Project> projectsList){
+        projectsList.getList(this.projectsList);
+    }
+
     public String getName() {
         return name;
     }
@@ -27,34 +31,7 @@ public class Area implements DescribableContainer {
     }
 
     public void addProject(Project newProject) {
-        if (hasProject(newProject.getName())) {
-            String exceptionExplanation;
-            exceptionExplanation = "Project with name "
-                    + newProject.getName()
-                    + " already exists in Area "
-                    + getName();
-
-            throw new IllegalArgumentException(exceptionExplanation);
-        }
         projectsList.add(newProject);
-    }
-
-    public Project getProject(String projectName) {
-        for (Project project : projectsList) {
-            if (project.getName().equals(projectName)) {
-                return project;
-            }
-        }
-        return null;
-    }
-
-    public boolean hasProject(String projectName) {
-        for (Project project : projectsList) {
-            if (project.getName().equals(projectName)) {
-                return true;
-            }
-        }
-        return false;
     }
 
     public boolean hasProject(Project projectToSearch) {
