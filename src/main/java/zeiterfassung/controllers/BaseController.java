@@ -10,6 +10,10 @@ import javafx.scene.layout.AnchorPane;
 import zeiterfassung.DataStore;
 import zeiterfassung.components.Tree;
 import zeiterfassung.components.TreeContextItem;
+import zeiterfassung.models.Area;
+import zeiterfassung.models.Project;
+import zeiterfassung.models.SubProject;
+import zeiterfassung.models.Task;
 
 import java.io.IOException;
 
@@ -80,20 +84,20 @@ public class BaseController {
 
         switch (item.getType()) {
             case AREA:
-                // AreaController controller = (AreaController) setContent("area");
-                // controller.setProject((Area) item.getItem());
+                AreaController areaController = (AreaController) setContent("Area");
+                areaController.setArea((Area) item.getItem());
                 break;
             case PROJECT:
-                ProjectController controller = (ProjectController) setContent("Project");
-                // controller.setProject((Project) item.getItem());
+                ProjectController projectController = (ProjectController) setContent("Project");
+                projectController.setProject((Project) item.getItem());
                 break;
             case SUBPROJECT:
-                // SubProjectController controller = (SubProjectController) setContent("subProject");
-                // controller.setProject((Project) item.getItem());
+                SubProjectController subProjectController = (SubProjectController) setContent("SubProject");
+                subProjectController.setSubProject((SubProject) item.getItem());
                 break;
             case TASK:
-                // TaskController controller = (TaskController) setContent("task");
-                // controller.setProject((Project) item.getItem());
+                TaskController taskController = (TaskController) setContent("Task");
+                taskController.setTask((Task) item.getItem());
                 break;
             default:
                 setContent("Start");
