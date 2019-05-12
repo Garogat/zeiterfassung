@@ -1,5 +1,5 @@
 package zeiterfassung.controllers;
 
-public class Project {
+public class ProjectController {
 
 }

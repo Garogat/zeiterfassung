@@ -4,7 +4,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import zeiterfassung.controllers.Base;
+import zeiterfassung.controllers.BaseController;
 
 import java.io.IOException;
 
@@ -25,11 +25,11 @@ public class ZeitErfassung {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/zeiterfassung/views/Base.fxml"));
         try {
             page = loader.load();
-        } catch(IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
 
-        Base baseController = loader.getController();
+        BaseController baseController = loader.getController();
         baseController.setDataStore(this.store);
 
         stage.setScene(new Scene(page));
