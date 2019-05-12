@@ -13,7 +13,7 @@ import java.lang.IllegalStateException;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement
 public class Task implements TimeableWork, DescribableContainer {
-    private List<WorkChunk> workList;
+    private List<WorkChunk> workList = new ArrayList<>();
 
     private LocalDateTime workStartTime;
     private LocalDateTime workEndTime;
@@ -21,6 +21,13 @@ public class Task implements TimeableWork, DescribableContainer {
     private Role role;
     private String name;
     private String description;
+
+    public Task(String name, String description, String workDescription, Role role){
+        setName(name);
+        setDescription(description);
+        setWorkDescription(workDescription);
+        setRole(role);
+    }
 
     public void getWorkList(Listable<WorkChunk> workList){
         workList.getList(this.workList);
@@ -119,6 +126,4 @@ public class Task implements TimeableWork, DescribableContainer {
         workList = new ArrayList<>();
 
     }
-
-
 }

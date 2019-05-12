@@ -5,6 +5,7 @@ import zeiterfassung.models.*;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
+import javax.xml.bind.Unmarshaller;
 import java.io.File;
 
 public class DataStore {
@@ -14,9 +15,11 @@ public class DataStore {
         // TODO: autoload?
     }
 
-    public void load() {
-        // TODO: load data from xml
-        // root = ...
+    public void load() throws JAXBException {
+        JAXBContext jbc = JAXBContext.newInstance(TimeRegistrationRoot.class);
+        Unmarshaller jaxbUnmarshaller = jbc.createUnmarshaller();
+        TimeRegistrationRoot root = (TimeRegistrationRoot) jaxbUnmarshaller.unmarshal(new File("Save.xml"));
+        // TODO: various .set(Variable) calls
     }
 
     public void unload() throws JAXBException {
@@ -62,12 +65,19 @@ public class DataStore {
         Area areaFH = new Area("FH", "Hier findet man FH Kram");
         Project aem = new Project("Agile Entwicklungsmethoden", "Modul AEM im SS2019");
         Project seg = new Project("Software Engineering", "Modul SEG im SS2019");
+        Project pij = new Project("Programmieren in Java", "Modul PIJ im SS2019");
         SubProject sprint4 = new SubProject("4. Sprint", "Unser 4. Sprint");
         SubProject anaphase = new SubProject("Analysephase", "Anforderungsanalyse und Lastenheft");
+        SubProject sprint2 = new SubProject("2. Sprint", "Unser 2. einwöchiger Sprint");
+        Task xml = new Task("XML Import", "XML Datei erzeugen und auslesen", "Annotationen setzen und Adapter schreiben", Role.roleFactory("Student"));
+
+        sprint2.addTask(xml);
         aem.addSubProject(sprint4);
         seg.addSubProject(anaphase);
+        pij.addSubProject(sprint2);
         areaFH.addProject(aem);
         areaFH.addProject(seg);
+        areaFH.addProject(pij);
         root.addArea(areaFH);
 
         return root;

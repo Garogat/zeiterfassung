@@ -3,10 +3,10 @@ package zeiterfassung.models;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.lang.IllegalArgumentException;
 import java.time.Duration;
 import java.math.BigDecimal;
@@ -14,7 +14,7 @@ import java.math.BigDecimal;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement
 public class SubProject implements DescribableContainer, TimeableWork {
-    private List<Task> taskList;
+    private List<Task> taskList = new ArrayList<>();
     private String name;
     private String description;
 

@@ -34,5 +34,23 @@
                 <description>Anforderungsanalyse und Lastenheft</description>
             </SubProject>
         </Project>
+        <Project>
+            <name>Programmieren in Java</name>
+            <description>Modul PIJ im SS2019</description>
+            <SubProject>
+                <taskList>
+                    <workDescription>Annotationen setzen und Adapter schreiben</workDescription>
+                    <role>
+                        <name>Student</name>
+                        <description>Einfacher Student mit grundlegenden Programmierkenntnissen</description>
+                        <hourlyWage>12.0</hourlyWage>
+                    </role>
+                    <name>XML Import</name>
+                    <description>XML Datei erzeugen und auslesen</description>
+                </taskList>
+                <name>2. Sprint</name>
+                <description>Unser 2. einwöchiger Sprint</description>
+            </SubProject>
+        </Project>
     </Area>
 </Root>
