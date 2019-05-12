@@ -1,5 +1,8 @@
 package zeiterfassung.models;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
@@ -7,7 +10,8 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.lang.IllegalStateException;
 
-
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlRootElement
 public class Task implements TimeableWork, DescribableContainer {
     private List<WorkChunk> workList;
 

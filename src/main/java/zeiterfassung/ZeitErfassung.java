@@ -6,13 +6,14 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import zeiterfassung.controllers.Base;
 
+import javax.xml.bind.JAXBException;
 import java.io.IOException;
 
 public class ZeitErfassung {
     private Stage stage;
     private DataStore store;
 
-    public ZeitErfassung(Stage stage) {
+    public ZeitErfassung(Stage stage) throws JAXBException {
         this.stage = stage;
 
         // init data store
@@ -41,7 +42,7 @@ public class ZeitErfassung {
     /**
      * stop ZeitErfassung (unload data initstore)
      */
-    public void stop() {
+    public void stop() throws JAXBException{
         if (this.store != null) {
             this.store.unload();
         }

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Root>
+    <Area>
+        <name>Privat</name>
+        <description>Hier findet man alle meine privaten Projekte</description>
+        <Project>
+            <name>Garten</name>
+            <description>Dieses Projekt ist für meine Garten Aufgaben</description>
+            <SubProject>
+                <taskList>
+                    <name>Äpfel plücken</name>
+                    <description>Nur die schönen dicken Äpfel dürfen gepflückt werden.</description>
+                </taskList>
+                <name>Baum Pflege</name>
+            </SubProject>
+        </Project>
+    </Area>
+    <Area>
+        <name>FH</name>
+        <description>Hier findet man FH Kram</description>
+        <Project>
+            <name>Agile Entwicklungsmethoden</name>
+            <description>Modul AEM im SS2019</description>
+            <SubProject>
+                <name>4. Sprint</name>
+                <description>Unser 4. Sprint</description>
+            </SubProject>
+        </Project>
+        <Project>
+            <name>Software Engineering</name>
+            <description>Modul SEG im SS2019</description>
+            <SubProject>
+                <name>Analysephase</name>
+                <description>Anforderungsanalyse und Lastenheft</description>
+            </SubProject>
+        </Project>
+    </Area>
+</Root>
