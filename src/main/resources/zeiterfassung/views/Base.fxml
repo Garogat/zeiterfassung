@@ -35,10 +35,11 @@
             <items>
                 <AnchorPane>
                     <children>
-                        <TreeView fx:id="projectTree" />
+                        <TreeView fx:id="projectTree" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                                  AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
                     </children>
                 </AnchorPane>
-                <AnchorPane fx:id="content" />
+                <AnchorPane fx:id="content"/>
             </items>
         </SplitPane>
     </center>
