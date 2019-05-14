@@ -1,6 +1,5 @@
 package zeiterfassung;
 
-import zeiterfassung.components.Tree;
 import zeiterfassung.models.*;
 
 public class TestStore extends DataStore {
@@ -27,6 +26,27 @@ public class TestStore extends DataStore {
         task.setDescription("Nur die schönen dicken Äpfel dürfen gepflückt werden.");
         subProject.addTask(task);
 
+        SubProject subProject1 = new SubProject();
+        subProject1.setName("Hühner");
+        project.addSubProject(subProject1);
+
+        Task task1 = new Task();
+        task1.setName("Stall ausmisten");
+        subProject.addTask(task1);
+
+        Task task2 = new Task();
+        task2.setName("Eier sammeln");
+        subProject.addTask(task2);
+
+        Project project1 = new Project();
+        project1.setName("FH");
+        project1.setDescription("Dieses Projekt ist für meine FH Aufgaben");
+        area.addProject(project1);
+    }
+
+    @Override
+    public TimeRegistrationRoot getRoot() {
+        return root;
     }
 
     public TestStore(){

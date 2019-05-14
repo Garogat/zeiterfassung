@@ -1,6 +1,5 @@
 package zeiterfassung.controllers;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -35,6 +34,7 @@ public class BaseController {
     private DataStore store;
     private ContextMenu contextMenu;
     private Tree tree;
+    private TreeContextItem.Listener contextMenuListener;
 
     @FXML
     public void initialize() {
@@ -45,7 +45,43 @@ public class BaseController {
 
         contextMenu = new ContextMenu();
         projectTree.setContextMenu(contextMenu);
+
+        contextMenuListener = new TreeContextItem.Listener() {
+            @Override
+            public void onDelete(Object obj) {
+
+            }
+
+            @Override
+            public void onAddArea() {
+                Area area = new Area();
+                area.setName("Neuer Bereich");
+                store.getRoot().addArea(area);
+            }
+
+            @Override
+            public void onAddProject(Area area) {
+                Project project = new Project();
+                project.setName("Neues Projekt");
+                area.addProject(project);
+            }
+
+            @Override
+            public void onAddSubProject(Project project) {
+                SubProject subProject = new SubProject();
+                subProject.setName("Neues Unterprojekt");
+                project.addSubProject(subProject);
+            }
+
+            @Override
+            public void onAddTask(SubProject subProject) {
+                Task task = new Task();
+                task.setName("Neuer Task");
+                subProject.addTask(task);
+            }
+        };
     }
+
 
     public Object setContent(String view) {
         Node node = null;
@@ -71,11 +107,11 @@ public class BaseController {
         tree = new Tree( projectTree, store.getRoot());
 
         // TODO: observe datastore and update tree view
+
         projectTree.setRoot(tree.getTree());
 
         // Hide the root Item.
         projectTree.setShowRoot(false);
-
     }
 
 
@@ -116,6 +152,7 @@ public class BaseController {
         }
 
         TreeContextItem item = selected.getValue();
+        item.setListener(contextMenuListener);
 
         contextMenu.hide();
 
@@ -128,14 +165,5 @@ public class BaseController {
             // show menu
             contextMenu.show(projectTree, event.getScreenX(), event.getScreenY());
         }
-    }
-
-    public void machwasambaum(ActionEvent actionEvent) {
-
-        Project newPro = new Project();
-        newPro.setName("Bääääm");
-        store.getRoot().getAreas(list -> {
-            list.get(0).addProject(newPro);
-        });
     }
 }

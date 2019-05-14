@@ -1,5 +1,6 @@
 package zeiterfassung.components;
 
+import javafx.event.Event;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import zeiterfassung.models.*;
@@ -62,6 +63,14 @@ public class Tree {
         this.root.getAreas(list -> {
             for (Area area : list) {
                 TreeItem<TreeContextItem> item = getArea(area);
+                area.addObserver(new Observer() {
+                    @Override
+                    public void update(Observable observable, Object o) {
+                        System.out.println("tt:" + ((Area) observable).getName());
+                        TreeItem.TreeModificationEvent<TreeContextItem> event = new TreeItem.TreeModificationEvent<>(TreeItem.valueChangedEvent(), item);
+                        Event.fireEvent(item, event);
+                    }
+                });
                 rootItem.getChildren().add(item);
             }
         });

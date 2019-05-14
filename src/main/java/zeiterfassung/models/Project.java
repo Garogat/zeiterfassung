@@ -25,11 +25,19 @@ public class Project extends SubProject {
      * @throws IllegalArgumentException
      */
     public void addSubProject(SubProject newSubProject) {
-        subProjectList.add(newSubProject);
+        if (subProjectList.add(newSubProject)) {
+            setChanged();
+            notifyObservers();
+        }
     }
 
     public boolean removeSubProject(SubProject subProject) {
-        return subProjectList.remove(subProject);
+        if (subProjectList.remove(subProject)) {
+            setChanged();
+            notifyObservers();
+            return true;
+        }
+        return false;
     }
 
 
@@ -38,12 +46,20 @@ public class Project extends SubProject {
     }
 
     public void addRole(Role newRole) {
-        roleList.add(newRole);
+        if (roleList.add(newRole)){
+            setChanged();
+            notifyObservers();
+        }
     }
 
-    public boolean hasRole(Role role) {
+    public boolean deleteRole(Role role) {
 
-        return roleList.contains(role);
+        if (roleList.remove(role)){
+            setChanged();
+            notifyObservers();
+            return true;
+        }
+        return false;
     }
 
 
