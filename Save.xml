@@ -7,11 +7,11 @@
             <name>Garten</name>
             <description>Dieses Projekt ist für meine Garten Aufgaben</description>
             <SubProject>
-                <taskList>
+                <name>Baum Pflege</name>
+                <Task>
                     <name>Äpfel plücken</name>
                     <description>Nur die schönen dicken Äpfel dürfen gepflückt werden.</description>
-                </taskList>
-                <name>Baum Pflege</name>
+                </Task>
             </SubProject>
         </Project>
     </Area>
@@ -37,8 +37,20 @@
         <Project>
             <name>Programmieren in Java</name>
             <description>Modul PIJ im SS2019</description>
+            <Role>
+                <name>Hiwi</name>
+                <description>Wissenschaftliche Hilfskraft</description>
+                <hourlyWage>16.0</hourlyWage>
+            </Role>
             <SubProject>
-                <taskList>
+                <name>2. Sprint</name>
+                <description>Unser 2. einwöchiger Sprint</description>
+                <Task>
+                    <WorkChunk>
+                        <start>2019-05-14T15:34:05.439</start>
+                        <end>2019-05-14T15:34:05.440</end>
+                        <description>Meine Beispielarbeit</description>
+                    </WorkChunk>
                     <workDescription>Annotationen setzen und Adapter schreiben</workDescription>
                     <role>
                         <name>Student</name>
@@ -47,9 +59,7 @@
                     </role>
                     <name>XML Import</name>
                     <description>XML Datei erzeugen und auslesen</description>
-                </taskList>
-                <name>2. Sprint</name>
-                <description>Unser 2. einwöchiger Sprint</description>
+                </Task>
             </SubProject>
         </Project>
     </Area>

@@ -1,6 +1,7 @@
 package zeiterfassung;
 
 import zeiterfassung.models.*;
+import zeiterfassung.xml.DataStore;
 
 public class TestStore extends DataStore {
     @Override

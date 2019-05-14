@@ -1,4 +1,4 @@
-package zeiterfassung;
+package zeiterfassung.xml;
 
 import zeiterfassung.models.*;
 
@@ -7,6 +7,7 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 import java.io.File;
+import java.time.LocalDateTime;
 
 public class DataStore {
     private TimeRegistrationRoot root;
@@ -16,14 +17,14 @@ public class DataStore {
     }
 
     public void load() throws JAXBException {
-        JAXBContext jbc = JAXBContext.newInstance(TimeRegistrationRoot.class);
-        Unmarshaller jaxbUnmarshaller = jbc.createUnmarshaller();
-        TimeRegistrationRoot root = (TimeRegistrationRoot) jaxbUnmarshaller.unmarshal(new File("Save.xml"));
+        //JAXBContext jbc = JAXBContext.newInstance(TimeRegistrationRoot.class);
+        //Unmarshaller jaxbUnmarshaller = jbc.createUnmarshaller();
+        //TimeRegistrationRoot root = (TimeRegistrationRoot) jaxbUnmarshaller.unmarshal(new File("Save.xml"));
         // TODO: various .set(Variable) calls
     }
 
     public void unload() throws JAXBException {
-        JAXBContext jbc = JAXBContext.newInstance(TimeRegistrationRoot.class, Area.class, Project.class, SubProject.class);
+        JAXBContext jbc = JAXBContext.newInstance(TimeRegistrationRoot.class, Area.class, Project.class, SubProject.class, Task.class, WorkChunk.class);
         Marshaller jaxbMarshaller = jbc.createMarshaller();
         jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
 
@@ -71,10 +72,12 @@ public class DataStore {
         SubProject sprint2 = new SubProject("2. Sprint", "Unser 2. einwöchiger Sprint");
         Task xml = new Task("XML Import", "XML Datei erzeugen und auslesen", "Annotationen setzen und Adapter schreiben", Role.roleFactory("Student"));
 
+        xml.addWorkChunk(new WorkChunk(LocalDateTime.now(), LocalDateTime.now(), "Meine Beispielarbeit"));
         sprint2.addTask(xml);
         aem.addSubProject(sprint4);
         seg.addSubProject(anaphase);
         pij.addSubProject(sprint2);
+        pij.addRole(Role.roleFactory("Hiwi"));
         areaFH.addProject(aem);
         areaFH.addProject(seg);
         areaFH.addProject(pij);

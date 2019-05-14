@@ -1,8 +1,9 @@
 package zeiterfassung.models;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlRootElement;
+import com.sun.corba.se.spi.orbutil.threadpool.Work;
+
+import javax.xml.bind.annotation.*;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,9 +11,11 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.lang.IllegalStateException;
 
+
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement
 public class Task implements TimeableWork, DescribableContainer {
+    @XmlElement(name = "WorkChunk")
     private List<WorkChunk> workList = new ArrayList<>();
 
     private LocalDateTime workStartTime;
@@ -27,6 +30,10 @@ public class Task implements TimeableWork, DescribableContainer {
         setDescription(description);
         setWorkDescription(workDescription);
         setRole(role);
+    }
+
+    public void addWorkChunk(WorkChunk workChunk){
+        workList.add(workChunk);
     }
 
     public void getWorkList(Listable<WorkChunk> workList){

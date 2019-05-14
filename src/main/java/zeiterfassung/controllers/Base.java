@@ -8,7 +8,7 @@ import javafx.scene.control.SplitPane;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.scene.layout.AnchorPane;
-import zeiterfassung.DataStore;
+import zeiterfassung.xml.DataStore;
 import zeiterfassung.models.TimeRegistrationRoot;
 
 import java.io.IOException;

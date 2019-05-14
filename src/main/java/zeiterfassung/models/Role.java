@@ -3,7 +3,9 @@ package zeiterfassung.models;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 
+@XmlType(propOrder = {"name", "description", "hourlyWage"})
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement
 public class Role {
