@@ -1,5 +1,6 @@
 package zeiterfassung.controllers;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -33,6 +34,7 @@ public class BaseController {
 
     private DataStore store;
     private ContextMenu contextMenu;
+    private Tree tree;
 
     @FXML
     public void initialize() {
@@ -66,17 +68,13 @@ public class BaseController {
     public void setDataStore(DataStore store) {
         this.store = store;
 
-        // TODO: observe datastore and update tree view
-        updateTreeView();
-    }
+        tree = new Tree( projectTree, store.getRoot());
 
-    private void updateTreeView() {
-        Tree tree = new Tree(store.getRoot());
+        // TODO: observe datastore and update tree view
         projectTree.setRoot(tree.getTree());
 
-        // Hide the root Item.
-        projectTree.setShowRoot(false);
     }
+
 
     private void openView(TreeContextItem item) {
         // TODO: open depending content view
@@ -127,5 +125,14 @@ public class BaseController {
             // show menu
             contextMenu.show(projectTree, event.getScreenX(), event.getScreenY());
         }
+    }
+
+    public void machwasambaum(ActionEvent actionEvent) {
+
+        Project newPro = new Project();
+        newPro.setName("Bääääm");
+        store.getRoot().getAreas(list -> {
+            list.get(0).addProject(newPro);
+        });
     }
 }

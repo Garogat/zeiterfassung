@@ -1,12 +1,13 @@
 package zeiterfassung;
 
+import zeiterfassung.components.Tree;
 import zeiterfassung.models.*;
 
 public class TestStore extends DataStore {
-    @Override
-    public TimeRegistrationRoot getRoot() {
-        TimeRegistrationRoot root = new TimeRegistrationRoot();
 
+
+    public void generateTestData(){
+        root = new TimeRegistrationRoot();
         Area area = new Area();
         area.setName("Privat");
         area.setDescription("Hier findet man alle meine privaten Projekte");
@@ -26,6 +27,10 @@ public class TestStore extends DataStore {
         task.setDescription("Nur die schönen dicken Äpfel dürfen gepflückt werden.");
         subProject.addTask(task);
 
-        return root;
     }
+
+    public TestStore(){
+        generateTestData();
+    }
+
 }

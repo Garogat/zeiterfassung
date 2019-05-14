@@ -1,6 +1,7 @@
 package zeiterfassung.components;
 
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.TreeItem;
 import zeiterfassung.models.*;
 
 import java.util.ArrayList;
@@ -10,12 +11,13 @@ public class TreeContextItem {
 
     public enum Type {ROOT, AREA, PROJECT, SUBPROJECT, TASK}
 
-    ;
 
     private String stringified;
     private List<MenuItem> contextMenu = new ArrayList<MenuItem>();
     private Type type;
     private Object item;
+
+
 
     public TreeContextItem(TimeRegistrationRoot root) {
         type = Type.ROOT;
@@ -67,6 +69,9 @@ public class TreeContextItem {
     public List<MenuItem> getContextMenu() {
         return this.contextMenu;
     }
+
+
+
 
     @Override
     public String toString() {
