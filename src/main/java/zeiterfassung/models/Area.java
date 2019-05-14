@@ -21,6 +21,8 @@ public class Area extends Observable implements DescribableContainer {
 
     public void setName(String name) {
         this.name = name;
+        setChanged();
+        notifyObservers();
     }
 
     public String getDescription() {
@@ -29,10 +31,14 @@ public class Area extends Observable implements DescribableContainer {
 
     public void setDescription(String description) {
         this.description = description;
+        setChanged();
+        notifyObservers();
     }
 
     public void addProject(Project newProject) {
         projectsList.add(newProject);
+        setChanged();
+        notifyObservers();
     }
 
     public boolean hasProject(Project projectToSearch) {
