@@ -7,8 +7,9 @@ import java.util.List;
 import java.lang.IllegalArgumentException;
 import java.time.Duration;
 import java.math.BigDecimal;
+import java.util.Observable;
 
-public class SubProject implements DescribableContainer, TimeableWork {
+public class SubProject extends Observable implements DescribableContainer, TimeableWork {
     private List<Task> taskList;
     private String name;
     private String description;

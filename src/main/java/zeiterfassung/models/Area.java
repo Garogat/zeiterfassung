@@ -1,10 +1,11 @@
 package zeiterfassung.models;
 
+
 import java.util.ArrayList;
 import java.util.List;
-import java.lang.IllegalArgumentException;
+import java.util.Observable;
 
-public class Area implements DescribableContainer {
+public class Area extends Observable implements DescribableContainer {
 
     private String name;
     private String description;
@@ -42,4 +43,5 @@ public class Area implements DescribableContainer {
         }
         return false;
     }
+
 }

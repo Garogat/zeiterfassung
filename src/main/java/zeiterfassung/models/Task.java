@@ -6,9 +6,10 @@ import java.util.List;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.lang.IllegalStateException;
+import java.util.Observable;
 
 
-public class Task implements TimeableWork, DescribableContainer {
+public class Task extends Observable implements TimeableWork, DescribableContainer {
     private List<WorkChunk> workList;
 
     private LocalDateTime workStartTime;
