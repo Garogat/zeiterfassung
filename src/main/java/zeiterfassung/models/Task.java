@@ -31,6 +31,8 @@ public class Task extends Observable implements TimeableWork, DescribableContain
     @Override
     public void setName(String name) {
         this.name = name;
+        setChanged();
+        notifyObservers();
     }
 
     @Override
@@ -41,6 +43,8 @@ public class Task extends Observable implements TimeableWork, DescribableContain
     @Override
     public void setDescription(String description) {
         this.description = description;
+        setChanged();
+        notifyObservers();
     }
 
     @Override
@@ -65,6 +69,8 @@ public class Task extends Observable implements TimeableWork, DescribableContain
 
     public void setRole(Role role) {
         this.role = role;
+        setChanged();
+        notifyObservers();
     }
 
 
@@ -78,6 +84,8 @@ public class Task extends Observable implements TimeableWork, DescribableContain
 
     public void setWorkDescription(String description) {
         this.workDescription = description;
+        setChanged();
+        notifyObservers();
     }
 
     public String getWorkDescription() {
@@ -95,6 +103,8 @@ public class Task extends Observable implements TimeableWork, DescribableContain
         } else {
             workStartTime = LocalDateTime.now();
         }
+        setChanged();
+        notifyObservers();
     }
 
     /**
@@ -110,11 +120,12 @@ public class Task extends Observable implements TimeableWork, DescribableContain
         workEndTime = LocalDateTime.now();
         WorkChunk newWork = new WorkChunk(workStartTime, workEndTime, workDescription);
         workList.add(newWork);
+        setChanged();
+        notifyObservers();
     }
 
     public Task(){
         workList = new ArrayList<>();
-
     }
 
 

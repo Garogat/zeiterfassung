@@ -25,6 +25,8 @@ public class SubProject extends Observable implements DescribableContainer, Time
     @Override
     public void setName(String name) {
         this.name = name;
+        setChanged();
+        notifyObservers();
     }
 
     @Override
@@ -35,6 +37,8 @@ public class SubProject extends Observable implements DescribableContainer, Time
     @Override
     public void setDescription(String description) {
         this.description = description;
+        setChanged();
+        notifyObservers();
     }
 
     @Override
@@ -59,7 +63,10 @@ public class SubProject extends Observable implements DescribableContainer, Time
      * @throws IllegalArgumentException
      */
     public void addTask(Task newTask) {
-            taskList.add(newTask);
+        if (taskList.add(newTask)) {
+            setChanged();
+            notifyObservers();
+        }
     }
 
     public boolean hasTask(Task taskToFind) {
@@ -67,7 +74,12 @@ public class SubProject extends Observable implements DescribableContainer, Time
     }
 
     public boolean removeTask(Task task) {
-        return taskList.remove(task);
+        if (taskList.remove(task)){
+            setChanged();
+            notifyObservers();
+            return true;
+        }
+        return false;
     }
 
     public SubProject(){
