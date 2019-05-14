@@ -1,5 +1,7 @@
 package zeiterfassung.components;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.control.MenuItem;
 import zeiterfassung.models.*;
 
@@ -21,7 +23,19 @@ public class TreeContextItem {
         type = Type.ROOT;
         item = root;
         stringified = "";
-        contextMenu.add(new MenuItem("Bereich anlegen"));
+
+        MenuItem addArea = new MenuItem("Bereich anlegen");
+        addArea.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                // TODO: needs store and base ref
+                // Area area = new Area();
+                // store.getRoot().addArea(area);
+                // AreaController areaController = (AreaController) base.setContent("Area");
+                // areaController.setArea(area);
+            }
+        });
+        contextMenu.add(addArea);
     }
 
     public TreeContextItem(Area area) {

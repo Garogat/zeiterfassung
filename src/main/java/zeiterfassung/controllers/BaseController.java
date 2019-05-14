@@ -76,6 +76,7 @@ public class BaseController {
 
         // Hide the root Item.
         projectTree.setShowRoot(false);
+        projectTree.refresh();
     }
 
     private void openView(TreeContextItem item) {
@@ -129,3 +130,6 @@ public class BaseController {
         }
     }
 }
+
+
+

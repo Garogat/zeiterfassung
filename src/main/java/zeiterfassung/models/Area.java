@@ -3,8 +3,9 @@ package zeiterfassung.models;
 import java.util.ArrayList;
 import java.util.List;
 import java.lang.IllegalArgumentException;
+import java.util.Observable;
 
-public class Area implements DescribableContainer {
+public class Area extends Observable implements DescribableContainer  {
 
     private String name;
     private String description;
@@ -20,6 +21,8 @@ public class Area implements DescribableContainer {
 
     public void setName(String name) {
         this.name = name;
+        setChanged();
+        notifyObservers();
     }
 
     public String getDescription() {
@@ -28,6 +31,8 @@ public class Area implements DescribableContainer {
 
     public void setDescription(String description) {
         this.description = description;
+        setChanged();
+        notifyObservers();
     }
 
     public void addProject(Project newProject) {
