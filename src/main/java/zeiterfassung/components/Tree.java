@@ -39,12 +39,12 @@ public class Tree {
 
     public static TreeItem<TreeContextItem> getTreeViewItem(TreeItem<TreeContextItem> item , Object value)
     {
-        if (item != null && item.getValue().equals(value))
+        if (item != null && item.getValue().getItem().equals(value))
             return  item;
 
         for (TreeItem<TreeContextItem> child : item.getChildren()){
-            TreeItem<TreeContextItem> s=getTreeViewItem(child, value);
-            if(s!=null)
+            TreeItem<TreeContextItem> s = getTreeViewItem(child, value);
+            if(s != null)
                 return s;
 
         }

@@ -73,6 +73,9 @@ public class BaseController {
         // TODO: observe datastore and update tree view
         projectTree.setRoot(tree.getTree());
 
+        // Hide the root Item.
+        projectTree.setShowRoot(false);
+
     }
 
 
