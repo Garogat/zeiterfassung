@@ -11,17 +11,22 @@ public class TimeRegistrationRoot extends Observable {
 
     private List<Area> areaList = new ArrayList<>();
 
-    public void addArea(Area newArea) {
-        areaList.add(newArea);
+    public boolean addArea(Area newArea) {
+        if (areaList.add(newArea)){
+            setChanged();
+            notifyObservers();
+            return true;
+        }
+        return false;
     }
 
     public boolean removeArea(Area area) {
-        boolean tmp = areaList.remove(area);
-        if (tmp) {
+        if (areaList.remove(area)) {
             setChanged();
             notifyObservers();
+            return true;
         }
-        return tmp;
+        return false;
     }
 
     public boolean hasArea(Area area) {
