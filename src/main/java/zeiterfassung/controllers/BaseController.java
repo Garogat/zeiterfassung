@@ -1,5 +1,6 @@
 package zeiterfassung.controllers;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -32,6 +33,7 @@ public class BaseController {
     private SplitPane splitPane;
 
     private DataStore store;
+    private Tree tree;
     private ContextMenu contextMenu;
 
     @FXML
@@ -42,7 +44,6 @@ public class BaseController {
         splitPane.setDividerPositions(0.3);
 
         contextMenu = new ContextMenu();
-        projectTree.setContextMenu(contextMenu);
     }
 
     public Object setContent(String view) {
@@ -66,17 +67,30 @@ public class BaseController {
     public void setDataStore(DataStore store) {
         this.store = store;
 
-        // TODO: observe datastore and update tree view
-        updateTreeView();
-    }
-
-    private void updateTreeView() {
-        Tree tree = new Tree(store.getRoot());
+        tree = new Tree(store.getRoot());
         projectTree.setRoot(tree.getTree());
+
+        projectTree.setCellFactory(t -> new TreeCell<TreeContextItem>() {
+            @Override
+            public void updateItem(TreeContextItem item, boolean empty) {
+                super.updateItem(item, empty);
+
+                textProperty().unbind();
+                graphicProperty().unbind();
+
+                if (empty) {
+                    setText(null);
+                    setGraphic(null);
+                } else {
+                    // bind text value to model
+                    textProperty().bind(item.textProperty());
+                    setGraphic(null);
+                }
+            }
+        });
 
         // Hide the root Item.
         projectTree.setShowRoot(false);
-        projectTree.refresh();
     }
 
     private void openView(TreeContextItem item) {
@@ -128,6 +142,12 @@ public class BaseController {
             // show menu
             contextMenu.show(projectTree, event.getScreenX(), event.getScreenY());
         }
+    }
+
+    public void testTree(ActionEvent actionEvent) {
+        Area area = new Area();
+        area.setName("Test Bereich");
+        tree.getTree().getChildren().add(new TreeItem(new TreeContextItem(area)));
     }
 }
 
