@@ -6,42 +6,26 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class Task implements TimeableWork, DescribableContainer {
-    private List<WorkChunk> workList;
+public class Task extends DescribableModel implements TimeableWork {
+    private List<WorkChunk> workList = new ArrayList<>();
 
     private LocalDateTime workStartTime;
     private LocalDateTime workEndTime;
     private String workDescription;
     private Role role;
-    private String name;
-    private String description;
 
     public Task() {
-        workList = new ArrayList<>();
+        super();
+        setName("Neue Aufgabe");
+        setDescription("Dies ist eine Aufgabe");
+    }
+
+    public Task(String name, String description) {
+        super(name, description);
     }
 
     public void getWorkList(Listable<WorkChunk> workList) {
         workList.getList(this.workList);
-    }
-
-    @Override
-    public String getName() {
-        return name;
-    }
-
-    @Override
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    @Override
-    public String getDescription() {
-        return description;
-    }
-
-    @Override
-    public void setDescription(String description) {
-        this.description = description;
     }
 
     @Override

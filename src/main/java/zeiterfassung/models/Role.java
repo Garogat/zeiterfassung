@@ -1,12 +1,16 @@
 package zeiterfassung.models;
 
-public class Role {
-    private String name;
-    private String description;
+public class Role extends DescribableModel {
     private double hourlyWage;
 
-    public String getName() {
-        return name;
+    public Role() {
+        super();
+        setName("Neues Rolle");
+        setDescription("Dies ist eine Rolle");
+    }
+
+    public Role(String name, String description) {
+        super(name, description);
     }
 
     public double getHourlyWage() {
@@ -15,17 +19,5 @@ public class Role {
 
     public void setHourlyWage(double hourlyWage) {
         this.hourlyWage = hourlyWage;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
     }
 }

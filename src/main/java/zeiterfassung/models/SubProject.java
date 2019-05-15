@@ -6,33 +6,17 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SubProject implements DescribableContainer, TimeableWork {
-    private List<Task> taskList;
-    private String name;
-    private String description;
+public class SubProject extends DescribableModel implements TimeableWork {
+    private List<Task> taskList = new ArrayList<>();
 
     public SubProject() {
-        taskList = new ArrayList<>();
+        super();
+        setName("Neues Unterprojekt");
+        setDescription("Dies ist ein Unterprojekt");
     }
 
-    @Override
-    public String getName() {
-        return name;
-    }
-
-    @Override
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    @Override
-    public String getDescription() {
-        return description;
-    }
-
-    @Override
-    public void setDescription(String description) {
-        this.description = description;
+    public SubProject(String name, String description) {
+        super(name, description);
     }
 
     @Override

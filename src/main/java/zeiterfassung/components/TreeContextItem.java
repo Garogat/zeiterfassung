@@ -30,7 +30,7 @@ public class TreeContextItem {
         type = Type.AREA;
         item = area;
 
-        text.set(area.getName());
+        text.bind(area.nameProperty());
 
         contextMenu.add(new MenuItem("Projekt anlegen"));
         contextMenu.add(new MenuItem("Bereich löschen"));
@@ -40,7 +40,7 @@ public class TreeContextItem {
         type = Type.PROJECT;
         item = project;
 
-        text.set(project.getName());
+        text.bind(project.nameProperty());
 
         contextMenu.add(new MenuItem("Aufgabe anlegen"));
         contextMenu.add(new MenuItem("Unterprojekt anlegen"));
@@ -51,7 +51,7 @@ public class TreeContextItem {
         type = Type.SUBPROJECT;
         item = subProject;
 
-        text.set(subProject.getName());
+        text.bind(subProject.nameProperty());
 
         contextMenu.add(new MenuItem("Aufgabe anlegen"));
         contextMenu.add(new MenuItem("Unterprojekt löschen"));
@@ -61,7 +61,7 @@ public class TreeContextItem {
         type = Type.TASK;
         item = task;
 
-        text.set(task.getName());
+        text.bind(task.nameProperty());
 
         contextMenu.add(new MenuItem("Aufgabe löschen"));
     }

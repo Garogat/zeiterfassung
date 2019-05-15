@@ -3,30 +3,22 @@ package zeiterfassung.models;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Area implements DescribableContainer {
+public class Area extends DescribableModel {
 
-    private String name;
-    private String description;
     private List<Project> projectsList = new ArrayList<>();
+
+    public Area() {
+        super();
+        setName("Neuer Bereich");
+        setDescription("Dies ist ein Bereich");
+    }
+
+    public Area(String name, String description) {
+        super(name, description);
+    }
 
     public void getProjectList(Listable<Project> projectsList) {
         projectsList.getList(this.projectsList);
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
     }
 
     public void addProject(Project newProject) {

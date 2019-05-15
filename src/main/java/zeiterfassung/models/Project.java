@@ -11,6 +11,12 @@ public class Project extends SubProject {
 
     public Project() {
         super();
+        setName("Neues Projekt");
+        setDescription("Dies ist ein Projekt");
+    }
+
+    public Project(String name, String description) {
+        super(name, description);
     }
 
     public void getSubProjects(Listable<SubProject> subProjects) {
