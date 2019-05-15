@@ -3,7 +3,7 @@ package zeiterfassung;
 import zeiterfassung.models.TimeRegistrationRoot;
 
 public class DataStore {
-    private TimeRegistrationRoot root;
+    protected TimeRegistrationRoot root;
 
     public DataStore() {
         // TODO: autoload?

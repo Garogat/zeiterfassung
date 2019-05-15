@@ -30,8 +30,9 @@ public class BaseController {
     private SplitPane splitPane;
 
     private DataStore store;
-    private Tree tree;
     private ContextMenu contextMenu;
+    private Tree tree;
+    private TreeContextItem.Listener contextMenuListener;
 
     @FXML
     public void initialize() {
@@ -41,6 +42,42 @@ public class BaseController {
         splitPane.setDividerPositions(0.3);
 
         contextMenu = new ContextMenu();
+        projectTree.setContextMenu(contextMenu);
+
+        contextMenuListener = new TreeContextItem.Listener() {
+            @Override
+            public void onDelete(Object obj) {
+
+            }
+
+            @Override
+            public void onAddArea() {
+                Area area = new Area();
+                area.setName("Neuer Bereich");
+                store.getRoot().addArea(area);
+            }
+
+            @Override
+            public void onAddProject(Area area) {
+                Project project = new Project();
+                project.setName("Neues Projekt");
+                area.addProject(project);
+            }
+
+            @Override
+            public void onAddSubProject(Project project) {
+                SubProject subProject = new SubProject();
+                subProject.setName("Neues Unterprojekt");
+                project.addSubProject(subProject);
+            }
+
+            @Override
+            public void onAddTask(SubProject subProject) {
+                Task task = new Task();
+                task.setName("Neuer Task");
+                subProject.addTask(task);
+            }
+        };
     }
 
     public Object setContent(String view) {
@@ -88,6 +125,7 @@ public class BaseController {
 
         // Hide the root Item.
         projectTree.setShowRoot(false);
+        projectTree.refresh();
     }
 
     private void openView(TreeContextItem item) {
@@ -147,6 +185,7 @@ public class BaseController {
         }
 
         TreeContextItem item = selected.getValue();
+        item.setListener(contextMenuListener);
 
         contextMenu.hide();
 
