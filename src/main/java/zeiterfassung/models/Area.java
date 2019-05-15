@@ -1,11 +1,11 @@
 package zeiterfassung.models;
 
-import java.util.ArrayList;
-import java.util.List;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 public class Area extends DescribableModel {
 
-    private List<Project> projectsList = new ArrayList<>();
+    private ObservableList<Project> projectsList = FXCollections.observableArrayList();
 
     public Area() {
         super();
@@ -19,6 +19,10 @@ public class Area extends DescribableModel {
 
     public void getProjectList(Listable<Project> projectsList) {
         projectsList.getList(this.projectsList);
+    }
+
+    public ObservableList<Project> projectsListProperty() {
+        return projectsList;
     }
 
     public void addProject(Project newProject) {

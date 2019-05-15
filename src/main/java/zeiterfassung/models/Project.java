@@ -1,5 +1,9 @@
 package zeiterfassung.models;
 
+import javafx.beans.property.ListProperty;
+import javafx.beans.property.SimpleListProperty;
+import javafx.collections.FXCollections;
+
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -7,7 +11,7 @@ import java.util.List;
 
 public class Project extends SubProject {
     List<Role> roleList = new ArrayList<>();
-    List<SubProject> subProjectList = new ArrayList<>();
+    ListProperty<SubProject> subProjectList = new SimpleListProperty(FXCollections.observableArrayList());
 
     public Project() {
         super();
@@ -21,6 +25,10 @@ public class Project extends SubProject {
 
     public void getSubProjects(Listable<SubProject> subProjects) {
         subProjects.getList(subProjectList);
+    }
+
+    public ListProperty<SubProject> subProjectListProperty() {
+        return subProjectList;
     }
 
     /**

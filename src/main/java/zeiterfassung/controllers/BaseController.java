@@ -11,10 +11,7 @@ import javafx.scene.layout.AnchorPane;
 import zeiterfassung.DataStore;
 import zeiterfassung.components.Tree;
 import zeiterfassung.components.TreeContextItem;
-import zeiterfassung.models.Area;
-import zeiterfassung.models.Project;
-import zeiterfassung.models.SubProject;
-import zeiterfassung.models.Task;
+import zeiterfassung.models.*;
 
 import java.io.IOException;
 
@@ -99,25 +96,45 @@ public class BaseController {
 
         switch (item.getType()) {
             case AREA:
-                AreaController areaController = (AreaController) setContent("Area");
-                areaController.setArea((Area) item.getItem());
+                openView((Area) item.getItem());
                 break;
             case PROJECT:
-                ProjectController projectController = (ProjectController) setContent("Project");
-                projectController.setProject((Project) item.getItem());
+                openView((Project) item.getItem());
                 break;
             case SUBPROJECT:
-                SubProjectController subProjectController = (SubProjectController) setContent("SubProject");
-                subProjectController.setSubProject((SubProject) item.getItem());
+                openView((SubProject) item.getItem());
                 break;
             case TASK:
-                TaskController taskController = (TaskController) setContent("Task");
-                taskController.setTask((Task) item.getItem());
+                openView((Task) item.getItem());
                 break;
             default:
                 setContent("Start");
                 break;
         }
+    }
+
+    private AreaController openView(Area area) {
+        AreaController areaController = (AreaController) setContent("Area");
+        areaController.setArea(area);
+        return areaController;
+    }
+
+    private ProjectController openView(Project project) {
+        ProjectController projectController = (ProjectController) setContent("Project");
+        projectController.setProject(project);
+        return projectController;
+    }
+
+    private SubProjectController openView(SubProject subProject) {
+        SubProjectController subProjectController = (SubProjectController) setContent("SubProject");
+        subProjectController.setSubProject(subProject);
+        return subProjectController;
+    }
+
+    private TaskController openView(Task task) {
+        TaskController taskController = (TaskController) setContent("Task");
+        taskController.setTask(task);
+        return taskController;
     }
 
     @FXML
@@ -144,10 +161,36 @@ public class BaseController {
         }
     }
 
-    public void testTree(ActionEvent actionEvent) {
-        Area area = new Area();
-        area.setName("Test Bereich");
-        tree.getTree().getChildren().add(new TreeItem(new TreeContextItem(area)));
+    @FXML
+    private void testTree(ActionEvent actionEvent) {
+        TimeRegistrationRoot root = this.store.getRoot();
+
+        Area privat = root.areaListProperty().get(0);
+
+        Project garten = privat.projectsListProperty().get(0);
+
+
+        SubProject rasen = new SubProject("Rasen", "");
+
+        Task maehen = new Task("Rasen mähren", "");
+        rasen.addTask(maehen);
+
+        Task duengen = new Task("Rasen düngen", "");
+        rasen.addTask(duengen);
+
+        garten.addSubProject(rasen);
+
+        privat.addProject(new Project("Zug fahren", ""));
+
+        new Thread(() -> {
+            try {
+                Thread.sleep(2000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            System.out.println("Remove task duengen");
+            rasen.removeTask(duengen);
+        }).start();
     }
 }
 

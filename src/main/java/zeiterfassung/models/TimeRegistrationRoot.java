@@ -1,11 +1,12 @@
 package zeiterfassung.models;
 
-import java.util.ArrayList;
-import java.util.List;
+import javafx.beans.property.ListProperty;
+import javafx.beans.property.SimpleListProperty;
+import javafx.collections.FXCollections;
 
 public class TimeRegistrationRoot {
 
-    private List<Area> areaList = new ArrayList<Area>();
+    private ListProperty<Area> areaList = new SimpleListProperty(FXCollections.observableArrayList());
 
     public void addArea(Area newArea) {
         areaList.add(newArea);
@@ -21,5 +22,9 @@ public class TimeRegistrationRoot {
 
     public void getAreas(Listable<Area> areas) {
         areas.getList(areaList);
+    }
+
+    public ListProperty<Area> areaListProperty() {
+        return areaList;
     }
 }

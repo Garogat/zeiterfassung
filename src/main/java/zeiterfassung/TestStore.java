@@ -33,11 +33,11 @@ public class TestStore extends DataStore {
 
         Task task1 = new Task();
         task1.setName("Stall ausmisten");
-        subProject.addTask(task1);
+        subProject1.addTask(task1);
 
         Task task2 = new Task();
         task2.setName("Eier sammeln");
-        subProject.addTask(task2);
+        subProject1.addTask(task2);
 
         Project project1 = new Project();
         project1.setName("FH");

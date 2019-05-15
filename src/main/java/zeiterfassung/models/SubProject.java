@@ -1,13 +1,15 @@
 package zeiterfassung.models;
 
 
+import javafx.beans.property.ListProperty;
+import javafx.beans.property.SimpleListProperty;
+import javafx.collections.FXCollections;
+
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 public class SubProject extends DescribableModel implements TimeableWork {
-    private List<Task> taskList = new ArrayList<>();
+    private ListProperty<Task> taskList = new SimpleListProperty(FXCollections.observableArrayList());
 
     public SubProject() {
         super();
@@ -54,5 +56,9 @@ public class SubProject extends DescribableModel implements TimeableWork {
 
     public boolean hasTask(Task taskToFind) {
         return taskList.contains(taskToFind);
+    }
+
+    public ListProperty<Task> taskListProperty() {
+        return taskList;
     }
 }
