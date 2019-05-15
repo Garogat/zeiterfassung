@@ -3,17 +3,16 @@ package zeiterfassung.models;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlType;
 
-@XmlType(propOrder = {"name", "description", "hourlyWage"})
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement
 public class Role extends DescribableModel {
     private double hourlyWage;
 
-    public Role(){}
+    public Role() {
+    }
 
-    public Role(String name, String description, double hourlyWage){
+    public Role(String name, String description, double hourlyWage) {
         setName(name);
         setDescription(description);
         setHourlyWage(hourlyWage);
@@ -27,8 +26,8 @@ public class Role extends DescribableModel {
         this.hourlyWage = hourlyWage;
     }
 
-    public static Role roleFactory(String role){
-        switch(role){
+    public static Role roleFactory(String role) {
+        switch (role) {
             case "Hiwi":
                 return new Role("Hiwi", "Wissenschaftliche Hilfskraft", 16);
             case "Professor":

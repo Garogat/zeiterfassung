@@ -3,23 +3,26 @@ package zeiterfassung.models;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlType;
+
+@XmlType(propOrder = {"name", "description"})
+@XmlAccessorType(XmlAccessType.NONE)
 public abstract class DescribableModel {
-    private StringProperty name;
-    private StringProperty description;
+    private StringProperty name = new SimpleStringProperty();
+    private StringProperty description = new SimpleStringProperty();
 
     public DescribableModel() {
-        name = new SimpleStringProperty();
-        description = new SimpleStringProperty();
     }
 
     public DescribableModel(String name, String description) {
-        this.name = new SimpleStringProperty();
-        this.description = new SimpleStringProperty();
-
         setName(name);
         setDescription(description);
     }
 
+    @XmlElement(name = "name")
     public String getName() {
         return name.get();
     }
@@ -32,6 +35,7 @@ public abstract class DescribableModel {
         return name;
     }
 
+    @XmlElement(name = "description")
     public String getDescription() {
         return description.get();
     }

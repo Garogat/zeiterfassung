@@ -7,19 +7,17 @@ import javafx.stage.Stage;
 import zeiterfassung.controllers.BaseController;
 import zeiterfassung.xml.DataStore;
 
-import javax.xml.bind.JAXBException;
 import java.io.IOException;
 
 public class ZeitErfassung {
     private Stage stage;
     private DataStore store;
 
-    public ZeitErfassung(Stage stage) throws JAXBException {
+    public ZeitErfassung(Stage stage) {
         this.stage = stage;
 
         // init data store
-        this.store = new TestStore();
-        // this.store = new DataStore(); // production store with xml backend
+        this.store = new DataStore();
         this.store.load();
 
         // load scene
@@ -27,7 +25,7 @@ public class ZeitErfassung {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/zeiterfassung/views/Base.fxml"));
         try {
             page = loader.load();
-        } catch(IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
 
@@ -43,7 +41,7 @@ public class ZeitErfassung {
     /**
      * stop ZeitErfassung (unload data initstore)
      */
-    public void stop() throws JAXBException{
+    public void stop() {
         if (this.store != null) {
             this.store.unload();
         }
