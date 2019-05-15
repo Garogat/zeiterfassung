@@ -1,5 +1,6 @@
 package zeiterfassung.xml;
 
+import zeiterfassung.TestData;
 import zeiterfassung.models.*;
 
 import javax.xml.bind.JAXBContext;
@@ -17,7 +18,7 @@ public class DataStore {
 
         // load some sample data if no DataStore exists
         if (!file.exists()) {
-            // root = TestData.getData();
+            root = TestData.getData();
             return;
         }
 
