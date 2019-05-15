@@ -3,7 +3,7 @@ package zeiterfassung;
 import zeiterfassung.models.*;
 
 public class TestStore extends DataStore {
-    TimeRegistrationRoot root;
+    private TimeRegistrationRoot root;
 
     public TestStore() {
         root = new TimeRegistrationRoot();
