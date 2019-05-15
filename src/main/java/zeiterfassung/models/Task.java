@@ -1,12 +1,18 @@
 package zeiterfassung.models;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlRootElement
 public class Task extends DescribableModel implements TimeableWork {
+    @XmlElement(name = "WorkChunk")
     private List<WorkChunk> workList = new ArrayList<>();
 
     private LocalDateTime workStartTime;
@@ -22,6 +28,18 @@ public class Task extends DescribableModel implements TimeableWork {
 
     public Task(String name, String description) {
         super(name, description);
+    }
+
+    public Task(String name, String description, String workDescription, Role role) {
+        setName(name);
+        setDescription(description);
+        setWorkDescription(workDescription);
+        setRole(role);
+    }
+
+
+    public void addWorkChunk(WorkChunk workChunk) {
+        workList.add(workChunk);
     }
 
     public void getWorkList(Listable<WorkChunk> workList) {

@@ -1,10 +1,19 @@
 package zeiterfassung.models;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+import java.util.ArrayList;
+import java.util.List;
+import java.lang.IllegalArgumentException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlRootElement
 public class Area extends DescribableModel {
-
+    @XmlElement(name = "Project")
     private ObservableList<Project> projectsList = FXCollections.observableArrayList();
 
     public Area() {

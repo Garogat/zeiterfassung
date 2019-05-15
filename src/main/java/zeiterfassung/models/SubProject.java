@@ -5,10 +5,16 @@ import javafx.beans.property.ListProperty;
 import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
 
+import javax.xml.bind.annotation.*;
 import java.time.Duration;
 import java.time.LocalDateTime;
 
+@XmlType(propOrder = {"name", "description", "taskList"})
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlRootElement
 public class SubProject extends DescribableModel implements TimeableWork {
+
+    @XmlElement(name = "Task")
     private ListProperty<Task> taskList = new SimpleListProperty(FXCollections.observableArrayList());
 
     public SubProject() {

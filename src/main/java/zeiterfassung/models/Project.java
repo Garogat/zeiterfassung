@@ -1,16 +1,23 @@
 package zeiterfassung.models;
 
+import javax.xml.bind.annotation.*;
+import java.lang.IllegalArgumentException;
 import javafx.beans.property.ListProperty;
 import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
-
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+@XmlType(propOrder = {"name", "description", "roleList", "subProjectList"})
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlRootElement
 public class Project extends SubProject {
+    @XmlElement(name = "Role")
     List<Role> roleList = new ArrayList<>();
+
+    @XmlElement(name = "SubProject")
     ListProperty<SubProject> subProjectList = new SimpleListProperty(FXCollections.observableArrayList());
 
     public Project() {
@@ -41,6 +48,7 @@ public class Project extends SubProject {
     public boolean removeSubProject(SubProject subProject) {
         return subProjectList.remove(subProject);
     }
+
 
     public boolean hasSubProject(SubProject subProject) {
         return subProjectList.contains(subProject);
