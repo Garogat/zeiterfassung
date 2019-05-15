@@ -1,7 +1,7 @@
 package zeiterfassung.components;
 
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.scene.control.MenuItem;
 import zeiterfassung.models.*;
 
@@ -9,39 +9,29 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TreeContextItem {
-
     public enum Type {ROOT, AREA, PROJECT, SUBPROJECT, TASK}
 
     ;
 
-    private String stringified;
-    private List<MenuItem> contextMenu = new ArrayList<MenuItem>();
+    private StringProperty text = new SimpleStringProperty();
+    private List<MenuItem> contextMenu = new ArrayList<>();
     private Type type;
     private Object item;
 
     public TreeContextItem(TimeRegistrationRoot root) {
         type = Type.ROOT;
         item = root;
-        stringified = "";
+        text.set("");
 
-        MenuItem addArea = new MenuItem("Bereich anlegen");
-        addArea.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                // TODO: needs store and base ref
-                // Area area = new Area();
-                // store.getRoot().addArea(area);
-                // AreaController areaController = (AreaController) base.setContent("Area");
-                // areaController.setArea(area);
-            }
-        });
-        contextMenu.add(addArea);
+        contextMenu.add(new MenuItem("Bereich anlegen"));
     }
 
     public TreeContextItem(Area area) {
         type = Type.AREA;
         item = area;
-        stringified = area.getName();
+
+        text.set(area.getName());
+
         contextMenu.add(new MenuItem("Projekt anlegen"));
         contextMenu.add(new MenuItem("Bereich löschen"));
     }
@@ -49,7 +39,9 @@ public class TreeContextItem {
     public TreeContextItem(Project project) {
         type = Type.PROJECT;
         item = project;
-        stringified = project.getName();
+
+        text.set(project.getName());
+
         contextMenu.add(new MenuItem("Aufgabe anlegen"));
         contextMenu.add(new MenuItem("Unterprojekt anlegen"));
         contextMenu.add(new MenuItem("Projekt löschen"));
@@ -58,7 +50,9 @@ public class TreeContextItem {
     public TreeContextItem(SubProject subProject) {
         type = Type.SUBPROJECT;
         item = subProject;
-        stringified = subProject.getName();
+
+        text.set(subProject.getName());
+
         contextMenu.add(new MenuItem("Aufgabe anlegen"));
         contextMenu.add(new MenuItem("Unterprojekt löschen"));
     }
@@ -66,7 +60,9 @@ public class TreeContextItem {
     public TreeContextItem(Task task) {
         type = Type.TASK;
         item = task;
-        stringified = task.getName();
+
+        text.set(task.getName());
+
         contextMenu.add(new MenuItem("Aufgabe löschen"));
     }
 
@@ -82,8 +78,12 @@ public class TreeContextItem {
         return this.contextMenu;
     }
 
+    public StringProperty textProperty() {
+        return text;
+    }
+
     @Override
     public String toString() {
-        return this.stringified;
+        return text.get();
     }
 }
