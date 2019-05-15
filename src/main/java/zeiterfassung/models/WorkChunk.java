@@ -1,8 +1,7 @@
 package zeiterfassung.models;
 
-import java.time.LocalDateTime;
 import java.time.Duration;
-import java.lang.IllegalStateException;
+import java.time.LocalDateTime;
 
 public class WorkChunk {
     private LocalDateTime start;

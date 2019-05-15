@@ -1,20 +1,18 @@
 package zeiterfassung.models;
 
 
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.lang.IllegalArgumentException;
-import java.time.Duration;
-import java.math.BigDecimal;
 
 public class SubProject implements DescribableContainer, TimeableWork {
     private List<Task> taskList;
     private String name;
     private String description;
 
-    public void getTasks(Listable<Task> tasks){
-        tasks.getList(taskList);
+    public SubProject() {
+        taskList = new ArrayList<>();
     }
 
     @Override
@@ -55,24 +53,22 @@ public class SubProject implements DescribableContainer, TimeableWork {
         return costs;
     }
 
+    public void getTasks(Listable<Task> tasks) {
+        tasks.getList(taskList);
+    }
+
     /**
      * @throws IllegalArgumentException
      */
-    public void addTask(Task newTask) {
-            taskList.add(newTask);
-    }
-
-    public boolean hasTask(Task taskToFind) {
-        return taskList.contains(taskToFind);
+    public boolean addTask(Task newTask) {
+        return taskList.add(newTask);
     }
 
     public boolean removeTask(Task task) {
         return taskList.remove(task);
     }
 
-    public SubProject(){
-        taskList = new ArrayList<>();
+    public boolean hasTask(Task taskToFind) {
+        return taskList.contains(taskToFind);
     }
-
-
 }

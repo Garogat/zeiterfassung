@@ -2,7 +2,6 @@ package zeiterfassung.models;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.lang.IllegalArgumentException;
 
 public class TimeRegistrationRoot {
 
@@ -20,7 +19,7 @@ public class TimeRegistrationRoot {
         return areaList.contains(area);
     }
 
-    public void getAreas(Listable<Area> areas){
+    public void getAreas(Listable<Area> areas) {
         areas.getList(areaList);
     }
 }

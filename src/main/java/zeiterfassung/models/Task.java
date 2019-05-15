@@ -1,11 +1,9 @@
 package zeiterfassung.models;
 
 import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
-import java.lang.IllegalStateException;
 
 
 public class Task implements TimeableWork, DescribableContainer {
@@ -18,7 +16,11 @@ public class Task implements TimeableWork, DescribableContainer {
     private String name;
     private String description;
 
-    public void getWorkList(Listable<WorkChunk> workList){
+    public Task() {
+        workList = new ArrayList<>();
+    }
+
+    public void getWorkList(Listable<WorkChunk> workList) {
         workList.getList(this.workList);
     }
 
@@ -44,7 +46,7 @@ public class Task implements TimeableWork, DescribableContainer {
 
     @Override
     public double getCosts(LocalDateTime start, LocalDateTime stop) {
-        return getRole().getHourlyWage() *  ((double)getDuration(start, stop).toMinutes()/60);
+        return getRole().getHourlyWage() * ((double) getDuration(start, stop).toMinutes() / 60);
     }
 
     @Override
@@ -66,7 +68,6 @@ public class Task implements TimeableWork, DescribableContainer {
         this.role = role;
     }
 
-
     public boolean hasWorkStarted() {
         return workStartTime != null;
     }
@@ -83,12 +84,10 @@ public class Task implements TimeableWork, DescribableContainer {
         return workDescription;
     }
 
-
     /**
      * throws IllegalStateException
      */
     public void start() {
-
         if (hasWorkStarted()) {
             throw new IllegalStateException("Task already started");
         } else {
@@ -110,11 +109,4 @@ public class Task implements TimeableWork, DescribableContainer {
         WorkChunk newWork = new WorkChunk(workStartTime, workEndTime, workDescription);
         workList.add(newWork);
     }
-
-    public Task(){
-        workList = new ArrayList<>();
-
-    }
-
-
 }
