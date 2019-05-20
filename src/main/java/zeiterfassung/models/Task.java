@@ -2,6 +2,8 @@ package zeiterfassung.models;
 
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -16,7 +18,8 @@ import java.util.List;
 @XmlRootElement
 public class Task extends DescribableModel implements TimeableWork {
     @XmlElement(name = "WorkChunk")
-    private List<WorkChunk> workList = new ArrayList<>();
+    //private List<WorkChunk> workList = new ArrayList<>();
+    private ObservableList<WorkChunk> workList = FXCollections.observableArrayList();
 
     private LocalDateTime workStartTime;
     private LocalDateTime workEndTime;
@@ -42,6 +45,9 @@ public class Task extends DescribableModel implements TimeableWork {
         setRole(role);
     }
 
+    public ObservableList<WorkChunk> workListProperty() {
+        return workList;
+    }
 
     public void addWorkChunk(WorkChunk workChunk) {
         workList.add(workChunk);

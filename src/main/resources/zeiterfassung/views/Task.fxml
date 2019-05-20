@@ -16,7 +16,6 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-
 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="444.0" prefWidth="673.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <TitledPane prefHeight="223.0" prefWidth="673.0" text="Task">
@@ -54,10 +53,10 @@
                <children>
                   <TableView fx:id="workchunkTable" prefHeight="131.0" prefWidth="648.0">
                     <columns>
-                      <TableColumn prefWidth="113.0" text="Anfang" />
-                      <TableColumn prefWidth="118.33334350585938" text="Ende" />
-                        <TableColumn minWidth="0.0" prefWidth="112.66668701171875" text="Dauer" />
-                        <TableColumn prefWidth="299.33331298828125" text="Kommentar" />
+                      <TableColumn fx:id="startCol" prefWidth="113.0" text="Anfang" />
+                      <TableColumn fx:id="endCol" prefWidth="118.33334350585938" text="Ende" />
+                        <TableColumn fx:id="durCol" minWidth="0.0" prefWidth="112.66668701171875" text="Dauer" />
+                        <TableColumn fx:id="descCol" prefWidth="299.33331298828125" text="Kommentar" />
                     </columns>
                   </TableView>
                </children>

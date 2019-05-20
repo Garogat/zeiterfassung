@@ -1,5 +1,7 @@
 package zeiterfassung.models;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import zeiterfassung.xml.LocalDateTimeAdapter;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -17,7 +19,8 @@ public class WorkChunk {
     private LocalDateTime start;
     @XmlJavaTypeAdapter(LocalDateTimeAdapter.class)
     private LocalDateTime end;
-    private String description;
+
+    private StringProperty description = new SimpleStringProperty();;
 
     public WorkChunk() {
         setStartTime(LocalDateTime.now());
@@ -48,14 +51,18 @@ public class WorkChunk {
     }
 
     public String getDescription() {
-        return description;
+        return description.get();
     }
 
     public void setDescription(String description) {
-        this.description = description;
+        this.description.set(description);
     }
 
     public Duration getDuration() {
         return Duration.between(start, end);
+    }
+
+    public StringProperty descriptionProperty(){
+        return description;
     }
 }
