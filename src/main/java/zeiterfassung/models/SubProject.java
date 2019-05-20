@@ -1,50 +1,32 @@
 package zeiterfassung.models;
 
 
+import javafx.beans.property.ListProperty;
+import javafx.beans.property.SimpleListProperty;
+import javafx.collections.FXCollections;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.lang.IllegalArgumentException;
 import java.time.Duration;
-import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement
-public class SubProject implements DescribableContainer, TimeableWork {
-    private List<Task> taskList;
-    private String name;
-    private String description;
+public class SubProject extends DescribableModel implements TimeableWork {
 
-    public SubProject(){
-        setName("SubProject name");
-        setDescription("SubProject desc");
+    @XmlElement(name = "Task")
+    private ListProperty<Task> taskList = new SimpleListProperty(FXCollections.observableArrayList());
+
+    public SubProject() {
+        super();
+        setName("Neues Unterprojekt");
+        setDescription("Dies ist ein Unterprojekt");
     }
 
-    public void getTasks(Listable<Task> tasks){
-        tasks.getList(taskList);
-    }
-
-    @Override
-    public String getName() {
-        return name;
-    }
-
-    @Override
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    @Override
-    public String getDescription() {
-        return description;
-    }
-
-    @Override
-    public void setDescription(String description) {
-        this.description = description;
+    public SubProject(String name, String description) {
+        super(name, description);
     }
 
     @Override
@@ -65,21 +47,26 @@ public class SubProject implements DescribableContainer, TimeableWork {
         return costs;
     }
 
+    public void getTasks(Listable<Task> tasks) {
+        tasks.getList(taskList);
+    }
+
     /**
      * @throws IllegalArgumentException
      */
-    public void addTask(Task newTask) {
-            taskList.add(newTask);
-    }
-
-    public boolean hasTask(Task taskToFind) {
-        return taskList.contains(taskToFind);
+    public boolean addTask(Task newTask) {
+        return taskList.add(newTask);
     }
 
     public boolean removeTask(Task task) {
         return taskList.remove(task);
     }
 
+    public boolean hasTask(Task taskToFind) {
+        return taskList.contains(taskToFind);
+    }
 
-
+    public ListProperty<Task> taskListProperty() {
+        return taskList;
+    }
 }

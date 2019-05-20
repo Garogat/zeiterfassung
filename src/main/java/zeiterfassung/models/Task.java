@@ -1,50 +1,54 @@
 package zeiterfassung.models;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
-import java.lang.IllegalStateException;
 
-
-public class Task implements TimeableWork, DescribableContainer {
-    private List<WorkChunk> workList;
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlRootElement
+public class Task extends DescribableModel implements TimeableWork {
+    @XmlElement(name = "WorkChunk")
+    private List<WorkChunk> workList = new ArrayList<>();
 
     private LocalDateTime workStartTime;
     private LocalDateTime workEndTime;
     private String workDescription;
     private Role role;
-    private String name;
-    private String description;
 
-    public void getWorkList(Listable<WorkChunk> workList){
+    public Task() {
+        super();
+        setName("Neue Aufgabe");
+        setDescription("Dies ist eine Aufgabe");
+    }
+
+    public Task(String name, String description) {
+        super(name, description);
+    }
+
+    public Task(String name, String description, String workDescription, Role role) {
+        setName(name);
+        setDescription(description);
+        setWorkDescription(workDescription);
+        setRole(role);
+    }
+
+
+    public void addWorkChunk(WorkChunk workChunk) {
+        workList.add(workChunk);
+    }
+
+    public void getWorkList(Listable<WorkChunk> workList) {
         workList.getList(this.workList);
     }
 
     @Override
-    public String getName() {
-        return name;
-    }
-
-    @Override
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    @Override
-    public String getDescription() {
-        return description;
-    }
-
-    @Override
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    @Override
     public double getCosts(LocalDateTime start, LocalDateTime stop) {
-        return getRole().getHourlyWage() *  ((double)getDuration(start, stop).toMinutes()/60);
+        return getRole().getHourlyWage() * ((double) getDuration(start, stop).toMinutes() / 60);
     }
 
     @Override
@@ -66,7 +70,6 @@ public class Task implements TimeableWork, DescribableContainer {
         this.role = role;
     }
 
-
     public boolean hasWorkStarted() {
         return workStartTime != null;
     }
@@ -83,12 +86,10 @@ public class Task implements TimeableWork, DescribableContainer {
         return workDescription;
     }
 
-
     /**
      * throws IllegalStateException
      */
     public void start() {
-
         if (hasWorkStarted()) {
             throw new IllegalStateException("Task already started");
         } else {
@@ -110,11 +111,4 @@ public class Task implements TimeableWork, DescribableContainer {
         WorkChunk newWork = new WorkChunk(workStartTime, workEndTime, workDescription);
         workList.add(newWork);
     }
-
-    public Task(){
-        workList = new ArrayList<>();
-
-    }
-
-
 }

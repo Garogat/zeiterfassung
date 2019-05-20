@@ -1,12 +1,14 @@
 package zeiterfassung.models;
 
+import javafx.beans.property.ListProperty;
+import javafx.beans.property.SimpleListProperty;
+import javafx.collections.FXCollections;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
-import java.lang.IllegalArgumentException;
 import java.time.Duration;
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,36 +16,35 @@ import java.util.List;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement
 public class Project extends SubProject {
-    private String name;
-    private String description;
     @XmlElement(name = "Role")
-    List<Role> roleList = new ArrayList<Role>();
+    List<Role> roleList = new ArrayList<>();
+
     @XmlElement(name = "SubProject")
-    List<SubProject> subProjectList = new ArrayList<SubProject>();
+    ListProperty<SubProject> subProjectList = new SimpleListProperty(FXCollections.observableArrayList());
 
-    public Project(){
-        this.setName("Cool Project name");
-        this.setDescription("My interesting description");
+    public Project() {
+        super();
+        setName("Neues Projekt");
+        setDescription("Dies ist ein Projekt");
     }
 
-    public Project(String name, String description){
-        this.setName(name);
-        this.setDescription(description);
+    public Project(String name, String description) {
+        super(name, description);
     }
 
-    public void getRoles(Listable<Role> roles){
-        roles.getList(roleList);
-    }
-
-    public void getSubProjects(Listable<SubProject> subProjects){
+    public void getSubProjects(Listable<SubProject> subProjects) {
         subProjects.getList(subProjectList);
+    }
+
+    public ListProperty<SubProject> subProjectListProperty() {
+        return subProjectList;
     }
 
     /**
      * @throws IllegalArgumentException
      */
-    public void addSubProject(SubProject newSubProject) {
-        subProjectList.add(newSubProject);
+    public boolean addSubProject(SubProject newSubProject) {
+        return subProjectList.add(newSubProject);
     }
 
     public boolean removeSubProject(SubProject subProject) {
@@ -55,16 +56,22 @@ public class Project extends SubProject {
         return subProjectList.contains(subProject);
     }
 
-    public void addRole(Role newRole) {
-        roleList.add(newRole);
+
+    public void getRoles(Listable<Role> roles) {
+        roles.getList(roleList);
+    }
+
+    public boolean addRole(Role newRole) {
+        return roleList.add(newRole);
+    }
+
+    public boolean removeRole(Role newRole) {
+        return roleList.remove(newRole);
     }
 
     public boolean hasRole(Role role) {
-
         return roleList.contains(role);
     }
-
-
 
     @Override
     public Duration getDuration(LocalDateTime start, LocalDateTime stop) {
