@@ -32,10 +32,10 @@ public class TaskController {
     private TableView<WorkChunk> workchunkTable;
 
     @FXML
-    private TableColumn<WorkChunk, String> startCol;
+    private TableColumn<WorkChunk, LocalDateTime> startCol;
 
     @FXML
-    private TableColumn<WorkChunk, String> endCol;
+    private TableColumn<WorkChunk, LocalDateTime> endCol;
     @FXML
     private TableColumn<WorkChunk, Double> durCol;
 
@@ -83,11 +83,11 @@ public class TaskController {
             setEditWorkChunk(null);
         }
 
-        startCol.setCellFactory(new PropertyValueFactory<WorkChunk, String>("start"));
-
+        startCol.setCellValueFactory(new PropertyValueFactory<>("startTime"));
+        endCol.setCellValueFactory(new PropertyValueFactory<>("endTime"));
+        durCol.setCellValueFactory(new PropertyValueFactory<>("duration"));
+        descCol.setCellValueFactory(new PropertyValueFactory<>("description"));
         workchunkTable.setItems(task.workListProperty());
-
-
 
         /*
 

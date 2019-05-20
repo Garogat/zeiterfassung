@@ -16,9 +16,9 @@ import java.time.Duration;
 public class WorkChunk {
 
     @XmlJavaTypeAdapter(LocalDateTimeAdapter.class)
-    private LocalDateTime start;
+    private LocalDateTime startTime;
     @XmlJavaTypeAdapter(LocalDateTimeAdapter.class)
-    private LocalDateTime end;
+    private LocalDateTime endTime;
 
     private StringProperty description = new SimpleStringProperty();;
 
@@ -35,19 +35,19 @@ public class WorkChunk {
     }
 
     public LocalDateTime getStartTime() {
-        return start;
+        return startTime;
     }
 
     public void setStartTime(LocalDateTime time) {
-        start = time;
+        startTime = time;
     }
 
     public LocalDateTime getEndTime() {
-        return end;
+        return endTime;
     }
 
     public void setEndTime(LocalDateTime time) {
-        end = time;
+        endTime = time;
     }
 
     public String getDescription() {
@@ -59,7 +59,7 @@ public class WorkChunk {
     }
 
     public Duration getDuration() {
-        return Duration.between(start, end);
+        return Duration.between(startTime, endTime);
     }
 
     public StringProperty descriptionProperty(){
