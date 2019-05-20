@@ -19,17 +19,8 @@ public class AreaController {
         this.area = area;
 
         // update gui elements
-        name.setText(area.getName());
-        description.setText(area.getDescription());
-    }
 
-    @FXML
-    public void setName() {
-        area.setName(name.getText());
-    }
-
-    @FXML
-    public void setDescription() {
-        area.setDescription(description.getText());
+        name.textProperty().bindBidirectional(area.nameProperty());
+        description.textProperty().bindBidirectional(area.descriptionProperty());
     }
 }

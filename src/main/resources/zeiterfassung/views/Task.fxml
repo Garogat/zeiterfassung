@@ -1,9 +1,79 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.layout.AnchorPane?>
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="zeiterfassung.controllers.TaskController"
-            prefHeight="400.0" prefWidth="600.0">
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
 
-</AnchorPane>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="444.0" prefWidth="673.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <TitledPane prefHeight="223.0" prefWidth="673.0" text="Task">
+         <content>
+            <GridPane prefHeight="137.0" prefWidth="598.0">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="284.33331298828125" minWidth="10.0" prefWidth="104.33331298828125" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="487.66668701171875" minWidth="10.0" prefWidth="473.66668701171875" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints maxHeight="72.33331298828125" minHeight="10.0" prefHeight="27.666656494140625" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="125.66667175292969" minHeight="0.0" prefHeight="48.333343505859375" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="125.66667175292969" minHeight="10.0" prefHeight="31.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="125.66667175292969" minHeight="10.0" prefHeight="31.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="125.66667175292969" minHeight="10.0" prefHeight="31.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Label text="Name" />
+                  <Label text="Beschreibung" GridPane.rowIndex="1" />
+                  <Label text="Rolle" GridPane.rowIndex="2" />
+                  <TextArea id="n" fx:id="descriptionTextArea" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <TextField fx:id="nameTextField" GridPane.columnIndex="1" />
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Dauer" GridPane.rowIndex="3" />
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Kosten" GridPane.rowIndex="4" />
+                  <Text fx:id="durationLabel" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <Text fx:id="costsLabel" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                  <ChoiceBox fx:id="roleChouceBox" prefHeight="25.0" prefWidth="486.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+               </children>
+            </GridPane>
+         </content>
+      </TitledPane>
+      <TitledPane prefHeight="178.0" prefWidth="615.0" text="Arbeitszeiten">
+         <content>
+            <FlowPane prefHeight="188.0" prefWidth="630.0">
+               <children>
+                  <TableView fx:id="workchunkTable" prefHeight="131.0" prefWidth="648.0">
+                    <columns>
+                      <TableColumn prefWidth="113.0" text="Anfang" />
+                      <TableColumn prefWidth="118.33334350585938" text="Ende" />
+                        <TableColumn minWidth="0.0" prefWidth="112.66668701171875" text="Dauer" />
+                        <TableColumn prefWidth="299.33331298828125" text="Kommentar" />
+                    </columns>
+                  </TableView>
+               </children>
+            </FlowPane>
+         </content>
+      </TitledPane>
+      <TitledPane prefHeight="48.0" prefWidth="660.0" text="Zeitmessung">
+         <content>
+            <AnchorPane prefHeight="104.0" prefWidth="680.0">
+               <children>
+                  <Button fx:id="startBtn" layoutX="27.0" layoutY="5.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="56.0" text="Start" AnchorPane.leftAnchor="8.0" AnchorPane.topAnchor="8.0" />
+                  <TextField fx:id="workchuncDescription" layoutX="65.0" layoutY="18.0" prefHeight="25.0" prefWidth="489.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="8.0" />
+                  <Button fx:id="stopBtn" layoutX="531.0" layoutY="18.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="61.0" text="Stop" AnchorPane.rightAnchor="8.0" AnchorPane.topAnchor="8.0" />
+               </children>
+            </AnchorPane>
+         </content>
+      </TitledPane>
+   </children>
+</VBox>

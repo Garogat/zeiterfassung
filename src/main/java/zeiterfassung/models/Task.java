@@ -1,5 +1,8 @@
 package zeiterfassung.models;
 
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -19,6 +22,8 @@ public class Task extends DescribableModel implements TimeableWork {
     private LocalDateTime workEndTime;
     private String workDescription;
     private Role role;
+
+
 
     public Task() {
         super();

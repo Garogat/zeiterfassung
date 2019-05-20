@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Root>
     <Area>
-        <name>Privat</name>
-        <description>Hier findet man alle meine privaten Projekte</description>
+        <name>Privattest</name>
+        <description>Hier findet man alle meine privaten Projekte test
+</description>
         <Project>
             <name>Garten</name>
             <description>Dieses Projekt ist für meine Garten Aufgaben</description>
