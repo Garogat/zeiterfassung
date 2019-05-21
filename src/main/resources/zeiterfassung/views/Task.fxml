@@ -16,7 +16,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="444.0" prefWidth="673.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="444.0" prefWidth="673.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="zeiterfassung.controllers.TaskController">
    <children>
       <TitledPane prefHeight="223.0" prefWidth="673.0" text="Task">
          <content>
@@ -42,7 +42,7 @@
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Kosten" GridPane.rowIndex="4" />
                   <Text fx:id="durationLabel" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                   <Text fx:id="costsLabel" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                  <ChoiceBox fx:id="roleChouceBox" prefHeight="25.0" prefWidth="486.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <ChoiceBox fx:id="roleChoiceBox" prefHeight="25.0" prefWidth="486.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                </children>
             </GridPane>
          </content>
@@ -67,9 +67,9 @@
          <content>
             <AnchorPane prefHeight="104.0" prefWidth="680.0">
                <children>
-                  <Button fx:id="startBtn" layoutX="27.0" layoutY="5.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="56.0" text="Start" AnchorPane.leftAnchor="8.0" AnchorPane.topAnchor="8.0" />
+                  <Button fx:id="startBtn" layoutX="27.0" layoutY="5.0" mnemonicParsing="false" onAction="#onStartBtn" prefHeight="25.0" prefWidth="56.0" text="Start" AnchorPane.leftAnchor="8.0" AnchorPane.topAnchor="8.0" />
                   <TextField fx:id="workchuncDescription" layoutX="65.0" layoutY="18.0" prefHeight="25.0" prefWidth="489.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="8.0" />
-                  <Button fx:id="stopBtn" layoutX="531.0" layoutY="18.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="61.0" text="Stop" AnchorPane.rightAnchor="8.0" AnchorPane.topAnchor="8.0" />
+                  <Button fx:id="stopBtn" layoutX="531.0" layoutY="18.0" mnemonicParsing="false" onAction="#onStopBtn" prefHeight="25.0" prefWidth="61.0" text="Stop" AnchorPane.rightAnchor="8.0" AnchorPane.topAnchor="8.0" />
                </children>
             </AnchorPane>
          </content>

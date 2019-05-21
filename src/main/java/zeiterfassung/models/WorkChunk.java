@@ -24,8 +24,8 @@ public class WorkChunk {
 
     public WorkChunk() {
         setStartTime(LocalDateTime.now());
-        setEndTime(LocalDateTime.now());
-        setDescription("Default description");
+        setEndTime(null);
+        setDescription("");
     }
 
     public WorkChunk(LocalDateTime start, LocalDateTime end, String description) {

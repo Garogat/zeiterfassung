@@ -1,15 +1,17 @@
 package zeiterfassung.controllers;
 
-import javafx.beans.InvalidationListener;
-import javafx.beans.Observable;
+
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.text.Text;
 import zeiterfassung.components.ActiveWorkChunk;
+import zeiterfassung.models.Role;
 import zeiterfassung.models.Task;
 import zeiterfassung.models.WorkChunk;
 
-import javax.xml.soap.Text;
+
 import java.time.LocalDateTime;
 
 public class TaskController {
@@ -18,15 +20,19 @@ public class TaskController {
     private WorkChunk editWorkChunk;
 
     @FXML
-    TextArea descriptionTextArea;
+    private TextArea descriptionTextArea;
+
     @FXML
-    TextField nameTextField;
+    private TextField nameTextField;
+
     @FXML
-    Text durationLabel;
+    private Text durationLabel;
+
     @FXML
-    Text costsLabel;
+    private Text costsLabel;
+
     @FXML
-    ChoiceBox roleChouceBox;
+    private ChoiceBox<Role> roleChoiceBox;
 
     @FXML
     private TableView<WorkChunk> workchunkTable;
@@ -36,32 +42,44 @@ public class TaskController {
 
     @FXML
     private TableColumn<WorkChunk, LocalDateTime> endCol;
+
     @FXML
     private TableColumn<WorkChunk, Double> durCol;
 
     @FXML
-    private TableColumn<WorkChunk, String> descCol;
+    private TableColumn<WorkChunk, Double> descCol;
 
     @FXML
-    Button startBtn;
+    private Button startBtn;
+
     @FXML
-    TextField workchuncDescription;
+    private TextField workchuncDescription;
+
     @FXML
-    Button stopBtn;
+    private Button stopBtn;
 
 
-    private void setEditWorkChunk(WorkChunk workChunk){
-        editWorkChunk = workChunk;
+    private void setEditWorkChunk(){
+        boolean editable = ActiveWorkChunk.isWorkChunkInTask(this.activeWorkChunk.getActiveWorkChunk(), task)  || this.activeWorkChunk.getActiveWorkChunk() == null;
+        if (editable) {
+            editWorkChunk = this.activeWorkChunk.getActiveWorkChunk();
+        }else {
+            editWorkChunk = null;
+        }
+
+        startBtn.setVisible(editable);
+        stopBtn.setVisible(editable);
+        descriptionTextArea.setVisible(editable);
 
         if (editWorkChunk != null) {
-            workchuncDescription.textProperty().bindBidirectional(workChunk.descriptionProperty());
+            workchuncDescription.textProperty().bindBidirectional(editWorkChunk.descriptionProperty());
         }else{
             workchuncDescription.textProperty().unbind();
             workchuncDescription.setText("");
         }
-        startBtn.setDisable(this.activeWorkChunk.getActiveWorkChunk() != null);
-        stopBtn.setDisable(workChunk != null);
-        workchuncDescription.setDisable(workChunk != null);
+        startBtn.setDisable(!editable || editWorkChunk != null);
+        stopBtn.setDisable(editWorkChunk == null);
+        workchuncDescription.setDisable(editWorkChunk == null);
     }
 
     public void setTask(Task task, ActiveWorkChunk activeWorkChunk) {
@@ -77,25 +95,31 @@ public class TaskController {
         stopBtn.setVisible(startBtn.isVisible());
         workchuncDescription.setVisible(startBtn.isVisible());
 
-        if (ActiveWorkChunk.isWorkChunkInTask(this.activeWorkChunk.getActiveWorkChunk(), task)){
-            setEditWorkChunk(this.activeWorkChunk.getActiveWorkChunk());
-        }else{
-            setEditWorkChunk(null);
-        }
+        setEditWorkChunk();
 
         startCol.setCellValueFactory(new PropertyValueFactory<>("startTime"));
         endCol.setCellValueFactory(new PropertyValueFactory<>("endTime"));
         durCol.setCellValueFactory(new PropertyValueFactory<>("duration"));
         descCol.setCellValueFactory(new PropertyValueFactory<>("description"));
+
         workchunkTable.setItems(task.workListProperty());
 
-        /*
 
-            description.textProperty().bindBidirectional(area.descriptionProperty());
-        */
     }
 
     public Task getTask() {
         return task;
+    }
+
+    public void onStartBtn(ActionEvent actionEvent) {
+        WorkChunk newWc = new WorkChunk();
+        newWc.setStartTime(LocalDateTime.now());
+        task.addWorkChunk(newWc);
+        setEditWorkChunk();
+    }
+
+    public void onStopBtn(ActionEvent actionEvent) {
+        editWorkChunk.setEndTime(LocalDateTime.now());
+        setEditWorkChunk();
     }
 }

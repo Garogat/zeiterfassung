@@ -24,8 +24,6 @@ public class TreeContextItem {
 
     public enum Type {ROOT, AREA, PROJECT, SUBPROJECT, TASK}
 
-    ;
-
     private StringProperty text = new SimpleStringProperty();
     private List<MenuItem> contextMenu = new ArrayList<>();
     private Type type;
