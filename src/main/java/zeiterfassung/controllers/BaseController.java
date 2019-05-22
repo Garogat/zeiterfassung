@@ -118,13 +118,13 @@ public class BaseController {
                 } else {
                     // bind text value to model
                     textProperty().bind(item.textProperty());
-                    setGraphic(null);
+                    setGraphic(item.getIcon());
                 }
             }
         });
 
         // Hide the root Item.
-        projectTree.setShowRoot(false);
+        // projectTree.setShowRoot(false);
         projectTree.refresh();
     }
 

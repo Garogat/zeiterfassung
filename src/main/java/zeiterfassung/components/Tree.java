@@ -1,7 +1,10 @@
 package zeiterfassung.components;
 
 import javafx.collections.ListChangeListener;
+import javafx.scene.Node;
 import javafx.scene.control.TreeItem;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import zeiterfassung.models.*;
 
 public class Tree {
