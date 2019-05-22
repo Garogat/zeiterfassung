@@ -98,7 +98,27 @@ public class TaskController {
         setEditWorkChunk();
 
         startCol.setCellValueFactory(new PropertyValueFactory<>("startTime"));
+        startCol.setCellFactory(col -> new TableCell<WorkChunk, LocalDateTime>() {
+            @Override
+            protected void updateItem(LocalDateTime item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty)
+                    setText(null);
+                else
+                    setText(String.format(item.toString()));
+            }
+        });
         endCol.setCellValueFactory(new PropertyValueFactory<>("endTime"));
+        endCol.setCellFactory(col -> new TableCell<WorkChunk, LocalDateTime>() {
+            @Override
+            protected void updateItem(LocalDateTime item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null)
+                    setText(null);
+                else
+                    setText(String.format(item.toString()));
+            }
+        });
         durCol.setCellValueFactory(new PropertyValueFactory<>("duration"));
         descCol.setCellValueFactory(new PropertyValueFactory<>("description"));
 
