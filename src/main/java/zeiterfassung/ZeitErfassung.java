@@ -3,6 +3,7 @@ package zeiterfassung;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import zeiterfassung.controllers.BaseController;
 import zeiterfassung.xml.DataStore;
@@ -34,6 +35,7 @@ public class ZeitErfassung {
 
         stage.setScene(new Scene(page));
         stage.setTitle("Zeiterfassung");
+        stage.getIcons().add(new Image(getClass().getResourceAsStream("/zeiterfassung/icons/clipboard.png")));
         stage.setMaximized(true);
         stage.show();
     }
