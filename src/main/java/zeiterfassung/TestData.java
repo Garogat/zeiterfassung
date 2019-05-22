@@ -53,7 +53,7 @@ public class TestData {
         pij.addSubProject(sprint2);
 
         Task xml = new Task("XML Import", "XML Datei erzeugen und auslesen", "Annotationen setzen und Adapter schreiben", Role.roleFactory("Student"));
-        xml.addWorkChunk(new WorkChunk(LocalDateTime.now(), LocalDateTime.now(), "Meine Beispielarbeit"));
+        xml.addWorkChunk(new WorkChunk(LocalDateTime.now(), LocalDateTime.now().plusHours(4), "Meine Beispielarbeit"));
         sprint2.addTask(xml);
 
         root.addArea(areaFH);
