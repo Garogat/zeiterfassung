@@ -70,11 +70,9 @@ public class TaskController {
         startBtn.setVisible(editable);
         stopBtn.setVisible(editable);
         descriptionTextArea.setVisible(editable);
-
         if (editWorkChunk != null) {
             workchuncDescription.textProperty().bindBidirectional(editWorkChunk.descriptionProperty());
         }else{
-            workchuncDescription.textProperty().unbind();
             workchuncDescription.setText("");
         }
         startBtn.setDisable(!editable || editWorkChunk != null);
@@ -124,7 +122,13 @@ public class TaskController {
 
         workchunkTable.setItems(task.workListProperty());
 
+        updateCostDuration();
+    }
 
+
+    private void updateCostDuration(){
+        costsLabel.setText(task.getCosts(LocalDateTime.MIN, LocalDateTime.MAX)+"€");
+        durationLabel.setText( task.getDuration(LocalDateTime.MIN, LocalDateTime.MAX).getSeconds()/(60*60)+ "Std");
     }
 
     public Task getTask() {
@@ -139,7 +143,9 @@ public class TaskController {
     }
 
     public void onStopBtn(ActionEvent actionEvent) {
+        workchuncDescription.textProperty().unbindBidirectional(editWorkChunk.descriptionProperty());
         editWorkChunk.setEndTime(LocalDateTime.now());
         setEditWorkChunk();
+        updateCostDuration();
     }
 }

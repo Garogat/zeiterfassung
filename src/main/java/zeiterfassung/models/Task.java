@@ -59,7 +59,10 @@ public class Task extends DescribableModel implements TimeableWork {
 
     @Override
     public double getCosts(LocalDateTime start, LocalDateTime stop) {
-        return getRole().getHourlyWage() * ((double) getDuration(start, stop).toMinutes() / 60);
+        if (getRole() != null) {
+            return getRole().getHourlyWage() * ((double) getDuration(start, stop).toMinutes() / 60);
+        }
+        return 0;
     }
 
     @Override
