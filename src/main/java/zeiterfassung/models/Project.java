@@ -13,8 +13,6 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement
@@ -95,6 +93,15 @@ public class Project extends SubProject {
         Duration duration = super.getDuration(start, stop);
         for (SubProject sp : subProjectList) {
             duration = duration.plus(sp.getDuration(start, stop));
+        }
+        return duration;
+    }
+
+    @Override
+    public Duration getEstimatedDuration() {
+        Duration duration = super.getEstimatedDuration();
+        for (SubProject sp : subProjectList) {
+            duration = duration.plus(sp.getEstimatedDuration());
         }
         return duration;
     }

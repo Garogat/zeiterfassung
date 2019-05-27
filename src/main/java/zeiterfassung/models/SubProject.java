@@ -39,6 +39,15 @@ public class SubProject extends DescribableModel implements TimeableWork {
     }
 
     @Override
+    public Duration getEstimatedDuration() {
+        Duration duration = Duration.ofSeconds(0);
+        for (Task task : taskList) {
+            duration = duration.plus(task.getEstimatedDuration());
+        }
+        return duration;
+    }
+
+    @Override
     public double getCosts(LocalDateTime start, LocalDateTime stop) {
         double costs = 0;
         for (Task task : taskList) {
