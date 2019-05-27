@@ -1,13 +1,13 @@
 package zeiterfassung.reports;
 
 
-import static htmlProducer.HtmlFactory.*;
 import htmlProducer.HtmlTagElement;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import static htmlProducer.HtmlFactory.*;
 
 public class ReportDocument implements Reportable {
 
@@ -21,7 +21,7 @@ public class ReportDocument implements Reportable {
 
         body.addElement(H1.build().addText(title));
 
-        for (Reportable item: items){
+        for (Reportable item : items) {
             body.addElement(item.getHtmlNode());
         }
 
@@ -32,7 +32,7 @@ public class ReportDocument implements Reportable {
                 body);
     }
 
-    ReportDocument(String title, Reportable... items){
+    public ReportDocument(String title, Reportable... items) {
         this.title = title;
         this.items = new ArrayList<>();
         Collections.addAll(this.items, items);
