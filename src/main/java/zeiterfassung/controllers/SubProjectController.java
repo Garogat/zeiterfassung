@@ -29,13 +29,12 @@ public class SubProjectController {
         name.textProperty().bindBidirectional(subProject.nameProperty());
         description.textProperty().bindBidirectional(subProject.descriptionProperty());
 
-
         // TODO: set valued time
         Duration duration = subProject.getDuration(LocalDateTime.MIN, LocalDateTime.MAX);
-        workValued.setText("X" + " Stunden");
+        workValued.setText(subProject.getEstimatedDuration().toHours() + " Stunden");
 
         if (duration.toHours() > 0) {
-            int percentage = (int) (10 / duration.toHours());
+            int percentage = (int) (subProject.getEstimatedDuration().toHours() / duration.toHours());
             workDone.setText(duration.toHours() + " Stunden (" + percentage + " %)");
         } else {
             workDone.setText("noch nicht begonnen");

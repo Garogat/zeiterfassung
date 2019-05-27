@@ -1,7 +1,5 @@
 package zeiterfassung.models;
 
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.SimpleDoubleProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -11,22 +9,18 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement
 public class Task extends DescribableModel implements TimeableWork {
     @XmlElement(name = "WorkChunk")
-    //private List<WorkChunk> workList = new ArrayList<>();
     private ObservableList<WorkChunk> workList = FXCollections.observableArrayList();
 
     private LocalDateTime workStartTime;
     private LocalDateTime workEndTime;
     private String workDescription;
     private Role role;
-
-
+    private Duration estimatedDuration = Duration.ZERO;
 
     public Task() {
         super();
@@ -124,5 +118,13 @@ public class Task extends DescribableModel implements TimeableWork {
         workEndTime = LocalDateTime.now();
         WorkChunk newWork = new WorkChunk(workStartTime, workEndTime, workDescription);
         workList.add(newWork);
+    }
+
+    public Duration getEstimatedDuration() {
+        return estimatedDuration;
+    }
+
+    public void setEstimatedDuration(Duration estimatedTime) {
+        this.estimatedDuration = estimatedTime;
     }
 }
