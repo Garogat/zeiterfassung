@@ -222,38 +222,6 @@ public class BaseController {
             contextMenu.show(projectTree, event.getScreenX(), event.getScreenY());
         }
     }
-
-    @FXML
-    private void testTree(ActionEvent actionEvent) {
-        TimeRegistrationRoot root = this.store.getRoot();
-
-        Area privat = root.areaListProperty().get(0);
-
-        Project garten = privat.projectsListProperty().get(0);
-
-
-        SubProject rasen = new SubProject("Rasen", "");
-
-        Task maehen = new Task("Rasen mähren", "");
-        rasen.addTask(maehen);
-
-        Task duengen = new Task("Rasen düngen", "");
-        rasen.addTask(duengen);
-
-        garten.addSubProject(rasen);
-
-        privat.addProject(new Project("Zug fahren", ""));
-
-        new Thread(() -> {
-            try {
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            System.out.println("Remove task duengen");
-            rasen.removeTask(duengen);
-        }).start();
-    }
 }
 
 
