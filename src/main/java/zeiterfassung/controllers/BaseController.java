@@ -8,6 +8,7 @@ import javafx.scene.control.*;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import zeiterfassung.components.ActiveWorkChunk;
 import zeiterfassung.components.Tree;
 import zeiterfassung.components.TreeContextItem;
 import zeiterfassung.models.*;
@@ -33,6 +34,7 @@ public class BaseController {
     private ContextMenu contextMenu;
     private Tree tree;
     private TreeContextItem.Listener contextMenuListener;
+    private ActiveWorkChunk activeWorkChunk;
 
     @FXML
     public void initialize() {
@@ -121,6 +123,7 @@ public class BaseController {
         this.store = store;
 
         tree = new Tree(store.getRoot());
+        activeWorkChunk = new ActiveWorkChunk(store.getRoot());
         projectTree.setRoot(tree.getTree());
 
         projectTree.setCellFactory(t -> new TreeCell<TreeContextItem>() {
@@ -190,7 +193,7 @@ public class BaseController {
 
     private TaskController openView(Task task) {
         TaskController taskController = (TaskController) setContent("Task");
-        taskController.setTask(task);
+        taskController.setTask(task,  activeWorkChunk);
         return taskController;
     }
 

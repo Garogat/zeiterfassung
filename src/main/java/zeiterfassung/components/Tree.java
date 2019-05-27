@@ -36,7 +36,6 @@ public class Tree {
                     }
                 }
             }
-
         });
 
         root.getAreas(list -> {

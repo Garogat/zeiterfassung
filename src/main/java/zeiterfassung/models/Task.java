@@ -1,5 +1,10 @@
 package zeiterfassung.models;
 
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -13,12 +18,15 @@ import java.util.List;
 @XmlRootElement
 public class Task extends DescribableModel implements TimeableWork {
     @XmlElement(name = "WorkChunk")
-    private List<WorkChunk> workList = new ArrayList<>();
+    //private List<WorkChunk> workList = new ArrayList<>();
+    private ObservableList<WorkChunk> workList = FXCollections.observableArrayList();
 
     private LocalDateTime workStartTime;
     private LocalDateTime workEndTime;
     private String workDescription;
     private Role role;
+
+
 
     public Task() {
         super();
@@ -37,6 +45,9 @@ public class Task extends DescribableModel implements TimeableWork {
         setRole(role);
     }
 
+    public ObservableList<WorkChunk> workListProperty() {
+        return workList;
+    }
 
     public void addWorkChunk(WorkChunk workChunk) {
         workList.add(workChunk);
@@ -48,7 +59,10 @@ public class Task extends DescribableModel implements TimeableWork {
 
     @Override
     public double getCosts(LocalDateTime start, LocalDateTime stop) {
-        return getRole().getHourlyWage() * ((double) getDuration(start, stop).toMinutes() / 60);
+        if (getRole() != null) {
+            return getRole().getHourlyWage() * ((double) getDuration(start, stop).toMinutes() / 60);
+        }
+        return 0;
     }
 
     @Override

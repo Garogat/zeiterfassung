@@ -1,9 +1,14 @@
 package zeiterfassung.models;
 
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import zeiterfassung.xml.LocalDateTimeAdapter;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.time.LocalDateTime;
@@ -14,15 +19,17 @@ import java.time.Duration;
 public class WorkChunk extends BaseModel {
 
     @XmlJavaTypeAdapter(LocalDateTimeAdapter.class)
-    private LocalDateTime start;
+    private ObjectProperty<LocalDateTime> startTime = new SimpleObjectProperty<>();
+
     @XmlJavaTypeAdapter(LocalDateTimeAdapter.class)
-    private LocalDateTime end;
-    private String description;
+    private ObjectProperty<LocalDateTime> endTime = new SimpleObjectProperty<>();
+
+    private StringProperty description = new SimpleStringProperty();;
 
     public WorkChunk() {
         setStartTime(LocalDateTime.now());
-        setEndTime(LocalDateTime.now());
-        setDescription("Default description");
+        setEndTime(null);
+        setDescription("");
     }
 
     public WorkChunk(LocalDateTime start, LocalDateTime end, String description) {
@@ -32,30 +39,45 @@ public class WorkChunk extends BaseModel {
     }
 
     public LocalDateTime getStartTime() {
-        return start;
+        return startTime.getValue();
     }
 
     public void setStartTime(LocalDateTime time) {
-        start = time;
+        startTime.set(time);
     }
 
     public LocalDateTime getEndTime() {
-        return end;
+        return endTime.get();
     }
 
     public void setEndTime(LocalDateTime time) {
-        end = time;
+        endTime.set(time);
     }
 
     public String getDescription() {
-        return description;
+        return description.get();
     }
 
     public void setDescription(String description) {
-        this.description = description;
+        this.description.set(description);
     }
 
     public Duration getDuration() {
-        return Duration.between(start, end);
+        if (startTime.get() != null && endTime.get() != null) {
+            return Duration.between(startTime.get(), endTime.get());
+        }
+        return Duration.ZERO;
+    }
+
+    public StringProperty descriptionProperty(){
+        return description;
+    }
+
+    public ObjectProperty<LocalDateTime> startTimeProperty() {
+        return startTime;
+    }
+
+    public ObjectProperty<LocalDateTime> endTimeProperty() {
+        return endTime;
     }
 }
