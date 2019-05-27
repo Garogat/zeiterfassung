@@ -1,10 +1,7 @@
 package zeiterfassung.components;
 
 import javafx.collections.ListChangeListener;
-import javafx.scene.Node;
 import javafx.scene.control.TreeItem;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import zeiterfassung.models.*;
 
 public class Tree {
@@ -34,8 +31,7 @@ public class Tree {
                     }
                 } else if (change.wasRemoved()) {
                     for (Area area : change.getRemoved()) {
-                        // TODO: fix removing
-                        rootItem.getChildren().remove(area);
+                        removeChild(rootItem, area);
                     }
                 }
             }
@@ -44,6 +40,7 @@ public class Tree {
 
         this.root.getAreas(list -> {
             for (Area area : list) {
+                area.setParent(this.root);
                 TreeItem<TreeContextItem> item = build(area);
                 rootItem.getChildren().add(item);
             }
@@ -64,8 +61,7 @@ public class Tree {
                     }
                 } else if (change.wasRemoved()) {
                     for (Project project : change.getRemoved()) {
-                        // TODO: fix removing
-                        rootItem.getChildren().remove(project);
+                        removeChild(rootItem, project);
                     }
                 }
             }
@@ -73,6 +69,7 @@ public class Tree {
 
         area.getProjectList(projects -> {
             for (Project project : projects) {
+                project.setParent(area);
                 rootItem.getChildren().add(build(project));
             }
         });
@@ -92,8 +89,7 @@ public class Tree {
                     }
                 } else if (change.wasRemoved()) {
                     for (SubProject subProject : change.getRemoved()) {
-                        // TODO: fix removing
-                        rootItem.getChildren().remove(subProject);
+                        removeChild(rootItem, subProject);
                     }
                 }
             }
@@ -105,26 +101,7 @@ public class Tree {
             }
         });
 
-        project.taskListProperty().addListener((ListChangeListener.Change<? extends Task> change) -> {
-            while (change.next()) {
-                if (change.wasAdded()) {
-                    for (Task task : change.getAddedSubList()) {
-                        rootItem.getChildren().add(build(task));
-                    }
-                } else if (change.wasRemoved()) {
-                    for (Task task : change.getRemoved()) {
-                        // TODO: fix removing
-                        rootItem.getChildren().remove(task);
-                    }
-                }
-            }
-        });
-
-        project.getTasks(tasks -> {
-            for (Task task : tasks) {
-                rootItem.getChildren().add(build(task));
-            }
-        });
+        addTasks(rootItem, project);
 
         return rootItem;
     }
@@ -133,6 +110,17 @@ public class Tree {
         TreeItem<TreeContextItem> rootItem = new TreeItem<>(new TreeContextItem(subProject));
         rootItem.setExpanded(true);
 
+        addTasks(rootItem, subProject);
+
+        return rootItem;
+    }
+
+    private TreeItem<TreeContextItem> build(Task task) {
+        TreeItem<TreeContextItem> rootItem = new TreeItem<>(new TreeContextItem(task));
+        return rootItem;
+    }
+
+    private void addTasks(TreeItem<TreeContextItem> rootItem, SubProject subProject) {
         subProject.taskListProperty().addListener((ListChangeListener.Change<? extends Task> change) -> {
             while (change.next()) {
                 if (change.wasAdded()) {
@@ -141,9 +129,7 @@ public class Tree {
                     }
                 } else if (change.wasRemoved()) {
                     for (Task task : change.getRemoved()) {
-                        System.out.println("remove task: " + task.getName());
-                        // TODO: fix removing
-                        rootItem.getChildren().remove(task);
+                        removeChild(rootItem, task);
                     }
                 }
             }
@@ -151,15 +137,20 @@ public class Tree {
 
         subProject.getTasks(tasks -> {
             for (Task task : tasks) {
+                task.setParent(subProject);
                 rootItem.getChildren().add(build(task));
             }
         });
-
-        return rootItem;
     }
 
-    private TreeItem<TreeContextItem> build(Task task) {
-        TreeItem<TreeContextItem> rootItem = new TreeItem<>(new TreeContextItem(task));
-        return rootItem;
+    private void removeChild(TreeItem<TreeContextItem> rootItem, Object object) {
+        for (int i = 0; i < rootItem.getChildren().size(); i++) {
+            TreeItem<TreeContextItem> child = rootItem.getChildren().get(i);
+            if (child.getValue().getType() == TreeContextItem.Type.AREA) {
+                if (child.getValue().getItem().equals(object)) {
+                    rootItem.getChildren().remove(child);
+                }
+            }
+        }
     }
 }

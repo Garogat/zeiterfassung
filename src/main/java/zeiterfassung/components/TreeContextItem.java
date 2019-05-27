@@ -14,7 +14,10 @@ import java.util.List;
 public class TreeContextItem {
 
     public interface Listener {
-        void onDelete(Object obj);
+        void onDelete(Area area);
+        void onDelete(Project project);
+        void onDelete(SubProject subProject);
+        void onDelete(Task task);
 
         void onAddArea();
 
@@ -65,11 +68,30 @@ public class TreeContextItem {
         return result;
     }
 
-    private MenuItem deleteObject(String caption) {
-        MenuItem result = new MenuItem(caption + " löschen");
-        result.setOnAction(event -> listener.onDelete(item));
+    private MenuItem deleteArea() {
+        MenuItem result = new MenuItem("Bereich löschen");
+        result.setOnAction(event -> listener.onDelete((Area) item));
         return result;
     }
+
+    private MenuItem deleteProject() {
+        MenuItem result = new MenuItem("Projekt löschen");
+        result.setOnAction(event -> listener.onDelete((Project) item));
+        return result;
+    }
+
+    private MenuItem deleteSubProject() {
+        MenuItem result = new MenuItem("Unterprojekt löschen");
+        result.setOnAction(event -> listener.onDelete((SubProject) item));
+        return result;
+    }
+
+    private MenuItem deleteTask() {
+        MenuItem result = new MenuItem("Aufgabe löschen");
+        result.setOnAction(event -> listener.onDelete((Task) item));
+        return result;
+    }
+
 
     public TreeContextItem setListener(Listener listener) {
         this.listener = listener;
@@ -79,7 +101,7 @@ public class TreeContextItem {
     public TreeContextItem(TimeRegistrationRoot root) {
         type = Type.ROOT;
         item = root;
-        text.set("Zeiterfassung.xml");
+        text.set("ZeitErfassung.xml");
         icon = iconRoot;
 
         contextMenu.add(addArea());
@@ -92,7 +114,7 @@ public class TreeContextItem {
         icon = iconArea;
 
         contextMenu.add(addProject());
-        contextMenu.add(deleteObject("Bereich"));
+        contextMenu.add(deleteArea());
     }
 
     public TreeContextItem(Project project) {
@@ -103,7 +125,7 @@ public class TreeContextItem {
 
         contextMenu.add(addTask());
         contextMenu.add(addSubProject());
-        contextMenu.add(deleteObject("Projekt"));
+        contextMenu.add(deleteProject());
     }
 
     public TreeContextItem(SubProject subProject) {
@@ -113,7 +135,7 @@ public class TreeContextItem {
         icon = iconProject;
 
         contextMenu.add(addTask());
-        contextMenu.add(deleteObject("Unterprojekt"));
+        contextMenu.add(deleteSubProject());
     }
 
     public TreeContextItem(Task task) {
@@ -122,7 +144,7 @@ public class TreeContextItem {
         text.bind(task.nameProperty());
         icon = iconTask;
 
-        contextMenu.add(deleteObject("Aufgabe"));
+        contextMenu.add(deleteTask());
     }
 
     public Type getType() {
