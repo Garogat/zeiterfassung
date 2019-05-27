@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Root>
+    <Area>
+        <name>Privat</name>
+        <description>Hier findet man alle meine privaten Projekte</description>
+        <Project>
+            <name>Garten</name>
+            <description>Dieses Projekt ist für meine Garten Aufgaben</description>
+            <SubProject>
+                <name>Baum Pflege</name>
+                <description></description>
+                <Task>
+                    <name>Äpfel plücken</name>
+                    <description>Nur die schönen dicken Äpfel dürfen gepflückt werden.</description>
+                </Task>
+            </SubProject>
+            <SubProject>
+                <name>Hühner</name>
+                <description></description>
+                <Task>
+                    <name>Stall ausmisten</name>
+                    <description></description>
+                </Task>
+                <Task>
+                    <name>Eier sammeln</name>
+                    <description></description>
+                </Task>
+            </SubProject>
+        </Project>
+    </Area>
+    <Area>
+        <name>FH</name>
+        <description>Hier findet man FH Kram</description>
+        <Project>
+            <name>Agile Entwicklungsmethoden</name>
+            <description>Modul AEM im SS2019</description>
+            <SubProject>
+                <name>4. Sprint</name>
+                <description>Unser 4. Sprint</description>
+            </SubProject>
+        </Project>
+        <Project>
+            <name>Software Engineering</name>
+            <description>Modul SEG im SS2019</description>
+            <SubProject>
+                <name>Analysephase</name>
+                <description>Anforderungsanalyse und Lastenheft</description>
+            </SubProject>
+        </Project>
+        <Project>
+            <name>Programmieren in Java</name>
+            <description>Modul PIJ im SS2019</description>
+            <customer>c</customer>
+            <Role>
+                <name>Hiwi</name>
+                <description>Wissenschaftliche Hilfskraft</description>
+                <hourlyWage>16.0</hourlyWage>
+            </Role>
+            <SubProject>
+                <name>2. Sprint</name>
+                <description>Unser 2. einwöchiger Sprint</description>
+                <Task>
+                    <name>XML Import</name>
+                    <description>XML Datei erzeugen und auslesen</description>
+                    <WorkChunk>
+                        <description>Meine Beispielarbeit</description>
+                        <endTime>2019-05-27T21:19:41.878</endTime>
+                        <startTime>2019-05-27T17:19:41.876</startTime>
+                    </WorkChunk>
+                    <workDescription>Annotationen setzen und Adapter schreiben</workDescription>
+                    <role>
+                        <name>Student</name>
+                        <description>Einfacher Student mit grundlegenden Programmierkenntnissen</description>
+                        <hourlyWage>12.0</hourlyWage>
+                    </role>
+                </Task>
+            </SubProject>
+        </Project>
+    </Area>
+</Root>
