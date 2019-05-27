@@ -10,7 +10,7 @@ import javafx.collections.FXCollections;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "Root")
-public class TimeRegistrationRoot {
+public class TimeRegistrationRoot extends BaseModel {
 
     @XmlElement(name = "Area")
     private ListProperty<Area> areaList = new SimpleListProperty(FXCollections.observableArrayList());

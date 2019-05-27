@@ -10,7 +10,7 @@ import javax.xml.bind.annotation.XmlType;
 
 @XmlType(propOrder = {"name", "description"})
 @XmlAccessorType(XmlAccessType.NONE)
-public abstract class DescribableModel {
+public abstract class DescribableModel extends BaseModel {
     private StringProperty name = new SimpleStringProperty();
     private StringProperty description = new SimpleStringProperty();
 

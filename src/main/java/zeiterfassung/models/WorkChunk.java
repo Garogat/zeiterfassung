@@ -11,7 +11,7 @@ import java.time.Duration;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement
-public class WorkChunk {
+public class WorkChunk extends BaseModel {
 
     @XmlJavaTypeAdapter(LocalDateTimeAdapter.class)
     private LocalDateTime start;
