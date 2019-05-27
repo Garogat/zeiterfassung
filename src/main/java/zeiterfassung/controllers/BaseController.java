@@ -73,7 +73,6 @@ public class BaseController {
             public void onAddArea() {
                 Area area = new Area();
                 area.setName("Neuer Bereich");
-                area.setParent(store.getRoot());
                 store.getRoot().addArea(area);
             }
 
@@ -81,7 +80,6 @@ public class BaseController {
             public void onAddProject(Area area) {
                 Project project = new Project();
                 project.setName("Neues Projekt");
-                project.setParent(area);
                 area.addProject(project);
             }
 
@@ -89,7 +87,6 @@ public class BaseController {
             public void onAddSubProject(Project project) {
                 SubProject subProject = new SubProject();
                 subProject.setName("Neues Unterprojekt");
-                subProject.setParent(project);
                 project.addSubProject(subProject);
             }
 
@@ -97,7 +94,6 @@ public class BaseController {
             public void onAddTask(SubProject subProject) {
                 Task task = new Task();
                 task.setName("Neuer Task");
-                task.setParent(subProject);
                 subProject.addTask(task);
             }
         };

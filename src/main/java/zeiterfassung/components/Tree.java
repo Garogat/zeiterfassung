@@ -23,10 +23,11 @@ public class Tree {
         TreeItem<TreeContextItem> rootItem = new TreeItem<>(new TreeContextItem(this.root));
         rootItem.setExpanded(true);
 
-        this.root.areaListProperty().addListener((ListChangeListener.Change<? extends Area> change) -> {
+        root.areaListProperty().addListener((ListChangeListener.Change<? extends Area> change) -> {
             while (change.next()) {
                 if (change.wasAdded()) {
                     for (Area area : change.getAddedSubList()) {
+                        area.setParent(root);
                         rootItem.getChildren().add(build(area));
                     }
                 } else if (change.wasRemoved()) {
@@ -38,9 +39,9 @@ public class Tree {
 
         });
 
-        this.root.getAreas(list -> {
+        root.getAreas(list -> {
             for (Area area : list) {
-                area.setParent(this.root);
+                area.setParent(root);
                 TreeItem<TreeContextItem> item = build(area);
                 rootItem.getChildren().add(item);
             }
@@ -57,6 +58,7 @@ public class Tree {
             while (change.next()) {
                 if (change.wasAdded()) {
                     for (Project project : change.getAddedSubList()) {
+                        project.setParent(area);
                         rootItem.getChildren().add(build(project));
                     }
                 } else if (change.wasRemoved()) {
@@ -85,6 +87,7 @@ public class Tree {
             while (change.next()) {
                 if (change.wasAdded()) {
                     for (SubProject subProject : change.getAddedSubList()) {
+                        subProject.setParent(project);
                         rootItem.getChildren().add(build(subProject));
                     }
                 } else if (change.wasRemoved()) {
@@ -97,6 +100,7 @@ public class Tree {
 
         project.getSubProjects(subProjects -> {
             for (SubProject subProject : subProjects) {
+                subProject.setParent(project);
                 rootItem.getChildren().add(build(subProject));
             }
         });
@@ -125,6 +129,7 @@ public class Tree {
             while (change.next()) {
                 if (change.wasAdded()) {
                     for (Task task : change.getAddedSubList()) {
+                        task.setParent(subProject);
                         rootItem.getChildren().add(build(task));
                     }
                 } else if (change.wasRemoved()) {
@@ -146,10 +151,8 @@ public class Tree {
     private void removeChild(TreeItem<TreeContextItem> rootItem, Object object) {
         for (int i = 0; i < rootItem.getChildren().size(); i++) {
             TreeItem<TreeContextItem> child = rootItem.getChildren().get(i);
-            if (child.getValue().getType() == TreeContextItem.Type.AREA) {
-                if (child.getValue().getItem().equals(object)) {
-                    rootItem.getChildren().remove(child);
-                }
+            if (child.getValue().getItem().equals(object)) {
+                rootItem.getChildren().remove(child);
             }
         }
     }
