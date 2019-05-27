@@ -11,20 +11,17 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
-import java.time.LocalDateTime;
 import java.time.Duration;
+import java.time.LocalDateTime;
 
-@XmlAccessorType(XmlAccessType.FIELD)
+@XmlAccessorType(XmlAccessType.NONE)
 @XmlRootElement
 public class WorkChunk extends BaseModel {
-
-    @XmlJavaTypeAdapter(LocalDateTimeAdapter.class)
     private ObjectProperty<LocalDateTime> startTime = new SimpleObjectProperty<>();
 
-    @XmlJavaTypeAdapter(LocalDateTimeAdapter.class)
     private ObjectProperty<LocalDateTime> endTime = new SimpleObjectProperty<>();
 
-    private StringProperty description = new SimpleStringProperty();;
+    private StringProperty description = new SimpleStringProperty();
 
     public WorkChunk() {
         setStartTime(LocalDateTime.now());
@@ -38,6 +35,7 @@ public class WorkChunk extends BaseModel {
         setDescription(description);
     }
 
+    @XmlJavaTypeAdapter(LocalDateTimeAdapter.class)
     public LocalDateTime getStartTime() {
         return startTime.getValue();
     }
@@ -46,6 +44,7 @@ public class WorkChunk extends BaseModel {
         startTime.set(time);
     }
 
+    @XmlJavaTypeAdapter(LocalDateTimeAdapter.class)
     public LocalDateTime getEndTime() {
         return endTime.get();
     }
@@ -54,6 +53,7 @@ public class WorkChunk extends BaseModel {
         endTime.set(time);
     }
 
+    @XmlElement(name = "description")
     public String getDescription() {
         return description.get();
     }
@@ -69,7 +69,7 @@ public class WorkChunk extends BaseModel {
         return Duration.ZERO;
     }
 
-    public StringProperty descriptionProperty(){
+    public StringProperty descriptionProperty() {
         return description;
     }
 
