@@ -2,11 +2,13 @@ package zeiterfassung.models;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import zeiterfassung.xml.DurationAdapter;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.time.Duration;
 import java.time.LocalDateTime;
 
@@ -20,6 +22,8 @@ public class Task extends DescribableModel implements TimeableWork {
     private LocalDateTime workEndTime;
     private String workDescription;
     private Role role;
+
+    @XmlJavaTypeAdapter(DurationAdapter.class)
     private Duration estimatedDuration = Duration.ZERO;
 
     public Task() {
