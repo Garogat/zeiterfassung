@@ -4,9 +4,6 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
-import java.util.ArrayList;
-import java.util.List;
-import java.lang.IllegalArgumentException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -45,5 +42,9 @@ public class Area extends DescribableModel {
             }
         }
         return false;
+    }
+
+    public boolean removeProject(Project project) {
+        return projectsList.remove(project);
     }
 }
