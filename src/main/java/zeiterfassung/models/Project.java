@@ -3,6 +3,7 @@ package zeiterfassung.models;
 import javafx.beans.property.ListProperty;
 import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -17,10 +18,11 @@ import java.util.List;
 @XmlRootElement
 public class Project extends SubProject {
     @XmlElement(name = "Role")
-    List<Role> roleList = new ArrayList<>();
+    //List<Role> roleList = new ArrayList<>();
+    private ObservableList<Role> roleList = FXCollections.observableArrayList();
 
     @XmlElement(name = "SubProject")
-    ListProperty<SubProject> subProjectList = new SimpleListProperty(FXCollections.observableArrayList());
+    private ListProperty<SubProject> subProjectList = new SimpleListProperty(FXCollections.observableArrayList());
 
     public Project() {
         super();
@@ -34,6 +36,10 @@ public class Project extends SubProject {
 
     public void getSubProjects(Listable<SubProject> subProjects) {
         subProjects.getList(subProjectList);
+    }
+
+    public ObservableList<Role> roleListProperty() {
+        return roleList;
     }
 
     public ListProperty<SubProject> subProjectListProperty() {
