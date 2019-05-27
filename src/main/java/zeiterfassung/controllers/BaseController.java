@@ -46,14 +46,34 @@ public class BaseController {
 
         contextMenuListener = new TreeContextItem.Listener() {
             @Override
-            public void onDelete(Object obj) {
+            public void onDelete(Area area) {
+                TimeRegistrationRoot root = (TimeRegistrationRoot) area.getParent();
+                root.removeArea(area);
+            }
 
+            @Override
+            public void onDelete(Project project) {
+                Area area = (Area) project.getParent();
+                area.removeProject(project);
+            }
+
+            @Override
+            public void onDelete(SubProject subProject) {
+                Project project = (Project) subProject.getParent();
+                project.removeSubProject(subProject);
+            }
+
+            @Override
+            public void onDelete(Task task) {
+                SubProject subProject = (SubProject) task.getParent();
+                subProject.removeTask(task);
             }
 
             @Override
             public void onAddArea() {
                 Area area = new Area();
                 area.setName("Neuer Bereich");
+                area.setParent(store.getRoot());
                 store.getRoot().addArea(area);
             }
 
@@ -61,6 +81,7 @@ public class BaseController {
             public void onAddProject(Area area) {
                 Project project = new Project();
                 project.setName("Neues Projekt");
+                project.setParent(area);
                 area.addProject(project);
             }
 
@@ -68,6 +89,7 @@ public class BaseController {
             public void onAddSubProject(Project project) {
                 SubProject subProject = new SubProject();
                 subProject.setName("Neues Unterprojekt");
+                subProject.setParent(project);
                 project.addSubProject(subProject);
             }
 
@@ -75,6 +97,7 @@ public class BaseController {
             public void onAddTask(SubProject subProject) {
                 Task task = new Task();
                 task.setName("Neuer Task");
+                task.setParent(subProject);
                 subProject.addTask(task);
             }
         };
