@@ -28,6 +28,7 @@ public class Task extends DescribableModel implements TimeableWork {
 
 
 
+
     public Task() {
         super();
         setName("Neue Aufgabe");

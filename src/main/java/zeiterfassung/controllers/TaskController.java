@@ -57,6 +57,9 @@ public class TaskController {
     private TextField workchuncDescription;
 
     @FXML
+    private TextField estimatedDurationTextField;
+
+    @FXML
     private Button stopBtn;
 
 
@@ -97,6 +100,8 @@ public class TaskController {
         workchuncDescription.setVisible(startBtn.isVisible());
 
         setEditWorkChunk();
+
+       // estimatedDurationTextField.textProperty().bindBidirectional(task.);
 
         roleChoiceBox.setItems(((Project)task.getParentByType(Project.class)).roleListProperty());
         roleChoiceBox.setConverter(new StringConverter<Role>() {
