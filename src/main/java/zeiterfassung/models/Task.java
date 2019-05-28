@@ -24,7 +24,7 @@ public class Task extends DescribableModel implements TimeableWork {
     private LocalDateTime workStartTime;
     private LocalDateTime workEndTime;
     private String workDescription;
-    private Role role;
+    private String roleId;
 
 
 
@@ -77,11 +77,16 @@ public class Task extends DescribableModel implements TimeableWork {
     }
 
     public Role getRole() {
-        return role;
+        Project tmpProject = (Project)getParentByType(Project.class);
+        if (tmpProject != null){
+            return tmpProject.getRole(roleId);
+        }
+
+        return null;
     }
 
     public void setRole(Role role) {
-        this.role = role;
+        this.roleId = role.getId();
     }
 
     public boolean hasWorkStarted() {

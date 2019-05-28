@@ -67,6 +67,26 @@ public class Project extends SubProject {
         roles.getList(roleList);
     }
 
+    public Role getRole(String id){
+        for (Role role: roleList){
+            if (role.getId().equals(id)){
+                return role;
+            }
+        }
+        return getDefaultRole();
+    }
+
+    public Role getRoleByIdx(int idx){
+        return roleList.get(idx);
+    }
+
+    public Role getDefaultRole(){
+        if (roleList.size() > 0){
+            return roleList.get(0);
+        }
+        return null;
+    }
+
     public boolean addRole(Role newRole) {
         return roleList.add(newRole);
     }
@@ -78,6 +98,16 @@ public class Project extends SubProject {
     public boolean hasRole(Role role) {
         return roleList.contains(role);
     }
+
+    public Role findRoleByID(String id){
+        for (Role role: roleList){
+            if (role.getId().equals(id)){
+                return role;
+            }
+        }
+        return null;
+    }
+
 
     @Override
     public Duration getDuration(LocalDateTime start, LocalDateTime stop) {

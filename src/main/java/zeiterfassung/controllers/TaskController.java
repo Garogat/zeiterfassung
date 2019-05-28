@@ -1,15 +1,16 @@
 package zeiterfassung.controllers;
 
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
+import javafx.util.StringConverter;
 import zeiterfassung.components.ActiveWorkChunk;
-import zeiterfassung.models.Role;
-import zeiterfassung.models.Task;
-import zeiterfassung.models.WorkChunk;
+import zeiterfassung.models.*;
 
 
 import java.time.LocalDateTime;
@@ -80,6 +81,8 @@ public class TaskController {
         workchuncDescription.setDisable(editWorkChunk == null);
     }
 
+
+
     public void setTask(Task task, ActiveWorkChunk activeWorkChunk) {
         this.task = task;
         this.activeWorkChunk = activeWorkChunk;
@@ -94,6 +97,31 @@ public class TaskController {
         workchuncDescription.setVisible(startBtn.isVisible());
 
         setEditWorkChunk();
+
+        roleChoiceBox.setItems(((Project)task.getParentByType(Project.class)).roleListProperty());
+        roleChoiceBox.setConverter(new StringConverter<Role>() {
+            @Override
+            public String toString(Role role) {
+                if (role == null) {
+                    return null;
+                } else {
+                    return role.getName();
+                }
+            }
+
+            @Override
+            public Role fromString(String id) {
+                return null;
+            }
+        });
+        roleChoiceBox.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Role>() {
+            @Override
+            public void changed(ObservableValue<? extends Role> observable, Role oldValue, Role newValue) {
+                task.setRole(newValue);
+            }
+        });
+
+        roleChoiceBox.getSelectionModel().select(task.getRole());
 
         startCol.setCellValueFactory(new PropertyValueFactory<>("startTime"));
         startCol.setCellFactory(col -> new TableCell<WorkChunk, LocalDateTime>() {

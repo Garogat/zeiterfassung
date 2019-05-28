@@ -13,6 +13,9 @@ public class TestData {
         root.addArea(area);
 
         Project project = new Project("Garten", "Dieses Projekt ist für meine Garten Aufgaben");
+        project.addRole(new Role("Angestellter", "Sklave", 5.8));
+        project.addRole(new Role("Chöf", "Benz", 17.3));
+
         area.addProject(project);
 
         SubProject subProject = new SubProject("Baum Pflege", "");
