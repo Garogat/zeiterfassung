@@ -41,9 +41,18 @@ public class ZeitErfassung {
     }
 
     /**
-     * stop ZeitErfassung (unload data initstore)
+     * stop ZeitErfassung
      */
     public void stop() {
+        if (stage != null) {
+            stage.close();
+        }
+    }
+
+    /**
+     * save currently loaded data store
+     */
+    public void save() {
         if (this.store != null) {
             this.store.unload();
         }

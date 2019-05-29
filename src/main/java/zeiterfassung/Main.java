@@ -5,7 +5,7 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
 
-    private ZeitErfassung tool;
+    private static ZeitErfassung tool;
 
     /**
      * load ZeitErfassung with {@code stage} and start application
@@ -27,10 +27,22 @@ public class Main extends Application {
     @Override
     public void stop() throws Exception {
         if (tool != null) {
+            tool.save();
             tool.stop();
         }
 
         super.stop();
+    }
+
+    /**
+     * restart application
+     */
+    public static void restart() {
+        if (tool != null) {
+            tool.stop();
+        }
+
+        tool = new ZeitErfassung(new Stage());
     }
 
     /**
