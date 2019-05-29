@@ -14,7 +14,7 @@
                                   AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
                     </children>
                 </AnchorPane>
-                <AnchorPane fx:id="content"/>
+                <VBox fx:id="content"/>
             </items>
         </SplitPane>
     </center>

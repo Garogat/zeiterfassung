@@ -6,7 +6,7 @@ import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import zeiterfassung.Main;
 import zeiterfassung.components.ActiveWorkChunk;
@@ -30,7 +30,7 @@ public class BaseController {
     private TreeView<TreeContextItem> projectTree;
 
     @FXML
-    private AnchorPane content;
+    private VBox content;
 
     @FXML
     private SplitPane splitPane;
