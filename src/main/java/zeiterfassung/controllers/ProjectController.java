@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import java.lang.String;
 import javafx.scene.control.*;
 import javafx.scene.text.Text;
+import zeiterfassung.UI;
 import zeiterfassung.models.Project;
 import zeiterfassung.models.Role;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -65,8 +66,8 @@ public class ProjectController {
         LocalDateTime start = LocalDateTime.parse("2019-05-01T10:20:40.577");
         LocalDateTime stop = LocalDateTime.parse("2019-06-30T10:20:40.577");
         Duration duration = project.getDuration(start, stop);
-        estimateLabel.setText("Geschätzte Arbeit: " + "X" + " Stunden");
-        actualLabel.setText("Bisher geleistete Arbeit: " + duration.toHours() + " Stunden");
+        estimateLabel.setText(UI.utf8("Geschätzte Arbeit: " + "X" + " Stunden"));
+        actualLabel.setText(UI.utf8("Bisher geleistete Arbeit: " + duration.toHours() + " Stunden"));
 
         nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
         descCol.setCellValueFactory(new PropertyValueFactory<>("description"));

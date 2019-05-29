@@ -6,6 +6,7 @@ import javafx.scene.Node;
 import javafx.scene.control.MenuItem;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import zeiterfassung.UI;
 import zeiterfassung.models.*;
 
 import java.util.ArrayList;
@@ -52,49 +53,49 @@ public class TreeContextItem {
     private Node icon;
 
     private MenuItem addArea() {
-        MenuItem result = new MenuItem("Bereich anlegen");
+        MenuItem result = new MenuItem(UI.utf8("Bereich anlegen"));
         result.setOnAction(event -> listener.onAddArea());
         return result;
     }
 
     private MenuItem addProject() {
-        MenuItem result = new MenuItem("Projekt anlegen");
+        MenuItem result = new MenuItem(UI.utf8("Projekt anlegen"));
         result.setOnAction(event -> listener.onAddProject((Area) item));
         return result;
     }
 
     private MenuItem addSubProject() {
-        MenuItem result = new MenuItem("Unterprojekt anlegen");
+        MenuItem result = new MenuItem(UI.utf8("Unterprojekt anlegen"));
         result.setOnAction(event -> listener.onAddSubProject((Project) item));
         return result;
     }
 
     private MenuItem addTask() {
-        MenuItem result = new MenuItem("Aufgabe anlegen");
+        MenuItem result = new MenuItem(UI.utf8("Aufgabe anlegen"));
         result.setOnAction(event -> listener.onAddTask((SubProject) item));
         return result;
     }
 
     private MenuItem deleteArea() {
-        MenuItem result = new MenuItem("Bereich löschen");
+        MenuItem result = new MenuItem(UI.utf8("Bereich löschen"));
         result.setOnAction(event -> listener.onDelete((Area) item));
         return result;
     }
 
     private MenuItem deleteProject() {
-        MenuItem result = new MenuItem("Projekt löschen");
+        MenuItem result = new MenuItem(UI.utf8("Projekt löschen"));
         result.setOnAction(event -> listener.onDelete((Project) item));
         return result;
     }
 
     private MenuItem deleteSubProject() {
-        MenuItem result = new MenuItem("Unterprojekt löschen");
+        MenuItem result = new MenuItem(UI.utf8("Unterprojekt löschen"));
         result.setOnAction(event -> listener.onDelete((SubProject) item));
         return result;
     }
 
     private MenuItem deleteTask() {
-        MenuItem result = new MenuItem("Aufgabe löschen");
+        MenuItem result = new MenuItem(UI.utf8("Aufgabe löschen"));
         result.setOnAction(event -> listener.onDelete((Task) item));
         return result;
     }
@@ -110,11 +111,11 @@ public class TreeContextItem {
         text.set("ZeitErfassung.xml");
         icon = iconRoot;
 
-        MenuItem importDatabase = new MenuItem("Datenbank importieren");
+        MenuItem importDatabase = new MenuItem(UI.utf8("Datenbank importieren"));
         importDatabase.setOnAction(event -> listener.onImportDatabase());
         contextMenu.add(importDatabase);
 
-        MenuItem exportDatabase = new MenuItem("Datenbank exportieren");
+        MenuItem exportDatabase = new MenuItem(UI.utf8("Datenbank exportieren"));
         exportDatabase.setOnAction(event -> listener.onExportDatabase());
         contextMenu.add(exportDatabase);
 

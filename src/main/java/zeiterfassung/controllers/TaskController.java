@@ -10,6 +10,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
 import javafx.util.Callback;
 import javafx.util.StringConverter;
+import zeiterfassung.UI;
 import zeiterfassung.Utils;
 import zeiterfassung.components.ActiveWorkChunk;
 import zeiterfassung.models.*;
@@ -192,8 +193,8 @@ public class TaskController {
 
 
     private void updateCostDuration(){
-        costsLabel.setText(Utils.formatCosts( task.getCosts(LocalDateTime.MIN, LocalDateTime.MAX)));
-        durationLabel.setText( Utils.formatDuration(task.getDuration(LocalDateTime.MIN, LocalDateTime.MAX)));
+        costsLabel.setText(UI.utf8((Utils.formatCosts( task.getCosts(LocalDateTime.MIN, LocalDateTime.MAX)))));
+        durationLabel.setText(UI.utf8(( Utils.formatDuration(task.getDuration(LocalDateTime.MIN, LocalDateTime.MAX)))));
     }
 
     public Task getTask() {
