@@ -1,4 +1,4 @@
-package zeiterfassung;
+package zeiterfassung.xml;
 
 import zeiterfassung.models.*;
 
