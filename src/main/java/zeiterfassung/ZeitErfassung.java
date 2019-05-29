@@ -33,7 +33,10 @@ public class ZeitErfassung {
         BaseController baseController = loader.getController();
         baseController.setDataStore(this.store);
 
-        stage.setScene(new Scene(page));
+        Scene scene = new Scene(page);
+        scene.getStylesheets().add(getClass().getResource("/zeiterfassung/styles/main.css").toExternalForm());
+
+        stage.setScene(scene);
         stage.setTitle("Zeiterfassung");
         stage.getIcons().add(new Image(getClass().getResourceAsStream("/zeiterfassung/icons/clipboard.png")));
         stage.setMaximized(true);
