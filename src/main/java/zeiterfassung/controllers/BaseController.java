@@ -9,6 +9,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import zeiterfassung.Main;
+import zeiterfassung.Utils;
 import zeiterfassung.components.ActiveWorkChunk;
 import zeiterfassung.components.Tree;
 import zeiterfassung.components.TreeContextItem;
@@ -266,11 +267,7 @@ public class BaseController {
         Main.restart();
 
         // alert user
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("ZeitErfassung");
-        alert.setHeaderText(null);
-        alert.setContentText("Die neue Datenbank wurde erfolgreich importiert.");
-        alert.showAndWait();
+        Utils.alertInfo("Die neue Datenbank wurde erfolgreich importiert.");
     }
 
     @FXML
@@ -289,11 +286,7 @@ public class BaseController {
             e.printStackTrace();
         }
 
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("ZeitErfassung");
-        alert.setHeaderText(null);
-        alert.setContentText("Die Datenbank wurde erfolgreich exportiert.");
-        alert.showAndWait();
+        Utils.alertInfo("Die Datenbank wurde erfolgreich exportiert.");
     }
 }
 
