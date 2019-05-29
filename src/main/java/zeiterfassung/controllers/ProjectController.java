@@ -99,6 +99,12 @@ public class ProjectController {
     }
 
     public void onRemoveRole(ActionEvent event) {
+        // prevent removing our first "default" role
+        if (roleTable.getSelectionModel().getSelectedIndex() == 0) {
+            Utils.alertWarning("Die Standard Rolle kann nicht entfernt werden.");
+            return;
+        }
+
         project.removeRole(roleTable.getSelectionModel().getSelectedItem());
         roleTable.setItems(project.roleListProperty());
     }

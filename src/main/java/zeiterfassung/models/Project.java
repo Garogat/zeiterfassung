@@ -2,8 +2,6 @@ package zeiterfassung.models;
 
 import javafx.beans.property.ListProperty;
 import javafx.beans.property.SimpleListProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -20,7 +18,6 @@ public class Project extends SubProject {
     String customer;
 
     @XmlElement(name = "Role")
-    //List<Role> roleList = new ArrayList<>();
     private ObservableList<Role> roleList = FXCollections.observableArrayList();
 
     @XmlElement(name = "SubProject")
@@ -30,10 +27,12 @@ public class Project extends SubProject {
         super();
         setName("Neues Projekt");
         setDescription("Dies ist ein Projekt");
+        addRole(Role.DEFAULT_ROLE);
     }
 
     public Project(String name, String description) {
         super(name, description);
+        addRole(Role.DEFAULT_ROLE);
     }
 
     public void getSubProjects(Listable<SubProject> subProjects) {
@@ -69,21 +68,21 @@ public class Project extends SubProject {
         roles.getList(roleList);
     }
 
-    public Role getRole(String id){
-        for (Role role: roleList){
-            if (role.getId().equals(id)){
+    public Role getRole(String id) {
+        for (Role role : roleList) {
+            if (role.getId().equals(id)) {
                 return role;
             }
         }
         return getDefaultRole();
     }
 
-    public Role getRoleByIdx(int idx){
+    public Role getRoleByIdx(int idx) {
         return roleList.get(idx);
     }
 
-    public Role getDefaultRole(){
-        if (roleList.size() > 0){
+    public Role getDefaultRole() {
+        if (roleList.size() > 0) {
             return roleList.get(0);
         }
         return null;
@@ -101,9 +100,9 @@ public class Project extends SubProject {
         return roleList.contains(role);
     }
 
-    public Role findRoleByID(String id){
-        for (Role role: roleList){
-            if (role.getId().equals(id)){
+    public Role findRoleByID(String id) {
+        for (Role role : roleList) {
+            if (role.getId().equals(id)) {
                 return role;
             }
         }
@@ -111,11 +110,11 @@ public class Project extends SubProject {
     }
 
 
-    public String getCustomer(){
+    public String getCustomer() {
         return customer;
     }
 
-    public void setCustomer(String customer){
+    public void setCustomer(String customer) {
         this.customer = customer;
     }
 

@@ -8,16 +8,16 @@ import java.util.UUID;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement
 public class Role extends DescribableModel {
-    private double hourlyWage;
+    public static final Role DEFAULT_ROLE = new Role("Standard", "Die ist die standard Rolle", 0);
 
+    private double hourlyWage;
 
     private String id;
 
     public Role() {
-        if (id == null || id.isEmpty()){
+        if (id == null || id.isEmpty()) {
             id = UUID.randomUUID().toString();
         }
-
     }
 
     public Role(String name, String description, double hourlyWage) {
@@ -41,19 +41,5 @@ public class Role extends DescribableModel {
 
     public void setId(String id) {
         this.id = id;
-    }
-
-    public static Role roleFactory(String role) {
-        switch (role) {
-            case "Hiwi":
-                return new Role("Hiwi", "Wissenschaftliche Hilfskraft", 16);
-            case "Professor":
-                return new Role("Professor", "Professor mit vielen Jahren tiefgründiger Erfahrung in der Informatik", 30);
-            case "Student":
-                return new Role("Student", "Einfacher Student mit grundlegenden Programmierkenntnissen", 12);
-
-            default:
-                return new Role();
-        }
     }
 }

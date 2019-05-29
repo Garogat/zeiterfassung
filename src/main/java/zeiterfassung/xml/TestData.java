@@ -42,7 +42,7 @@ public class TestData {
         areaFH.addProject(seg);
 
         Project pij = new Project("Programmieren in Java", "Modul PIJ im SS2019");
-        pij.addRole(Role.roleFactory("Hiwi"));
+        pij.addRole(new Role("Hiwi", "Der kleine Hilfsarbeiter", 11.2));
         areaFH.addProject(pij);
 
         SubProject sprint4 = new SubProject("4. Sprint", "Unser 4. Sprint");
@@ -55,7 +55,7 @@ public class TestData {
         SubProject sprint2 = new SubProject("2. Sprint", "Unser 2. einwöchiger Sprint");
         pij.addSubProject(sprint2);
 
-        Task xml = new Task("XML Import", "XML Datei erzeugen und auslesen", "Annotationen setzen und Adapter schreiben", Role.roleFactory("Student"));
+        Task xml = new Task("XML Import", "XML Datei erzeugen und auslesen", "Annotationen setzen und Adapter schreiben", new Role("Student", "Ein ganz normaler Student ohne besondere Qualifikationen", 8.5));
         xml.addWorkChunk(new WorkChunk(LocalDateTime.now(), LocalDateTime.now().plusHours(4), "Meine Beispielarbeit"));
         sprint2.addTask(xml);
 
