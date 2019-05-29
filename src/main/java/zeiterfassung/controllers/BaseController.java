@@ -19,6 +19,7 @@ import javax.xml.bind.JAXBException;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.charset.Charset;
 import java.nio.file.Files;
 
 public class BaseController {
@@ -116,8 +117,9 @@ public class BaseController {
 
     public Object setContent(String view) {
         Node node = null;
+        FXMLLoader loader = new FXMLLoader(Charset.forName("UTF-8"));
+        loader.setLocation(getClass().getResource("/zeiterfassung/views/" + view + ".fxml"));
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/zeiterfassung/views/" + view + ".fxml"));
         try {
             node = loader.load();
         } catch (IOException e) {

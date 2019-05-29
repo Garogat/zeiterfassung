@@ -1,8 +1,11 @@
+import com.sun.org.apache.xalan.internal.xsltc.cmdline.Compile
+
 plugins {
     id 'java'
 }
 
 apply plugin: 'application'
+
 //mainClassName = 'java.main.zeiterfassung.Main'
 mainClassName = 'zeiterfassung.Main'
 

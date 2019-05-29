@@ -9,6 +9,7 @@ import zeiterfassung.controllers.BaseController;
 import zeiterfassung.xml.DataStore;
 
 import java.io.IOException;
+import java.nio.charset.Charset;
 
 public class ZeitErfassung {
     private Stage stage;
@@ -23,7 +24,8 @@ public class ZeitErfassung {
 
         // load scene
         Parent page = null;
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/zeiterfassung/views/Base.fxml"));
+        FXMLLoader loader = new FXMLLoader(Charset.forName("UTF-8"));
+        loader.setLocation(getClass().getResource("/zeiterfassung/views/Base.fxml"));
         try {
             page = loader.load();
         } catch (IOException e) {

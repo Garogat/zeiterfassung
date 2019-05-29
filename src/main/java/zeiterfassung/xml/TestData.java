@@ -12,19 +12,19 @@ public class TestData {
         Area area = new Area("Privat", "Hier findet man alle meine privaten Projekte");
         root.addArea(area);
 
-        Project project = new Project("Garten", "Dieses Projekt ist fÃ¼r meine Garten Aufgaben");
+        Project project = new Project("Garten", "Dieses Projekt ist für meine Garten Aufgaben");
         project.addRole(new Role("Angestellter", "Sklave", 5.8));
-        project.addRole(new Role("ChÃ¶f", "Benz", 17.3));
+        project.addRole(new Role("Chöf", "Benz", 17.3));
 
         area.addProject(project);
 
         SubProject subProject = new SubProject("Baum Pflege", "");
         project.addSubProject(subProject);
 
-        Task task = new Task("Ã„pfel plÃ¼cken", "Nur die schÃ¶nen dicken Ã„pfel dÃ¼rfen gepflÃ¼ckt werden.");
+        Task task = new Task("Äpfel plücken", "Nur die schönen dicken Äpfel dürfen gepflückt werden.");
         subProject.addTask(task);
 
-        SubProject subProject1 = new SubProject("HÃ¼hner", "");
+        SubProject subProject1 = new SubProject("Hühner", "");
         project.addSubProject(subProject1);
 
         Task task1 = new Task("Stall ausmisten", "");
@@ -52,7 +52,7 @@ public class TestData {
         seg.addSubProject(anaphase);
 
 
-        SubProject sprint2 = new SubProject("2. Sprint", "Unser 2. einwÃ¶chiger Sprint");
+        SubProject sprint2 = new SubProject("2. Sprint", "Unser 2. einwöchiger Sprint");
         pij.addSubProject(sprint2);
 
         Task xml = new Task("XML Import", "XML Datei erzeugen und auslesen", "Annotationen setzen und Adapter schreiben", Role.roleFactory("Student"));
