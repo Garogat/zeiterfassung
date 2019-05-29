@@ -1,6 +1,7 @@
 package zeiterfassung.controllers;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
@@ -20,24 +21,29 @@ public class SubProjectController {
     TextArea description;
 
     @FXML
-    Text workValued;
+    Text timeEstimated;
 
     @FXML
-    Text workDone;
+    Text timeSpent;
+
+    @FXML
+    ProgressBar time;
 
     public void setSubProject(SubProject subProject) {
         this.subProject = subProject;
         name.textProperty().bindBidirectional(subProject.nameProperty());
         description.textProperty().bindBidirectional(subProject.descriptionProperty());
 
-        Duration duration = subProject.getDuration(LocalDateTime.MIN, LocalDateTime.MAX);
-        workValued.setText(subProject.getEstimatedDuration().toHours() + " Stunden");
+        Duration estimatedDuration = subProject.getEstimatedDuration();
+        timeEstimated.setText(Utils.formatDuration(estimatedDuration));
 
-        if (duration.toNanos() > 0) {
-            int percentage = (int) (subProject.getEstimatedDuration().toHours() / duration.toHours());
-            workDone.setText(Utils.formatDuration(subProject.getEstimatedDuration()) + " (" + percentage + " %)");
-        } else {
-            workDone.setText("noch nicht begonnen");
+        Duration duration = subProject.getDuration(LocalDateTime.MIN, LocalDateTime.MAX);
+        int percentage = 0;
+        if (duration.toMinutes() > 0) {
+            percentage = (int) (duration.toMinutes() * 100.0 / estimatedDuration.toMinutes());
         }
+        timeSpent.setText(Utils.formatDuration(duration) + " (" + percentage + "%)");
+        time.setProgress(percentage / 100.0);
+        time.setMaxWidth(Double.MAX_VALUE);
     }
 }

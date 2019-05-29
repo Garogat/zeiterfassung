@@ -1,15 +1,13 @@
 package zeiterfassung.controllers;
 
-import javafx.beans.property.SimpleStringProperty;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import java.lang.String;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
+import zeiterfassung.Utils;
 import zeiterfassung.models.Project;
 import zeiterfassung.models.Role;
-import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -29,10 +27,13 @@ public class ProjectController {
     private TextArea descriptionTextArea;
 
     @FXML
-    private Text actualLabel;
+    private Text timeSpent;
 
     @FXML
-    private Text estimateLabel;
+    private Text timeEstimated;
+
+    @FXML
+    ProgressBar time;
 
     @FXML
     private TableColumn<Role, String> nameCol;
@@ -62,17 +63,24 @@ public class ProjectController {
         customer.setText(project.getCustomer());
 
         //Setting timeframe within which durations of WorkChunks are added up
-        LocalDateTime start = LocalDateTime.parse("2019-05-01T10:20:40.577");
-        LocalDateTime stop = LocalDateTime.parse("2019-06-30T10:20:40.577");
-        Duration duration = project.getDuration(start, stop);
-        estimateLabel.setText("Geschätzte Arbeit: " + "X" + " Stunden");
-        actualLabel.setText("Bisher geleistete Arbeit: " + duration.toHours() + " Stunden");
+        Duration estimatedDuration = project.getEstimatedDuration();
+        timeEstimated.setText(Utils.formatDuration(estimatedDuration));
+
+        Duration duration = project.getDuration(LocalDateTime.MIN, LocalDateTime.MAX);
+        int percentage = 0;
+        if (duration.toMinutes() > 0) {
+            percentage = (int) (duration.toMinutes() * 100.0 / estimatedDuration.toMinutes());
+        }
+        timeSpent.setText(Utils.formatDuration(duration) + " (" + percentage + "%)");
+        time.setProgress(percentage / 100.0);
+        time.setMaxWidth(Double.MAX_VALUE);
 
         nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
         descCol.setCellValueFactory(new PropertyValueFactory<>("description"));
         wageCol.setCellValueFactory(new PropertyValueFactory<>("hourlyWage"));
 
         roleTable.setItems(project.roleListProperty());
+        roleTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
     }
 
     public Project getProject() {
@@ -80,9 +88,9 @@ public class ProjectController {
     }
 
     public void onAddRole(ActionEvent event) {
-        if((newRoleName.getText()!=null)&&(newRoleDescription.getText()!=null)&&(newRoleWage.getText()!=null)){
+        if ((newRoleName.getText() != null) && (newRoleDescription.getText() != null) && (newRoleWage.getText() != null)) {
             Role role = new Role(newRoleName.getText(), newRoleDescription.getText(), Double.parseDouble(newRoleWage.getText()));
-            if(!(project.hasRole(role))){
+            if (!(project.hasRole(role))) {
                 System.out.println(project.hasRole(role));
                 this.project.addRole(role);
                 roleTable.setItems(project.roleListProperty());
@@ -90,12 +98,12 @@ public class ProjectController {
         }
     }
 
-    public void onRemoveRole(ActionEvent event){
+    public void onRemoveRole(ActionEvent event) {
         project.removeRole(roleTable.getSelectionModel().getSelectedItem());
         roleTable.setItems(project.roleListProperty());
     }
 
-    public void setCustomerField(){
+    public void setCustomerField() {
         this.project.setCustomer(customer.getText());
     }
 }

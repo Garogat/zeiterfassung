@@ -3,37 +3,51 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Text?>
-<AnchorPane prefHeight="480.0" prefWidth="640.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
-            AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/8.0.171"
-            xmlns:fx="http://javafx.com/fxml/1" fx:controller="zeiterfassung.controllers.SubProjectController">
-    <children>
-        <TitledPane collapsible="false" text="Unterprojekt" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
-                    AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-            <content>
-                <GridPane>
-                    <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES"/>
-                        <ColumnConstraints hgrow="SOMETIMES"/>
-                    </columnConstraints>
-                    <rowConstraints>
-                        <RowConstraints vgrow="NEVER"/>
-                        <RowConstraints vgrow="NEVER"/>
-                        <RowConstraints vgrow="NEVER"/>
-                        <RowConstraints vgrow="NEVER"/>
-                    </rowConstraints>
+<TitledPane collapsible="false" prefHeight="480.0" prefWidth="640.0" text="Unterprojekt"
+            xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="zeiterfassung.controllers.SubProjectController">
+    <content>
+        <GridPane>
+            <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES"/>
+                <ColumnConstraints hgrow="SOMETIMES"/>
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints vgrow="NEVER"/>
+                <RowConstraints vgrow="NEVER"/>
+                <RowConstraints vgrow="NEVER"/>
+                <RowConstraints vgrow="NEVER"/>
+                <RowConstraints vgrow="NEVER"/>
+            </rowConstraints>
+            <children>
+                <Label text="Name"/>
+                <Label text="Beschreibung" GridPane.rowIndex="1"/>
+                <Label text="Zeit" GridPane.rowIndex="2"/>
+                <TextField fx:id="name" GridPane.columnIndex="1"/>
+                <TextArea fx:id="description" prefHeight="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+                <VBox GridPane.columnIndex="1" GridPane.rowIndex="2">
                     <children>
-                        <Label text="Name"/>
-                        <Label text="Beschreibung" GridPane.rowIndex="1"/>
-                        <Label text="Geschätzte Arbeitszeit" GridPane.rowIndex="2"/>
-                        <Label text="Geleistete Arbeitszeit" GridPane.rowIndex="3"/>
-                        <TextField fx:id="name" GridPane.columnIndex="1"/>
-                        <TextArea fx:id="description" prefHeight="200.0" prefWidth="200.0"
-                                  GridPane.columnIndex="1" GridPane.rowIndex="1"/>
-                        <Text fx:id="workValued" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
-                        <Text fx:id="workDone" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+                        <ProgressBar fx:id="time" progress="0.0"/>
+                        <GridPane>
+                            <columnConstraints>
+                                <ColumnConstraints hgrow="SOMETIMES"/>
+                                <ColumnConstraints hgrow="SOMETIMES"/>
+                                <ColumnConstraints hgrow="SOMETIMES"/>
+                                <ColumnConstraints hgrow="SOMETIMES"/>
+                            </columnConstraints>
+                            <rowConstraints>
+                                <RowConstraints vgrow="SOMETIMES"/>
+                            </rowConstraints>
+                            <children>
+                                <Label text="Verbraucht"/>
+                                <Text fx:id="timeSpent" text="10h 9m" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS"/>
+                                <Label text="Geschätzt" GridPane.columnIndex="2"/>
+                                <Text fx:id="timeEstimated" text="1h 12m" GridPane.columnIndex="3"/>
+                            </children>
+                        </GridPane>
                     </children>
-                </GridPane>
-            </content>
-        </TitledPane>
-    </children>
-</AnchorPane>
+                </VBox>
+            </children>
+        </GridPane>
+    </content>
+</TitledPane>

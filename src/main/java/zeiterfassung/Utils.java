@@ -11,9 +11,22 @@ public class Utils {
     }
 
     public static String formatDuration(Duration dur) {
+        String res = "";
+        if (dur.toMinutes() == 0) {
+            return "0h 0m";
+        }
+
         int hours = (int) dur.getSeconds() / 3600;
-        int minutes = (int) dur.getSeconds() / 60;
-        return hours + " Std " + minutes + " Min";
+        if (hours > 0) {
+            res += hours + "h";
+        }
+
+        int minutes = (int) (dur.getSeconds() % 3600) / 60;
+        if (minutes > 0) {
+            res += " " + minutes + "m";
+        }
+
+        return res;
     }
 
     public static String formatLocalDateTime(LocalDateTime localDateTime) {
