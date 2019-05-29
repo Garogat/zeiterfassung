@@ -15,8 +15,11 @@ public class TreeContextItem {
 
     public interface Listener {
         void onDelete(Area area);
+
         void onDelete(Project project);
+
         void onDelete(SubProject subProject);
+
         void onDelete(Task task);
 
         void onAddArea();
@@ -26,16 +29,20 @@ public class TreeContextItem {
         void onAddSubProject(Project project);
 
         void onAddTask(SubProject subProject);
+
+        void onImportDatabase();
+
+        void onExportDatabase();
     }
 
     public enum Type {ROOT, AREA, PROJECT, SUBPROJECT, TASK}
 
     ;
 
-    private final Node iconRoot =  new ImageView(new Image(getClass().getResourceAsStream("/zeiterfassung/icons/database-25.png")));
-    private final Node iconArea =  new ImageView(new Image(getClass().getResourceAsStream("/zeiterfassung/icons/folder-25.png")));
-    private final Node iconProject =  new ImageView(new Image(getClass().getResourceAsStream("/zeiterfassung/icons/clipboard-25.png")));
-    private final Node iconTask =  new ImageView(new Image(getClass().getResourceAsStream("/zeiterfassung/icons/worker-with-shovel-25.png")));
+    private final Node iconRoot = new ImageView(new Image(getClass().getResourceAsStream("/zeiterfassung/icons/database-25.png")));
+    private final Node iconArea = new ImageView(new Image(getClass().getResourceAsStream("/zeiterfassung/icons/folder-25.png")));
+    private final Node iconProject = new ImageView(new Image(getClass().getResourceAsStream("/zeiterfassung/icons/clipboard-25.png")));
+    private final Node iconTask = new ImageView(new Image(getClass().getResourceAsStream("/zeiterfassung/icons/worker-with-shovel-25.png")));
 
     private StringProperty text = new SimpleStringProperty();
     private List<MenuItem> contextMenu = new ArrayList<>();
@@ -92,7 +99,6 @@ public class TreeContextItem {
         return result;
     }
 
-
     public TreeContextItem setListener(Listener listener) {
         this.listener = listener;
         return this;
@@ -103,6 +109,14 @@ public class TreeContextItem {
         item = root;
         text.set("ZeitErfassung.xml");
         icon = iconRoot;
+
+        MenuItem importDatabase = new MenuItem("Datenbank importieren");
+        importDatabase.setOnAction(event -> listener.onImportDatabase());
+        contextMenu.add(importDatabase);
+
+        MenuItem exportDatabase = new MenuItem("Datenbank exportieren");
+        exportDatabase.setOnAction(event -> listener.onExportDatabase());
+        contextMenu.add(exportDatabase);
 
         contextMenu.add(addArea());
     }

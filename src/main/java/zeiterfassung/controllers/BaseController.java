@@ -1,6 +1,5 @@
 package zeiterfassung.controllers;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -8,13 +7,19 @@ import javafx.scene.control.*;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.FileChooser;
+import zeiterfassung.Main;
 import zeiterfassung.components.ActiveWorkChunk;
 import zeiterfassung.components.Tree;
 import zeiterfassung.components.TreeContextItem;
 import zeiterfassung.models.*;
 import zeiterfassung.xml.DataStore;
 
+import javax.xml.bind.JAXBException;
+import java.io.File;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.nio.file.Files;
 
 public class BaseController {
 
@@ -38,8 +43,6 @@ public class BaseController {
 
     @FXML
     public void initialize() {
-        setContent("Start");
-
         // TODO: add resize listener to correctly set divider position
         splitPane.setDividerPositions(0.3);
 
@@ -98,6 +101,16 @@ public class BaseController {
                 task.setName("Neuer Task");
                 subProject.addTask(task);
             }
+
+            @Override
+            public void onImportDatabase() {
+                importDatabase();
+            }
+
+            @Override
+            public void onExportDatabase() {
+                exportDatabase();
+            }
         };
     }
 
@@ -145,32 +158,7 @@ public class BaseController {
             }
         });
 
-        // Hide the root Item.
-        // projectTree.setShowRoot(false);
-        projectTree.refresh();
-    }
-
-    private void openView(TreeContextItem item) {
-        // TODO: open depending content view
-        System.out.println("open " + item.getType().name() + " view");
-
-        switch (item.getType()) {
-            case AREA:
-                openView((Area) item.getItem());
-                break;
-            case PROJECT:
-                openView((Project) item.getItem());
-                break;
-            case SUBPROJECT:
-                openView((SubProject) item.getItem());
-                break;
-            case TASK:
-                openView((Task) item.getItem());
-                break;
-            default:
-                setContent("Start");
-                break;
-        }
+        openStart();
     }
 
     private AreaController openView(Area area) {
@@ -193,8 +181,32 @@ public class BaseController {
 
     private TaskController openView(Task task) {
         TaskController taskController = (TaskController) setContent("Task");
-        taskController.setTask(task,  activeWorkChunk);
+        taskController.setTask(task, activeWorkChunk);
         return taskController;
+    }
+
+    private StartController openStart() {
+        return (StartController) setContent("Start");
+    }
+
+    private void openView(TreeContextItem item) {
+        switch (item.getType()) {
+            case AREA:
+                openView((Area) item.getItem());
+                break;
+            case PROJECT:
+                openView((Project) item.getItem());
+                break;
+            case SUBPROJECT:
+                openView((SubProject) item.getItem());
+                break;
+            case TASK:
+                openView((Task) item.getItem());
+                break;
+            default:
+                openStart();
+                break;
+        }
     }
 
     @FXML
@@ -220,6 +232,68 @@ public class BaseController {
             // show menu
             contextMenu.show(projectTree, event.getScreenX(), event.getScreenY());
         }
+    }
+
+    @FXML
+    private void importDatabase() {
+        FileChooser chooser = new FileChooser();
+        chooser.setTitle("Datenbank auswählen");
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("XML Datenbank (*.xml)", "*.xml");
+        chooser.getExtensionFilters().add(extFilter);
+
+        File newDatabase = chooser.showOpenDialog(content.getScene().getWindow());
+        File currentDatabase = new File(DataStore.XMLFilePath);
+        File backupDatabase = new File("ZeitErfassung_Backup.xml");
+
+        // save current database to backup file
+        try {
+            store.saveToXML(backupDatabase);
+        } catch (JAXBException e) {
+            e.printStackTrace();
+        }
+
+        // save imported database
+        try {
+            String content = new String(Files.readAllBytes(newDatabase.toPath()));
+            PrintWriter writer = new PrintWriter(currentDatabase);
+            writer.println(content);
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // restart application
+        Main.restart();
+
+        // alert user
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("ZeitErfassung");
+        alert.setHeaderText(null);
+        alert.setContentText("Die neue Datenbank wurde erfolgreich importiert.");
+        alert.showAndWait();
+    }
+
+    @FXML
+    private void exportDatabase() {
+        FileChooser chooser = new FileChooser();
+        chooser.setTitle("Datenbank exportieren");
+        chooser.setInitialFileName(DataStore.XMLFilePath);
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("XML Datenbank (*.xml)", "*.xml");
+        chooser.getExtensionFilters().add(extFilter);
+
+        File file = chooser.showSaveDialog(content.getScene().getWindow());
+
+        try {
+            this.store.saveToXML(file);
+        } catch (JAXBException e) {
+            e.printStackTrace();
+        }
+
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("ZeitErfassung");
+        alert.setHeaderText(null);
+        alert.setContentText("Die Datenbank wurde erfolgreich exportiert.");
+        alert.showAndWait();
     }
 }
 

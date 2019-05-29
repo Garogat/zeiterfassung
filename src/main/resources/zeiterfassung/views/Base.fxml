@@ -18,4 +18,17 @@
             </items>
         </SplitPane>
     </center>
+    <top>
+        <MenuBar BorderPane.alignment="CENTER">
+            <menus>
+                <Menu mnemonicParsing="false" text="File"/>
+                <Menu mnemonicParsing="false" text="Datenbank">
+                    <items>
+                        <MenuItem mnemonicParsing="false" text="Importien" onAction="#importDatabase"/>
+                        <MenuItem mnemonicParsing="false" text="Exportieren" onAction="#exportDatabase"/>
+                    </items>
+                </Menu>
+            </menus>
+        </MenuBar>
+    </top>
 </BorderPane>
