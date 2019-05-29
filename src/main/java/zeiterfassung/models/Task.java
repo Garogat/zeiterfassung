@@ -1,13 +1,12 @@
 package zeiterfassung.models;
 
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import zeiterfassung.xml.DurationAdapter;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.*;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -21,9 +20,10 @@ public class Task extends DescribableModel implements TimeableWork {
     private LocalDateTime workStartTime;
     private LocalDateTime workEndTime;
     private String workDescription;
-    private Role role;
-    @XmlJavaTypeAdapter(DurationAdapter.class)
-    private Duration estimatedDuration = Duration.ZERO;
+    private String roleId;
+
+    @XmlTransient
+    private ObjectProperty<Duration> estimatedDuration = new SimpleObjectProperty<>(Duration.ZERO);
 
     public Task() {
         super();
@@ -44,6 +44,11 @@ public class Task extends DescribableModel implements TimeableWork {
 
     public ObservableList<WorkChunk> workListProperty() {
         return workList;
+    }
+
+    public ObjectProperty<Duration> estimatedDurationProperty() {
+        return estimatedDuration;
+
     }
 
     public void addWorkChunk(WorkChunk workChunk) {
@@ -74,11 +79,16 @@ public class Task extends DescribableModel implements TimeableWork {
     }
 
     public Role getRole() {
-        return role;
+        Project tmpProject = (Project) getParentByType(Project.class);
+        if (tmpProject != null) {
+            return tmpProject.getRole(roleId);
+        }
+
+        return null;
     }
 
     public void setRole(Role role) {
-        this.role = role;
+        this.roleId = role.getId();
     }
 
     public boolean hasWorkStarted() {
@@ -123,11 +133,12 @@ public class Task extends DescribableModel implements TimeableWork {
         workList.add(newWork);
     }
 
+    @XmlJavaTypeAdapter(DurationAdapter.class)
     public Duration getEstimatedDuration() {
-        return estimatedDuration;
+        return estimatedDuration.get();
     }
 
     public void setEstimatedDuration(Duration estimatedTime) {
-        this.estimatedDuration = estimatedTime;
+        this.estimatedDuration.setValue(estimatedTime);
     }
 }

@@ -1,6 +1,5 @@
 package zeiterfassung.reports;
 
-import com.sun.org.apache.xerces.internal.impl.dv.xs.DayDV;
 import zeiterfassung.models.*;
 
 import java.math.BigDecimal;
@@ -62,8 +61,6 @@ public class ReportDocumentTest {
         myArea.setName("My Area");
         myArea.addProject(myProject);
         myArea.addProject(myProject);
-
-
     }
 
     @org.junit.Test

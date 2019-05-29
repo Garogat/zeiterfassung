@@ -5,13 +5,21 @@ import javax.xml.bind.annotation.XmlAccessorType;
 
 @XmlAccessorType(XmlAccessType.NONE)
 public abstract class BaseModel {
-    private Object parent;
+    private BaseModel parent;
 
-    public Object getParent() {
+    public BaseModel getParent() {
         return parent;
     }
 
-    public void setParent(Object parent) {
+    public void setParent(BaseModel parent) {
         this.parent = parent;
+    }
+
+    public BaseModel getParentByType(Class type){
+        BaseModel tmpModel = getParent();
+        while (tmpModel != null && !(type.isInstance(tmpModel))){
+            tmpModel = tmpModel.getParent();
+        }
+        return tmpModel;
     }
 }

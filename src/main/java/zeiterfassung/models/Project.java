@@ -2,6 +2,8 @@ package zeiterfassung.models;
 
 import javafx.beans.property.ListProperty;
 import javafx.beans.property.SimpleListProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -15,6 +17,8 @@ import java.time.LocalDateTime;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement
 public class Project extends SubProject {
+    String customer;
+
     @XmlElement(name = "Role")
     //List<Role> roleList = new ArrayList<>();
     private ObservableList<Role> roleList = FXCollections.observableArrayList();
@@ -65,6 +69,26 @@ public class Project extends SubProject {
         roles.getList(roleList);
     }
 
+    public Role getRole(String id){
+        for (Role role: roleList){
+            if (role.getId().equals(id)){
+                return role;
+            }
+        }
+        return getDefaultRole();
+    }
+
+    public Role getRoleByIdx(int idx){
+        return roleList.get(idx);
+    }
+
+    public Role getDefaultRole(){
+        if (roleList.size() > 0){
+            return roleList.get(0);
+        }
+        return null;
+    }
+
     public boolean addRole(Role newRole) {
         return roleList.add(newRole);
     }
@@ -75,6 +99,24 @@ public class Project extends SubProject {
 
     public boolean hasRole(Role role) {
         return roleList.contains(role);
+    }
+
+    public Role findRoleByID(String id){
+        for (Role role: roleList){
+            if (role.getId().equals(id)){
+                return role;
+            }
+        }
+        return null;
+    }
+
+
+    public String getCustomer(){
+        return customer;
+    }
+
+    public void setCustomer(String customer){
+        this.customer = customer;
     }
 
     @Override
