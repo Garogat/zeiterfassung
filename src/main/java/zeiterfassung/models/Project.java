@@ -2,6 +2,8 @@ package zeiterfassung.models;
 
 import javafx.beans.property.ListProperty;
 import javafx.beans.property.SimpleListProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -11,12 +13,12 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement
 public class Project extends SubProject {
+    String customer;
+
     @XmlElement(name = "Role")
     //List<Role> roleList = new ArrayList<>();
     private ObservableList<Role> roleList = FXCollections.observableArrayList();
@@ -109,11 +111,28 @@ public class Project extends SubProject {
     }
 
 
+    public String getCustomer(){
+        return customer;
+    }
+
+    public void setCustomer(String customer){
+        this.customer = customer;
+    }
+
     @Override
     public Duration getDuration(LocalDateTime start, LocalDateTime stop) {
         Duration duration = super.getDuration(start, stop);
         for (SubProject sp : subProjectList) {
             duration = duration.plus(sp.getDuration(start, stop));
+        }
+        return duration;
+    }
+
+    @Override
+    public Duration getEstimatedDuration() {
+        Duration duration = super.getEstimatedDuration();
+        for (SubProject sp : subProjectList) {
+            duration = duration.plus(sp.getEstimatedDuration());
         }
         return duration;
     }

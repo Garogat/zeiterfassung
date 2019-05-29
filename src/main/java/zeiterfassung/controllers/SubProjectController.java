@@ -3,6 +3,7 @@ package zeiterfassung.controllers;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.text.Text;
 import zeiterfassung.models.SubProject;
 
 import java.time.Duration;
@@ -17,25 +18,26 @@ public class SubProjectController {
     @FXML
     TextArea description;
 
-    /* @Todo Replace
-     */
     @FXML
-    TextArea work;
+    Text workValued;
+
+    @FXML
+    Text workDone;
 
     public void setSubProject(SubProject subProject) {
         this.subProject = subProject;
         name.textProperty().bindBidirectional(subProject.nameProperty());
         description.textProperty().bindBidirectional(subProject.descriptionProperty());
 
-        //Setting timeframe within which durations of WorkChunks are added up
-        LocalDateTime start = LocalDateTime.parse("2019-05-01T10:20:40.577");
-        LocalDateTime stop = LocalDateTime.parse("2019-06-30T10:20:40.577");
-        Duration duration = subProject.getDuration(start, stop);
-        work.setText("GeschÃ¤tzte Arbeit: "+"X" + " Stunden\n" +
-                "Bisher geleistete Arbeit: "+duration.toHours()+" Stunden");
-    }
+        // TODO: set valued time
+        Duration duration = subProject.getDuration(LocalDateTime.MIN, LocalDateTime.MAX);
+        workValued.setText(subProject.getEstimatedDuration().toHours() + " Stunden");
 
-    public SubProject getSubProject() {
-        return subProject;
+        if (duration.toHours() > 0) {
+            int percentage = (int) (subProject.getEstimatedDuration().toHours() / duration.toHours());
+            workDone.setText(duration.toHours() + " Stunden (" + percentage + " %)");
+        } else {
+            workDone.setText("noch nicht begonnen");
+        }
     }
 }

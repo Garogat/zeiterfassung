@@ -8,12 +8,16 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
+import javafx.util.Callback;
 import javafx.util.StringConverter;
+import zeiterfassung.Utils;
 import zeiterfassung.components.ActiveWorkChunk;
 import zeiterfassung.models.*;
 
 
+import java.time.Duration;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class TaskController {
     private Task task;
@@ -45,7 +49,7 @@ public class TaskController {
     private TableColumn<WorkChunk, LocalDateTime> endCol;
 
     @FXML
-    private TableColumn<WorkChunk, Double> durCol;
+    private TableColumn<WorkChunk, Duration> durCol;
 
     @FXML
     private TableColumn<WorkChunk, Double> descCol;
@@ -85,7 +89,6 @@ public class TaskController {
     }
 
 
-
     public void setTask(Task task, ActiveWorkChunk activeWorkChunk) {
         this.task = task;
         this.activeWorkChunk = activeWorkChunk;
@@ -94,14 +97,29 @@ public class TaskController {
         nameTextField.textProperty().bindBidirectional(task.nameProperty());
         descriptionTextArea.textProperty().bindBidirectional(task.descriptionProperty());
 
+        estimatedDurationTextField.textProperty().bindBidirectional(task.estimatedDurationProperty(), new StringConverter<Duration>(){
+                    @Override
+                    public String toString(Duration object) {
+                        return String.valueOf(object.getSeconds()/3600);
+                    }
+
+                    @Override
+                    public Duration fromString(String string) {
+                        try {
+                            Duration res = Duration.ofHours(Integer.valueOf(string));
+                            return res;
+                        }catch (NumberFormatException e){
+                            return Duration.ZERO;
+                        }
+                    }
+                }
+        );
 
         startBtn.setVisible(this.activeWorkChunk.getActiveWorkChunk() == null || ActiveWorkChunk.isWorkChunkInTask(this.activeWorkChunk.getActiveWorkChunk(), task));
         stopBtn.setVisible(startBtn.isVisible());
         workchuncDescription.setVisible(startBtn.isVisible());
 
         setEditWorkChunk();
-
-       // estimatedDurationTextField.textProperty().bindBidirectional(task.);
 
         roleChoiceBox.setItems(((Project)task.getParentByType(Project.class)).roleListProperty());
         roleChoiceBox.setConverter(new StringConverter<Role>() {
@@ -123,6 +141,7 @@ public class TaskController {
             @Override
             public void changed(ObservableValue<? extends Role> observable, Role oldValue, Role newValue) {
                 task.setRole(newValue);
+                updateCostDuration();
             }
         });
 
@@ -136,7 +155,7 @@ public class TaskController {
                 if (empty)
                     setText(null);
                 else
-                    setText(String.format(item.toString()));
+                    setText(Utils.formatLocalDateTime(item));
             }
         });
         endCol.setCellValueFactory(new PropertyValueFactory<>("endTime"));
@@ -146,11 +165,24 @@ public class TaskController {
                 super.updateItem(item, empty);
                 if (empty || item == null)
                     setText(null);
-                else
-                    setText(String.format(item.toString()));
+                else {
+                    setText(Utils.formatLocalDateTime(item));
+                }
             }
         });
         durCol.setCellValueFactory(new PropertyValueFactory<>("duration"));
+        durCol.setCellFactory(col -> new TableCell<WorkChunk, Duration>() {
+            @Override
+            protected void updateItem(Duration item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null)
+                    setText(null);
+                else {
+                    setText(Utils.formatDuration(item));
+                }
+            }
+        });
+
         descCol.setCellValueFactory(new PropertyValueFactory<>("description"));
 
         workchunkTable.setItems(task.workListProperty());
@@ -160,8 +192,8 @@ public class TaskController {
 
 
     private void updateCostDuration(){
-        costsLabel.setText(task.getCosts(LocalDateTime.MIN, LocalDateTime.MAX)+"€");
-        durationLabel.setText( task.getDuration(LocalDateTime.MIN, LocalDateTime.MAX).getSeconds()/(60*60)+ "Std");
+        costsLabel.setText(Utils.formatCosts( task.getCosts(LocalDateTime.MIN, LocalDateTime.MAX)));
+        durationLabel.setText( Utils.formatDuration(task.getDuration(LocalDateTime.MIN, LocalDateTime.MAX)));
     }
 
     public Task getTask() {
