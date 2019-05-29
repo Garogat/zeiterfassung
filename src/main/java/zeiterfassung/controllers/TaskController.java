@@ -8,16 +8,16 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
-import javafx.util.Callback;
 import javafx.util.StringConverter;
 import zeiterfassung.Utils;
 import zeiterfassung.components.ActiveWorkChunk;
-import zeiterfassung.models.*;
-
+import zeiterfassung.models.Project;
+import zeiterfassung.models.Role;
+import zeiterfassung.models.Task;
+import zeiterfassung.models.WorkChunk;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 public class TaskController {
     private Task task;
@@ -67,11 +67,11 @@ public class TaskController {
     private Button stopBtn;
 
 
-    private void setEditWorkChunk(){
-        boolean editable = ActiveWorkChunk.isWorkChunkInTask(this.activeWorkChunk.getActiveWorkChunk(), task)  || this.activeWorkChunk.getActiveWorkChunk() == null;
+    private void setEditWorkChunk() {
+        boolean editable = ActiveWorkChunk.isWorkChunkInTask(this.activeWorkChunk.getActiveWorkChunk(), task) || this.activeWorkChunk.getActiveWorkChunk() == null;
         if (editable) {
             editWorkChunk = this.activeWorkChunk.getActiveWorkChunk();
-        }else {
+        } else {
             editWorkChunk = null;
         }
 
@@ -80,7 +80,7 @@ public class TaskController {
         descriptionTextArea.setVisible(editable);
         if (editWorkChunk != null) {
             workchuncDescription.textProperty().bindBidirectional(editWorkChunk.descriptionProperty());
-        }else{
+        } else {
             workchuncDescription.setText("");
         }
         startBtn.setDisable(!editable || editWorkChunk != null);
@@ -93,14 +93,13 @@ public class TaskController {
         this.task = task;
         this.activeWorkChunk = activeWorkChunk;
 
-
         nameTextField.textProperty().bindBidirectional(task.nameProperty());
         descriptionTextArea.textProperty().bindBidirectional(task.descriptionProperty());
 
-        estimatedDurationTextField.textProperty().bindBidirectional(task.estimatedDurationProperty(), new StringConverter<Duration>(){
+        estimatedDurationTextField.textProperty().bindBidirectional(task.estimatedDurationProperty(), new StringConverter<Duration>() {
                     @Override
                     public String toString(Duration object) {
-                        return String.valueOf(object.getSeconds()/3600);
+                        return String.valueOf(object.getSeconds() / 3600);
                     }
 
                     @Override
@@ -108,7 +107,7 @@ public class TaskController {
                         try {
                             Duration res = Duration.ofHours(Integer.valueOf(string));
                             return res;
-                        }catch (NumberFormatException e){
+                        } catch (NumberFormatException e) {
                             return Duration.ZERO;
                         }
                     }
@@ -121,7 +120,7 @@ public class TaskController {
 
         setEditWorkChunk();
 
-        roleChoiceBox.setItems(((Project)task.getParentByType(Project.class)).roleListProperty());
+        roleChoiceBox.setItems(((Project) task.getParentByType(Project.class)).roleListProperty());
         roleChoiceBox.setConverter(new StringConverter<Role>() {
             @Override
             public String toString(Role role) {
@@ -186,14 +185,15 @@ public class TaskController {
         descCol.setCellValueFactory(new PropertyValueFactory<>("description"));
 
         workchunkTable.setItems(task.workListProperty());
+        workchunkTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
         updateCostDuration();
     }
 
 
-    private void updateCostDuration(){
-        costsLabel.setText(Utils.formatCosts( task.getCosts(LocalDateTime.MIN, LocalDateTime.MAX)));
-        durationLabel.setText( Utils.formatDuration(task.getDuration(LocalDateTime.MIN, LocalDateTime.MAX)));
+    private void updateCostDuration() {
+        costsLabel.setText(Utils.formatCosts(task.getCosts(LocalDateTime.MIN, LocalDateTime.MAX)));
+        durationLabel.setText(Utils.formatDuration(task.getDuration(LocalDateTime.MIN, LocalDateTime.MAX)));
     }
 
     public Task getTask() {
