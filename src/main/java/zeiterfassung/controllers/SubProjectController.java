@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
+import zeiterfassung.Utils;
 import zeiterfassung.models.SubProject;
 
 import java.time.Duration;
@@ -29,13 +30,12 @@ public class SubProjectController {
         name.textProperty().bindBidirectional(subProject.nameProperty());
         description.textProperty().bindBidirectional(subProject.descriptionProperty());
 
-        // TODO: set valued time
         Duration duration = subProject.getDuration(LocalDateTime.MIN, LocalDateTime.MAX);
         workValued.setText(subProject.getEstimatedDuration().toHours() + " Stunden");
 
-        if (duration.toHours() > 0) {
+        if (duration.toNanos() > 0) {
             int percentage = (int) (subProject.getEstimatedDuration().toHours() / duration.toHours());
-            workDone.setText(duration.toHours() + " Stunden (" + percentage + " %)");
+            workDone.setText(Utils.formatDuration(subProject.getEstimatedDuration()) + " (" + percentage + " %)");
         } else {
             workDone.setText("noch nicht begonnen");
         }
