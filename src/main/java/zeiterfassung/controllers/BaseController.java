@@ -243,6 +243,11 @@ public class BaseController {
         chooser.getExtensionFilters().add(extFilter);
 
         File newDatabase = chooser.showOpenDialog(content.getScene().getWindow());
+
+        if (newDatabase == null) {
+            return;
+        }
+
         File currentDatabase = new File(DataStore.XMLFilePath);
         File backupDatabase = new File("ZeitErfassung_Backup.xml");
 
@@ -279,6 +284,10 @@ public class BaseController {
         chooser.getExtensionFilters().add(extFilter);
 
         File file = chooser.showSaveDialog(content.getScene().getWindow());
+
+        if (file == null) {
+            return;
+        }
 
         try {
             this.store.saveToXML(file);
