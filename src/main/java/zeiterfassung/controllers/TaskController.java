@@ -19,6 +19,9 @@ import zeiterfassung.models.WorkChunk;
 import java.time.Duration;
 import java.time.LocalDateTime;
 
+/**
+ * Provides the interface between task View and Task model
+ */
 public class TaskController {
     private Task task;
     private ActiveWorkChunk activeWorkChunk;
@@ -66,7 +69,10 @@ public class TaskController {
     @FXML
     private Button stopBtn;
 
-
+    /**
+     * Determines if a WorkChunk is open and if the WorkChunk belongs to this Task.
+     * It shows and enables the buttons so that you can not start a second WorkChunk
+     */
     private void setEditWorkChunk() {
         boolean editable = ActiveWorkChunk.isWorkChunkInTask(this.activeWorkChunk.getActiveWorkChunk(), task) || this.activeWorkChunk.getActiveWorkChunk() == null;
         if (editable) {
@@ -88,14 +94,22 @@ public class TaskController {
         workchuncDescription.setDisable(editWorkChunk == null);
     }
 
-
+    /**
+     * Initializes the Controller with a Task
+     * @param task This Task is handled by the Controller
+     * @param activeWorkChunk Is needed to determine, if a Task is running
+     */
     public void setTask(Task task, ActiveWorkChunk activeWorkChunk) {
         this.task = task;
         this.activeWorkChunk = activeWorkChunk;
 
-        nameTextField.textProperty().bindBidirectional(task.nameProperty());
-        descriptionTextArea.textProperty().bindBidirectional(task.descriptionProperty());
+        /* Bindings */
 
+        // Name
+        nameTextField.textProperty().bindBidirectional(task.nameProperty());
+        // Description
+        descriptionTextArea.textProperty().bindBidirectional(task.descriptionProperty());
+        // Estimated Time
         estimatedDurationTextField.textProperty().bindBidirectional(task.estimatedDurationProperty(), new StringConverter<Duration>() {
                     @Override
                     public String toString(Duration object) {
@@ -114,12 +128,10 @@ public class TaskController {
                 }
         );
 
-        startBtn.setVisible(this.activeWorkChunk.getActiveWorkChunk() == null || ActiveWorkChunk.isWorkChunkInTask(this.activeWorkChunk.getActiveWorkChunk(), task));
-        stopBtn.setVisible(startBtn.isVisible());
-        workchuncDescription.setVisible(startBtn.isVisible());
-
+        // Enable/ Disable/ Hide Start and Stop Task
         setEditWorkChunk();
 
+        // Roles
         roleChoiceBox.setItems(((Project) task.getParentByType(Project.class)).roleListProperty());
         roleChoiceBox.setConverter(new StringConverter<Role>() {
             @Override
@@ -143,9 +155,9 @@ public class TaskController {
                 updateCostDuration();
             }
         });
-
         roleChoiceBox.getSelectionModel().select(task.getRole());
 
+        // WorkChunks
         startCol.setCellValueFactory(new PropertyValueFactory<>("startTime"));
         startCol.setCellFactory(col -> new TableCell<WorkChunk, LocalDateTime>() {
             @Override
@@ -190,7 +202,9 @@ public class TaskController {
         updateCostDuration();
     }
 
-
+    /**
+     * recalculates the duration and the costs
+     */
     private void updateCostDuration() {
         costsLabel.setText(Utils.formatCosts(task.getCosts(LocalDateTime.MIN, LocalDateTime.MAX)));
         durationLabel.setText(Utils.formatDuration(task.getDuration(LocalDateTime.MIN, LocalDateTime.MAX)));
@@ -200,6 +214,10 @@ public class TaskController {
         return task;
     }
 
+    /**
+     * Starts a Task and generates a new WorkChunk
+     * @param actionEvent
+     */
     public void onStartBtn(ActionEvent actionEvent) {
         WorkChunk newWc = new WorkChunk();
         newWc.setStartTime(LocalDateTime.now());
@@ -207,6 +225,10 @@ public class TaskController {
         setEditWorkChunk();
     }
 
+    /**
+     * Stops a Task
+     * @param actionEvent
+     */
     public void onStopBtn(ActionEvent actionEvent) {
         workchuncDescription.textProperty().unbindBidirectional(editWorkChunk.descriptionProperty());
         editWorkChunk.setEndTime(LocalDateTime.now());

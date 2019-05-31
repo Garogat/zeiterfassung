@@ -1,5 +1,8 @@
 package htmlProducer;
 
+/**
+ * Factory to create specific HTML elements
+ */
 public enum HtmlFactory implements HtmlBuilder{
     TD(()->{return new HtmlTagElement("td");}),
     TR(()->{return new HtmlTagElement("tr");}),
@@ -20,6 +23,7 @@ public enum HtmlFactory implements HtmlBuilder{
 
     private HtmlBuilder attribute;
 
+    //
     HtmlFactory(HtmlBuilder hb) {
         attribute = hb;
     }
