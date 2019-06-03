@@ -36,6 +36,7 @@ public class WorkChunk extends BaseModel {
     }
 
     @XmlJavaTypeAdapter(LocalDateTimeAdapter.class)
+    @XmlElement(name = "start")
     public LocalDateTime getStartTime() {
         return startTime.getValue();
     }
@@ -45,6 +46,7 @@ public class WorkChunk extends BaseModel {
     }
 
     @XmlJavaTypeAdapter(LocalDateTimeAdapter.class)
+    @XmlElement(name = "end")
     public LocalDateTime getEndTime() {
         return endTime.get();
     }

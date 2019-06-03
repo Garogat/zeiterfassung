@@ -1,6 +1,6 @@
 package zeiterfassung.xml;
 
-import zeiterfassung.models.*;
+import zeiterfassung.models.TimeRegistrationRoot;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -55,7 +55,7 @@ public class DataStore {
     }
 
     private JAXBContext getXMlContext() throws JAXBException {
-        JAXBContext jbc = JAXBContext.newInstance(TimeRegistrationRoot.class, Area.class, Project.class, SubProject.class, Task.class, WorkChunk.class);
+        JAXBContext jbc = JAXBContext.newInstance(TimeRegistrationRoot.class);
         return jbc;
     }
 }

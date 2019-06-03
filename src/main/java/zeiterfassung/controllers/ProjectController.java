@@ -14,9 +14,7 @@ import java.time.LocalDateTime;
 
 public class ProjectController {
     private Project project;
-    /*
-    @Todo add roles (copy from TaskController), add Auftraggeber
-     */
+
     @FXML
     private TextField nameTextField;
 
@@ -63,9 +61,9 @@ public class ProjectController {
         this.project = project;
         nameTextField.textProperty().bindBidirectional(project.nameProperty());
         descriptionTextArea.textProperty().bindBidirectional(project.descriptionProperty());
-        customer.setText(project.getCustomer());
+        customer.textProperty().bindBidirectional(project.customerProperty());
 
-        //Setting timeframe within which durations of WorkChunks are added up
+        // Setting timeframe within which durations of WorkChunks are added up
         Duration estimatedDuration = project.getEstimatedDuration();
         timeEstimated.setText(Utils.formatDuration(estimatedDuration));
 
@@ -114,9 +112,5 @@ public class ProjectController {
 
         project.removeRole(roleTable.getSelectionModel().getSelectedItem());
         roleTable.setItems(project.roleListProperty());
-    }
-
-    public void setCustomerField() {
-        this.project.setCustomer(customer.getText());
     }
 }

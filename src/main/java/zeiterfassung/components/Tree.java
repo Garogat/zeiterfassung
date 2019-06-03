@@ -46,7 +46,7 @@ public class Tree {
      * @return sub-tree
      */
     private TreeItem<TreeContextItem> build(TimeRegistrationRoot root) {
-        TreeItem<TreeContextItem> rootItem = new TreeItem<>(new TreeContextItem(this.root));
+        TreeItem<TreeContextItem> rootItem = new TreeItem<>(new TreeContextItem(root));
         rootItem.setExpanded(true);
 
         root.areaListProperty().addListener((ListChangeListener.Change<? extends Area> change) -> {
