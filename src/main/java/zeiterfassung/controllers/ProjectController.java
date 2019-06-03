@@ -71,7 +71,9 @@ public class ProjectController {
 
         Duration duration = project.getDuration(LocalDateTime.MIN, LocalDateTime.MAX);
         int percentage = 0;
-        if (duration.toMinutes() > 0) {
+        if (estimatedDuration.toMinutes() == 0) {
+            percentage = 100;
+        } else if (duration.toMinutes() > 0) {
             percentage = (int) (duration.toMinutes() * 100.0 / estimatedDuration.toMinutes());
         }
         timeSpent.setText(Utils.formatDuration(duration) + " (" + percentage + "%)");
@@ -82,7 +84,7 @@ public class ProjectController {
         descCol.setCellValueFactory(new PropertyValueFactory<>("description"));
         wageCol.setCellValueFactory(new PropertyValueFactory<>("hourlyWage"));
 
-        costLabel.setText(""+project.getCosts(LocalDateTime.MIN, LocalDateTime.MAX)+"€");
+        costLabel.setText("" + project.getCosts(LocalDateTime.MIN, LocalDateTime.MAX) + "€");
 
         roleTable.setItems(project.roleListProperty());
         roleTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
