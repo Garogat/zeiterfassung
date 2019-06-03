@@ -52,6 +52,7 @@ public class ReportDocumentTest {
 
         myProject = new Project();
         myProject.setName("my Project");
+        myProject.setCustomer("MusterGmbH\nMax Mustermann\nMusterstraße 17\n12345 Musterstadt");
         myProject.addTask(myTask);
         myProject.addTask(myTask);
         myProject.addSubProject(mySubproject);
@@ -96,10 +97,21 @@ public class ReportDocumentTest {
         assertTrue(html.charAt(0) == '<');
     }
 
+    @org.junit.Test
+    public void testProjectIncvoice() {
+        ReportDocument test = new ReportDocument("Rechnung", new ProjectInvoice(myProject));
+
+        String html = test.getHtmlNode().getHTMLCode();
+        assertTrue(html.charAt(0) == '<');
+    }
+
 
     @org.junit.Test
     public void testTaskDuration() {
         assertTrue(myTask.getDuration(LocalDateTime.MIN, LocalDateTime.MAX).toMinutes() != 0);
-
     }
+
+
+
+
 }
