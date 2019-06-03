@@ -14,6 +14,11 @@ public class ZeitErfassung {
     private Stage stage;
     private DataStore store;
 
+    /**
+     * Constructor to create a new tool instace
+     *
+     * @param stage stage to
+     */
     public ZeitErfassung(Stage stage) {
         this.stage = stage;
 

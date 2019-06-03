@@ -4,6 +4,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.scene.Node;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.TreeItem;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import zeiterfassung.models.*;
@@ -11,8 +12,14 @@ import zeiterfassung.models.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * A special {@link TreeItem} content wrapper including a special contextmenu, icon, ...
+ */
 public class TreeContextItem {
 
+    /**
+     * Listener for contextmenu actions
+     */
     public interface Listener {
         void onDelete(Area area);
 
@@ -35,46 +42,112 @@ public class TreeContextItem {
         void onExportDatabase();
     }
 
+    /**
+     * Enum for type of the wrappers content
+     */
     public enum Type {ROOT, AREA, PROJECT, SUBPROJECT, TASK}
 
     ;
 
+    /**
+     * Icon for {@link TimeRegistrationRoot}
+     */
     private final Node iconRoot = new ImageView(new Image(getClass().getResourceAsStream("/zeiterfassung/icons/database-25.png")));
+
+    /**
+     * Icon for {@link Area}
+     */
     private final Node iconArea = new ImageView(new Image(getClass().getResourceAsStream("/zeiterfassung/icons/folder-25.png")));
+
+    /**
+     * Icon for {@link Project} and {@link SubProject}
+     */
     private final Node iconProject = new ImageView(new Image(getClass().getResourceAsStream("/zeiterfassung/icons/clipboard-25.png")));
+
+    /**
+     * Icon for {@link Task}
+     */
     private final Node iconTask = new ImageView(new Image(getClass().getResourceAsStream("/zeiterfassung/icons/worker-with-shovel-25.png")));
 
+    /**
+     * String property for {@link TreeItem} text
+     */
     private StringProperty text = new SimpleStringProperty();
+
+    /**
+     * contextmenu
+     */
     private List<MenuItem> contextMenu = new ArrayList<>();
+
+    /**
+     * Type of {@code item}
+     */
     private Type type;
+
+    /**
+     * Model represented by {@link TreeItem}
+     */
     private Object item;
+
+    /**
+     * Contextmenu action listener
+     */
     private Listener listener;
+
+    /**
+     * Icon of this instance
+     */
     private Node icon;
 
+    /**
+     * Add area menu item and set it's listener
+     *
+     * @return "Add area" menu item
+     */
     private MenuItem addArea() {
         MenuItem result = new MenuItem("Bereich anlegen");
         result.setOnAction(event -> listener.onAddArea());
         return result;
     }
 
+    /**
+     * Add porject menu item and set it's listener
+     *
+     * @return "Add project" menu item
+     */
     private MenuItem addProject() {
         MenuItem result = new MenuItem("Projekt anlegen");
         result.setOnAction(event -> listener.onAddProject((Area) item));
         return result;
     }
 
+    /**
+     * "Add subproject" menu item and set it's listener
+     *
+     * @return "Add subproject" menu item
+     */
     private MenuItem addSubProject() {
         MenuItem result = new MenuItem("Unterprojekt anlegen");
         result.setOnAction(event -> listener.onAddSubProject((Project) item));
         return result;
     }
 
+    /**
+     * "Add task" menu item and set it's listener
+     *
+     * @return "Add task" menu item
+     */
     private MenuItem addTask() {
         MenuItem result = new MenuItem("Aufgabe anlegen");
         result.setOnAction(event -> listener.onAddTask((SubProject) item));
         return result;
     }
 
+    /**
+     * "Delete area" menu item and set it's listener
+     *
+     * @return "Delete area" menu item
+     */
     private MenuItem deleteArea() {
         MenuItem result = new MenuItem("Bereich löschen");
         result.setOnAction(event -> listener.onDelete((Area) item));
@@ -99,11 +172,22 @@ public class TreeContextItem {
         return result;
     }
 
+    /**
+     * Set the contextmenu action listener
+     *
+     * @param listener action listener
+     * @return {@link TreeContextItem} instance
+     */
     public TreeContextItem setListener(Listener listener) {
         this.listener = listener;
         return this;
     }
 
+    /**
+     * Create {@link TreeContextItem} for a {@link TimeRegistrationRoot}
+     *
+     * @param root {@link TimeRegistrationRoot} model
+     */
     public TreeContextItem(TimeRegistrationRoot root) {
         type = Type.ROOT;
         item = root;
@@ -121,6 +205,11 @@ public class TreeContextItem {
         contextMenu.add(addArea());
     }
 
+    /**
+     * Create {@link TreeContextItem} for a {@link Area}
+     *
+     * @param area {@link Area} model
+     */
     public TreeContextItem(Area area) {
         type = Type.AREA;
         item = area;
@@ -131,6 +220,11 @@ public class TreeContextItem {
         contextMenu.add(deleteArea());
     }
 
+    /**
+     * Create {@link TreeContextItem} for a {@link Project}
+     *
+     * @param project {@link Project} model
+     */
     public TreeContextItem(Project project) {
         type = Type.PROJECT;
         item = project;
@@ -142,6 +236,11 @@ public class TreeContextItem {
         contextMenu.add(deleteProject());
     }
 
+    /**
+     * Create {@link TreeContextItem} for {@link SubProject}
+     *
+     * @param subProject {@link SubProject} model
+     */
     public TreeContextItem(SubProject subProject) {
         type = Type.SUBPROJECT;
         item = subProject;
@@ -152,6 +251,11 @@ public class TreeContextItem {
         contextMenu.add(deleteSubProject());
     }
 
+    /**
+     * Create {@link TreeContextItem} for {@link Task}
+     *
+     * @param task {@link Task} model
+     */
     public TreeContextItem(Task task) {
         type = Type.TASK;
         item = task;
