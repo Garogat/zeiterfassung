@@ -21,6 +21,9 @@ public class ProjectController {
     private TextField nameTextField;
 
     @FXML
+    private Label costLabel;
+
+    @FXML
     private TableView<Role> roleTable;
 
     @FXML
@@ -78,6 +81,8 @@ public class ProjectController {
         nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
         descCol.setCellValueFactory(new PropertyValueFactory<>("description"));
         wageCol.setCellValueFactory(new PropertyValueFactory<>("hourlyWage"));
+
+        costLabel.setText(""+project.getCosts(LocalDateTime.MIN, LocalDateTime.MAX)+"€");
 
         roleTable.setItems(project.roleListProperty());
         roleTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);

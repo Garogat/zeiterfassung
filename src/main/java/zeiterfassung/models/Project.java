@@ -58,7 +58,6 @@ public class Project extends SubProject {
         return subProjectList.remove(subProject);
     }
 
-
     public boolean hasSubProject(SubProject subProject) {
         return subProjectList.contains(subProject);
     }
