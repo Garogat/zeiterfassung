@@ -96,7 +96,6 @@ public class ProjectController {
         if ((newRoleName.getText() != null) && (newRoleDescription.getText() != null) && (newRoleWage.getText() != null)) {
             Role role = new Role(newRoleName.getText(), newRoleDescription.getText(), Double.parseDouble(newRoleWage.getText()));
             if (!(project.hasRole(role))) {
-                System.out.println(project.hasRole(role));
                 this.project.addRole(role);
                 roleTable.setItems(project.roleListProperty());
             }
@@ -105,8 +104,8 @@ public class ProjectController {
 
     public void onRemoveRole(ActionEvent event) {
         // prevent removing our first "default" role
-        if (roleTable.getSelectionModel().getSelectedIndex() == 0) {
-            Utils.alertWarning("Die Standard Rolle kann nicht entfernt werden.");
+        if (project.getRolesSize() == 1) {
+            Utils.alertWarning("Es muss mindestens eine Rolle existieren.");
             return;
         }
 

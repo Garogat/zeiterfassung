@@ -68,6 +68,10 @@ public class Project extends SubProject {
         roles.getList(roleList);
     }
 
+    public int getRolesSize() {
+        return roleList.size();
+    }
+
     public Role getRole(String id) {
         for (Role role : roleList) {
             if (role.getId().equals(id)) {
