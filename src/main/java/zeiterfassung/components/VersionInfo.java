@@ -119,7 +119,7 @@ public class VersionInfo {
             reader = new BufferedReader(new FileReader(file));
         } catch(Exception e) {
             e.printStackTrace();
-            reader.close();
+            if(reader != null) reader.close();
             return;
         }
         String line = null;
