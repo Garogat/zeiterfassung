@@ -3,12 +3,9 @@ plugins {
 }
 
 apply plugin: 'application'
-//mainClassName = 'java.main.zeiterfassung.Main'
 mainClassName = 'zeiterfassung.Main'
-
 group 'de.fh_kiel_iue.pij.team_1'
 version '1.0-SNAPSHOT'
-
 sourceCompatibility = 1.8
 
 repositories {
@@ -17,4 +14,62 @@ repositories {
 
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
+}
+/**
+ * code for adding Version Information inside the application
+ */
+//variable switch
+def DEVELOP_INFO = true
+////
+
+def getBranchName = { ->
+    def stdout = new ByteArrayOutputStream()
+    exec {
+        commandLine 'git', 'rev-parse', '--abbrev-ref', 'HEAD'
+
+        standardOutput = stdout
+    }
+    return stdout.toString().trim()
+}
+def getCommitHash = { ->
+    def stdout = new ByteArrayOutputStream()
+    exec {
+        commandLine 'git', 'rev-parse', 'HEAD'
+
+        standardOutput = stdout
+    }
+    return stdout.toString().trim()
+}
+tasks.register("showVersion"){
+    group = "help"
+    description = "commit  from git"
+    doLast {
+        println "branch name is: " + getBranchName()
+        println "commit hash is: " + getCommitHash()
+    }
+}
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+
+assemble.doLast {
+    def versionData =  [branchName: "undefined", commitHash: "undefined"]
+    File file = new File("src/main/resources/VERSION.txt")
+    try {
+        versionData.branchName = getBranchName()
+        versionData.commitHash = getCommitHash()
+
+    } catch(Exception e) {
+        println "git error = no version info (did you add git to your environment variables)?!"
+    }
+    
+    if(DEVELOP_INFO) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+        file.write( ("branchName = " + versionData.branchName + "\n")
+                + ("commitHash = " + versionData.commitHash + "\n")
+                + ("active = true\n")
+                + ("time = "+ LocalDateTime.now().format(formatter)).toString()
+        )
+    }
+
 }

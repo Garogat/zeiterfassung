@@ -4,6 +4,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.input.Clipboard;
+import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
@@ -13,6 +15,7 @@ import zeiterfassung.Utils;
 import zeiterfassung.components.ActiveWorkChunk;
 import zeiterfassung.components.Tree;
 import zeiterfassung.components.TreeContextItem;
+import zeiterfassung.components.VersionInfo;
 import zeiterfassung.models.*;
 import zeiterfassung.xml.DataStore;
 
@@ -35,6 +38,8 @@ public class BaseController {
 
     @FXML
     private SplitPane splitPane;
+    @FXML
+    private Menu aboutMenu;
 
     private DataStore store;
     private ContextMenu contextMenu;
@@ -125,8 +130,21 @@ public class BaseController {
                 exportDatabase();
             }
         };
-    }
+        VersionInfo vInfo = new VersionInfo();
+        MenuItem versionInfoMenu = new MenuItem(vInfo.info());
+        //copy commit  hash to the clipboard
+        if(vInfo.isActive()) {
+            versionInfoMenu.setOnAction(event -> {
+                final Clipboard clipboard = Clipboard.getSystemClipboard();
+                final ClipboardContent content = new ClipboardContent();
+                content.putString(vInfo.getCommitHash());
+                clipboard.setContent(content);
+                Utils.alertInfo("Der Commit Hash ist nun im Clipboard");
 
+            });
+        }
+        aboutMenu.getItems().add(versionInfoMenu);
+    }
     public Object setContent(String view) {
         Node node = null;
 
