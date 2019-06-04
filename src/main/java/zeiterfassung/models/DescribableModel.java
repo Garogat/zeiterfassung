@@ -15,9 +15,11 @@ public abstract class DescribableModel extends BaseModel {
     private StringProperty description = new SimpleStringProperty();
 
     public DescribableModel() {
+        super();
     }
 
     public DescribableModel(String name, String description) {
+        super();
         setName(name);
         setDescription(description);
     }

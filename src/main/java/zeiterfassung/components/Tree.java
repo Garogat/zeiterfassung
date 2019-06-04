@@ -53,7 +53,6 @@ public class Tree {
             while (change.next()) {
                 if (change.wasAdded()) {
                     for (Area area : change.getAddedSubList()) {
-                        area.setParent(root);
                         rootItem.getChildren().add(build(area));
                     }
                 } else if (change.wasRemoved()) {
@@ -66,7 +65,6 @@ public class Tree {
 
         root.getAreas(list -> {
             for (Area area : list) {
-                area.setParent(root);
                 TreeItem<TreeContextItem> item = build(area);
                 rootItem.getChildren().add(item);
             }
@@ -89,7 +87,6 @@ public class Tree {
             while (change.next()) {
                 if (change.wasAdded()) {
                     for (Project project : change.getAddedSubList()) {
-                        project.setParent(area);
                         rootItem.getChildren().add(build(project));
                     }
                 } else if (change.wasRemoved()) {
@@ -102,7 +99,6 @@ public class Tree {
 
         area.getProjectList(projects -> {
             for (Project project : projects) {
-                project.setParent(area);
                 rootItem.getChildren().add(build(project));
             }
         });
@@ -125,7 +121,6 @@ public class Tree {
             while (change.next()) {
                 if (change.wasAdded()) {
                     for (SubProject subProject : change.getAddedSubList()) {
-                        subProject.setParent(project);
                         rootItem.getChildren().add(build(subProject));
                     }
                 } else if (change.wasRemoved()) {
@@ -138,7 +133,6 @@ public class Tree {
 
         project.getSubProjects(subProjects -> {
             for (SubProject subProject : subProjects) {
-                subProject.setParent(project);
                 rootItem.getChildren().add(build(subProject));
             }
         });
@@ -185,7 +179,6 @@ public class Tree {
             while (change.next()) {
                 if (change.wasAdded()) {
                     for (Task task : change.getAddedSubList()) {
-                        task.setParent(subProject);
                         rootItem.getChildren().add(build(task));
                     }
                 } else if (change.wasRemoved()) {
@@ -198,7 +191,6 @@ public class Tree {
 
         subProject.getTasks(tasks -> {
             for (Task task : tasks) {
-                task.setParent(subProject);
                 rootItem.getChildren().add(build(task));
             }
         });

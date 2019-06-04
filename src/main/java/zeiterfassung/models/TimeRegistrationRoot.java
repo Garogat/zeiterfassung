@@ -32,4 +32,8 @@ public class TimeRegistrationRoot extends BaseModel {
     public ListProperty<Area> areaListProperty() {
         return areaList;
     }
+
+    public TimeRegistrationRoot() {
+        super();
+    }
 }
