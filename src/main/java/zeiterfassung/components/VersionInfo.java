@@ -120,11 +120,13 @@ public class VersionInfo {
         } catch(Exception e) {
             e.printStackTrace();
             reader.close();
+            return;
         }
         String line = null;
         try {
             do {
                 line = reader.readLine();
+                if(line == null) break;
                 String[] token = line.split("=");
                 String t1, t2;
                 if(token.length >= 2) {
@@ -135,16 +137,12 @@ public class VersionInfo {
                         action.accept(t2);
                     }
                 }
-            } while(line != null);
+            } while(true);
 
         } catch(Exception e) {
             e.printStackTrace();
         } finally {
-            try {
-                reader.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            reader.close();
         }
     }
 
