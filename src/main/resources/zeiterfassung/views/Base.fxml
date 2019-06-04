@@ -28,6 +28,7 @@
                         <MenuItem mnemonicParsing="false" text="Exportieren" onAction="#exportDatabase"/>
                     </items>
                 </Menu>
+                <Menu mnemonicParsing="false" text="About" fx:id="aboutMenu"/>
             </menus>
         </MenuBar>
     </top>
