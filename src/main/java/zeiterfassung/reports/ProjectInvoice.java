@@ -1,22 +1,18 @@
 package zeiterfassung.reports;
 
-import com.sun.org.apache.xerces.internal.xs.StringList;
 import htmlProducer.HtmlElement;
 import htmlProducer.HtmlTagElement;
 import zeiterfassung.Utils;
 import zeiterfassung.models.Project;
-import zeiterfassung.models.SubProject;
-import zeiterfassung.models.Task;
 
 import java.time.LocalDateTime;
 import java.util.Scanner;
 
 import static htmlProducer.HtmlFactory.*;
-import static htmlProducer.HtmlFactory.LI;
 
 public class ProjectInvoice implements Reportable {
 
-    Project project;
+    private Project project;
 
     @Override
     public HtmlElement getHtmlNode() {
@@ -41,25 +37,25 @@ public class ProjectInvoice implements Reportable {
 
         root.addElement(TABLE.build().addElement(
 
-            TR.build().addElement(
-                TD.build().addText("Projekt:"),
-                TD.build().addText(project.getName())
-            ),
+                TR.build().addElement(
+                        TD.build().addText("Projekt:"),
+                        TD.build().addText(project.getName())
+                ),
 
-           TR.build().addElement(
-                TD.build().addText("Dauer:"),
-                TD.build().addText(Utils.formatDuration(project.getDuration(LocalDateTime.MIN, LocalDateTime.MAX)))
-           ),
-           TR.build().addElement(
-               TD.build().addText("Kosten:"),
-               TD.build().addText(Utils.formatCosts(project.getCosts(LocalDateTime.MIN, LocalDateTime.MAX)))
-           )
+                TR.build().addElement(
+                        TD.build().addText("Dauer:"),
+                        TD.build().addText(Utils.formatDuration(project.getDuration(LocalDateTime.MIN, LocalDateTime.MAX)))
+                ),
+                TR.build().addElement(
+                        TD.build().addText("Kosten:"),
+                        TD.build().addText(Utils.formatCosts(project.getCosts(LocalDateTime.MIN, LocalDateTime.MAX)))
+                )
         ));
 
         return root;
     }
 
-    public ProjectInvoice(Project project){
+    public ProjectInvoice(Project project) {
         this.project = project;
     }
 }

@@ -11,8 +11,8 @@ import static htmlProducer.HtmlFactory.*;
 
 public class ReportDocument implements Reportable {
 
-    String title;
-    List<Reportable> items;
+    private String title;
+    private List<Reportable> items;
 
 
     @Override
@@ -40,5 +40,7 @@ public class ReportDocument implements Reportable {
 
     }
 
-
+    public String getTitle() {
+        return this.title;
+    }
 }

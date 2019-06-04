@@ -1,27 +1,31 @@
 package zeiterfassung.controllers;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.stage.FileChooser;
+import javafx.util.StringConverter;
 import zeiterfassung.models.Area;
 import zeiterfassung.reports.AreaContent;
 import zeiterfassung.reports.ReportDocument;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class AreaController {
 
     private Area area;
 
     @FXML
-    TextField name;
+    private TextField name;
 
     @FXML
-    TextArea description;
+    private TextArea description;
+
+    @FXML
+    private DatePicker reportMonth;
+
 
     public void setArea(Area area) {
         this.area = area;
@@ -29,26 +33,39 @@ public class AreaController {
         // update gui elements
         name.textProperty().bindBidirectional(area.nameProperty());
         description.textProperty().bindBidirectional(area.descriptionProperty());
+
+        reportMonth.setShowWeekNumbers(false);
+        reportMonth.setConverter(new StringConverter<LocalDate>() {
+            DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("MMMM yyyy");
+
+            @Override
+            public String toString(LocalDate date) {
+                if (date != null) {
+                    return dateFormatter.format(date);
+                } else {
+                    return "";
+                }
+            }
+
+            @Override
+            public LocalDate fromString(String string) {
+                if (string != null && !string.isEmpty()) {
+                    return LocalDate.parse(string, dateFormatter);
+                } else {
+                    return null;
+                }
+            }
+        });
+        reportMonth.setValue(LocalDate.now());
     }
 
     @FXML
     private void createReport() {
-        // TODO: get time
-        LocalDateTime date = LocalDateTime.now();
+        LocalDateTime date = reportMonth.getValue().atStartOfDay();
 
-        ReportDocument report = new ReportDocument("Stundenzettel", new AreaContent(this.area, date.minusMonths(1), date));
-        String html = report.getHtmlNode().getHTMLCode();
+        String title = "Stundenzettel " + this.area.getName() + " " + date.format(DateTimeFormatter.ofPattern("MMMM yyyy"));
 
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Studenzettel speichern");
-        File file = fileChooser.showSaveDialog(name.getScene().getWindow());
+        ReportDocument report = new ReportDocument(title, new AreaContent(this.area, date.minusMonths(1), date));
 
-        try {
-            PrintWriter writer = new PrintWriter(file);
-            writer.println(html);
-            writer.close();
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
     }
 }

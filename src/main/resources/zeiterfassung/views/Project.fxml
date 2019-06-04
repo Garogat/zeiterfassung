@@ -21,6 +21,8 @@
                         <RowConstraints vgrow="SOMETIMES"/>
                         <RowConstraints vgrow="SOMETIMES"/>
                         <RowConstraints vgrow="SOMETIMES"/>
+                        <RowConstraints vgrow="SOMETIMES"/>
+                        <RowConstraints vgrow="SOMETIMES"/>
                     </rowConstraints>
                     <children>
                         <Label text="Name"/>
@@ -56,6 +58,17 @@
                         </VBox>
                         <Label text="Kosten" GridPane.rowIndex="6"/>
                         <Label fx:id="costLabel" GridPane.columnIndex="1" GridPane.rowIndex="6"/>
+                        <Label text="Stundenzettel" GridPane.rowIndex="7"/>
+                        <HBox GridPane.columnIndex="1" GridPane.rowIndex="7">
+                            <children>
+                                <DatePicker fx:id="reportMonth" HBox.hgrow="ALWAYS"/>
+                                <Button mnemonicParsing="false" onAction="#createReport" text="erstellen ..."
+                                        HBox.hgrow="ALWAYS"/>
+                            </children>
+                        </HBox>
+                        <Label text="Rechnung" GridPane.rowIndex="8"/>
+                        <Button mnemonicParsing="false" onAction="#createInvoice" text="erstellen ..."
+                                HBox.hgrow="ALWAYS" GridPane.columnIndex="1" GridPane.rowIndex="8"/>
                     </children>
                 </GridPane>
             </content>

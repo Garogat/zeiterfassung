@@ -5,12 +5,17 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
+import javafx.util.StringConverter;
 import zeiterfassung.Utils;
 import zeiterfassung.models.Project;
 import zeiterfassung.models.Role;
+import zeiterfassung.reports.ProjectContent;
+import zeiterfassung.reports.ReportDocument;
 
 import java.time.Duration;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class ProjectController {
     private Project project;
@@ -34,7 +39,7 @@ public class ProjectController {
     private Text timeEstimated;
 
     @FXML
-    ProgressBar time;
+    private ProgressBar time;
 
     @FXML
     private TableColumn<Role, String> nameCol;
@@ -56,6 +61,9 @@ public class ProjectController {
 
     @FXML
     private TextArea customer;
+
+    @FXML
+    private DatePicker reportMonth;
 
     public void setProject(Project project) {
         this.project = project;
@@ -86,6 +94,30 @@ public class ProjectController {
 
         roleTable.setItems(project.roleListProperty());
         roleTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+
+        reportMonth.setShowWeekNumbers(false);
+        reportMonth.setConverter(new StringConverter<LocalDate>() {
+            DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("MMMM yyyy");
+
+            @Override
+            public String toString(LocalDate date) {
+                if (date != null) {
+                    return dateFormatter.format(date);
+                } else {
+                    return "";
+                }
+            }
+
+            @Override
+            public LocalDate fromString(String string) {
+                if (string != null && !string.isEmpty()) {
+                    return LocalDate.parse(string, dateFormatter);
+                } else {
+                    return null;
+                }
+            }
+        });
+        reportMonth.setValue(LocalDate.now());
     }
 
     public Project getProject() {
@@ -111,5 +143,19 @@ public class ProjectController {
 
         project.removeRole(roleTable.getSelectionModel().getSelectedItem());
         roleTable.setItems(project.roleListProperty());
+    }
+
+    @FXML
+    private void createReport() {
+        LocalDateTime date = reportMonth.getValue().atStartOfDay();
+
+        String title = "Stundenzettel " + this.project.getName() + " " + date.format(DateTimeFormatter.ofPattern("MMMM yyyy"));
+        ReportDocument report = new ReportDocument(title, new ProjectContent(this.project, date.minusMonths(1), date));
+        Utils.createReport(report, nameTextField.getScene().getWindow());
+    }
+
+    @FXML
+    private void createInvoice() {
+        Utils.createInvoice(this.project, nameTextField.getScene().getWindow());
     }
 }
