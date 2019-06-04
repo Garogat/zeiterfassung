@@ -53,6 +53,7 @@ public class Project extends SubProject {
      * @throws IllegalArgumentException
      */
     public boolean addSubProject(SubProject newSubProject) {
+        newSubProject.setParent(this);
         return subProjectList.add(newSubProject);
     }
 
@@ -93,6 +94,7 @@ public class Project extends SubProject {
     }
 
     public boolean addRole(Role newRole) {
+        newRole.setParent(this);
         return roleList.add(newRole);
     }
 

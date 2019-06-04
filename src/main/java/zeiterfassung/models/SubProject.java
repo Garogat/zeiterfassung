@@ -64,6 +64,7 @@ public class SubProject extends DescribableModel implements TimeableWork {
      * @throws IllegalArgumentException
      */
     public boolean addTask(Task newTask) {
+        newTask.setParent(this);
         return taskList.add(newTask);
     }
 

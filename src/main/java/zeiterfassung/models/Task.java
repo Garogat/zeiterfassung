@@ -128,6 +128,7 @@ public class Task extends DescribableModel implements TimeableWork {
         }
         workEndTime = LocalDateTime.now();
         WorkChunk newWork = new WorkChunk(workStartTime, workEndTime, workDescription);
+        newWork.setParent(this);
         workList.add(newWork);
     }
 
