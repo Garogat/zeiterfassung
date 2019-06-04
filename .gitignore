@@ -6,3 +6,4 @@
 !gradle-wrapper.jar
 .gradletasknamecache
 /*.xml
+/src/main/resources/VERSION.txt
