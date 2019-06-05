@@ -20,7 +20,9 @@ public class Task extends DescribableModel implements TimeableWork {
     private LocalDateTime workStartTime;
     private LocalDateTime workEndTime;
     private String workDescription;
-    private String roleId;
+
+    @XmlIDREF
+    private Role role;
 
     @XmlTransient
     private ObjectProperty<Duration> estimatedDuration = new SimpleObjectProperty<>(Duration.ZERO);
@@ -36,6 +38,7 @@ public class Task extends DescribableModel implements TimeableWork {
     }
 
     public Task(String name, String description, String workDescription, Role role) {
+        super();
         setName(name);
         setDescription(description);
         setWorkDescription(workDescription);
@@ -79,16 +82,11 @@ public class Task extends DescribableModel implements TimeableWork {
     }
 
     public Role getRole() {
-        Project tmpProject = (Project) getParentByType(Project.class);
-        if (tmpProject != null) {
-            return tmpProject.getRole(roleId);
-        }
-
-        return null;
+        return this.role;
     }
 
     public void setRole(Role role) {
-        this.roleId = role.getId();
+        this.role = role;
     }
 
     public boolean hasWorkStarted() {
@@ -130,6 +128,7 @@ public class Task extends DescribableModel implements TimeableWork {
         }
         workEndTime = LocalDateTime.now();
         WorkChunk newWork = new WorkChunk(workStartTime, workEndTime, workDescription);
+        newWork.setParent(this);
         workList.add(newWork);
     }
 

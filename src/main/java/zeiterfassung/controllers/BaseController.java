@@ -60,24 +60,36 @@ public class BaseController {
             public void onDelete(Area area) {
                 TimeRegistrationRoot root = (TimeRegistrationRoot) area.getParent();
                 root.removeArea(area);
+
+                // open parent (start)
+                openStart();
             }
 
             @Override
             public void onDelete(Project project) {
                 Area area = (Area) project.getParent();
                 area.removeProject(project);
+
+                // open parent
+                openView(area);
             }
 
             @Override
             public void onDelete(SubProject subProject) {
                 Project project = (Project) subProject.getParent();
                 project.removeSubProject(subProject);
+
+                // open parent
+                openView(project);
             }
 
             @Override
             public void onDelete(Task task) {
                 SubProject subProject = (SubProject) task.getParent();
                 subProject.removeTask(task);
+
+                // open parent
+                openView(subProject);
             }
 
             @Override
@@ -205,6 +217,7 @@ public class BaseController {
     }
 
     private StartController openStart() {
+        this.projectTree.getSelectionModel().selectFirst();
         return (StartController) setContent("Start");
     }
 

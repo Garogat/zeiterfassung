@@ -24,12 +24,14 @@ public class WorkChunk extends BaseModel {
     private StringProperty description = new SimpleStringProperty();
 
     public WorkChunk() {
+        super();
         setStartTime(LocalDateTime.now());
         setEndTime(null);
         setDescription("");
     }
 
     public WorkChunk(LocalDateTime start, LocalDateTime end, String description) {
+        super();
         setStartTime(start);
         setEndTime(end);
         setDescription(description);

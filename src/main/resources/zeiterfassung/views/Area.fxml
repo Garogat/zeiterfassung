@@ -1,39 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextArea?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.control.TitledPane?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.RowConstraints?>
-
-<AnchorPane prefHeight="480.0" prefWidth="640.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="zeiterfassung.controllers.AreaController">
-   <children>
-      <TitledPane collapsible="false" text="Bereich" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <content>
-            <GridPane>
-               <columnConstraints>
-                  <ColumnConstraints hgrow="SOMETIMES" />
-                  <ColumnConstraints hgrow="SOMETIMES" />
-               </columnConstraints>
-               <rowConstraints>
-                  <RowConstraints vgrow="NEVER" />
-                  <RowConstraints vgrow="NEVER" />
-                  <RowConstraints vgrow="NEVER" />
-               </rowConstraints>
-               <children>
-                  <Label text="Name" />
-                  <Label text="Beschreibung" GridPane.rowIndex="1" />
-                  <Label text="Stundenzettel" GridPane.rowIndex="2" />
-                  <TextArea id="n" fx:id="description" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <TextField fx:id="name" GridPane.columnIndex="1" />
-                  <Button mnemonicParsing="false" text="erstellen ..." GridPane.columnIndex="1" GridPane.rowIndex="2" onAction="#createReport" />
-               </children>
-            </GridPane>
-         </content>
-      </TitledPane>
-   </children>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<AnchorPane prefHeight="480.0" prefWidth="640.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+            AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/8.0.171"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="zeiterfassung.controllers.AreaController">
+    <children>
+        <TitledPane collapsible="false" text="Bereich" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                    AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <content>
+                <GridPane>
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES"/>
+                        <ColumnConstraints hgrow="SOMETIMES"/>
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints vgrow="NEVER"/>
+                        <RowConstraints vgrow="NEVER"/>
+                        <RowConstraints vgrow="NEVER"/>
+                        <RowConstraints vgrow="NEVER"/>
+                    </rowConstraints>
+                    <children>
+                        <Label text="Name"/>
+                        <Label text="Beschreibung" GridPane.rowIndex="1"/>
+                        <Label text="Stundenzettel" GridPane.rowIndex="2"/>
+                        <TextArea id="n" fx:id="description" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+                        <TextField fx:id="name" GridPane.columnIndex="1"/>
+                        <HBox GridPane.columnIndex="1" GridPane.rowIndex="2">
+                            <children>
+                                <DatePicker fx:id="reportMonth" HBox.hgrow="ALWAYS"/>
+                                <Button mnemonicParsing="false" onAction="#createReport" text="erstellen ..."
+                                        HBox.hgrow="ALWAYS"/>
+                            </children>
+                        </HBox>
+                    </children>
+                </GridPane>
+            </content>
+        </TitledPane>
+    </children>
 </AnchorPane>

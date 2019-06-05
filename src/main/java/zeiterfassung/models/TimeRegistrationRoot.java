@@ -14,6 +14,7 @@ public class TimeRegistrationRoot extends BaseModel {
     private ListProperty<Area> areaList = new SimpleListProperty(FXCollections.observableArrayList());
 
     public void addArea(Area newArea) {
+        newArea.setParent(this);
         areaList.add(newArea);
     }
 
@@ -31,5 +32,9 @@ public class TimeRegistrationRoot extends BaseModel {
 
     public ListProperty<Area> areaListProperty() {
         return areaList;
+    }
+
+    public TimeRegistrationRoot() {
+        super();
     }
 }

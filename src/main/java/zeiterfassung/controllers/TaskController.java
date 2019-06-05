@@ -96,7 +96,8 @@ public class TaskController {
 
     /**
      * Initializes the Controller with a Task
-     * @param task This Task is handled by the Controller
+     *
+     * @param task            This Task is handled by the Controller
      * @param activeWorkChunk Is needed to determine, if a Task is running
      */
     public void setTask(Task task, ActiveWorkChunk activeWorkChunk) {
@@ -132,7 +133,8 @@ public class TaskController {
         setEditWorkChunk();
 
         // Roles
-        roleChoiceBox.setItems(((Project) task.getParentByType(Project.class)).roleListProperty());
+        Project project = (Project) task.getParentByType(Project.class);
+        roleChoiceBox.setItems(project.roleListProperty());
         roleChoiceBox.setConverter(new StringConverter<Role>() {
             @Override
             public String toString(Role role) {
@@ -216,6 +218,7 @@ public class TaskController {
 
     /**
      * Starts a Task and generates a new WorkChunk
+     *
      * @param actionEvent
      */
     public void onStartBtn(ActionEvent actionEvent) {
@@ -227,6 +230,7 @@ public class TaskController {
 
     /**
      * Stops a Task
+     *
      * @param actionEvent
      */
     public void onStopBtn(ActionEvent actionEvent) {

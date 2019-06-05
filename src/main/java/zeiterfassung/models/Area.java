@@ -33,6 +33,7 @@ public class Area extends DescribableModel {
     }
 
     public void addProject(Project newProject) {
+        newProject.setParent(this);
         projectsList.add(newProject);
     }
 

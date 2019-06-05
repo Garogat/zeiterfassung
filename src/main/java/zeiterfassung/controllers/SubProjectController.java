@@ -15,19 +15,19 @@ public class SubProjectController {
     private SubProject subProject;
 
     @FXML
-    TextField name;
+    private TextField name;
 
     @FXML
-    TextArea description;
+    private TextArea description;
 
     @FXML
-    Text timeEstimated;
+    private Text timeEstimated;
 
     @FXML
-    Text timeSpent;
+    private Text timeSpent;
 
     @FXML
-    ProgressBar time;
+    private ProgressBar time;
 
     public void setSubProject(SubProject subProject) {
         this.subProject = subProject;

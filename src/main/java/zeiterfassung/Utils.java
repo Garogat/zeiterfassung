@@ -1,7 +1,15 @@
 package zeiterfassung;
 
 import javafx.scene.control.Alert;
+import javafx.stage.FileChooser;
+import javafx.stage.Window;
+import zeiterfassung.models.Project;
+import zeiterfassung.reports.ProjectInvoice;
+import zeiterfassung.reports.ReportDocument;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -100,5 +108,67 @@ public class Utils {
         alert.setContentText(content);
         alert.showAndWait();
         return alert;
+    }
+
+    /**
+     * Save HTML report to file
+     *
+     * @param report Report to be saved
+     * @param window Window to show file saving dialog on
+     */
+    public static void createReport(ReportDocument report, Window window) {
+        String html = report.getHtmlNode().getHTMLCode();
+
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Studenzettel speichern");
+        fileChooser.setInitialFileName(report.getTitle().replace(" ", "-") + ".html");
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("HTML Stundenzettel (*.html)", "*.html");
+        File file = fileChooser.showSaveDialog(window);
+
+        if (file == null) {
+            return;
+        }
+
+        try {
+            PrintWriter writer = new PrintWriter(file);
+            writer.println(html);
+            writer.close();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+
+        Utils.alertInfo("Der Stundenzettel wurde erfolgreich erstellt");
+    }
+
+    /**
+     * Create HTML Invoice from project and save to file
+     *
+     * @param project Project to get times and
+     * @param window  Window to show file saving dialog on
+     */
+    public static void createInvoice(Project project, Window window) {
+        ProjectInvoice invoice = new ProjectInvoice(project);
+        String html = invoice.getHtmlNode().getHTMLCode();
+
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Rechnung speichern");
+        String filename = "Rechnung-" + project.getName().replace(" ", "-") + ".html";
+        fileChooser.setInitialFileName(filename);
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("HTML Rechnung (*.html)", "*.html");
+        File file = fileChooser.showSaveDialog(window);
+
+        if (file == null) {
+            return;
+        }
+
+        try {
+            PrintWriter writer = new PrintWriter(file);
+            writer.println(html);
+            writer.close();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+
+        Utils.alertInfo("Die Rechnung wurde erfolgreich erstellt");
     }
 }
