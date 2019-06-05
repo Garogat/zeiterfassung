@@ -16,10 +16,21 @@ import java.util.function.Consumer;
 public class VersionInfo {
     static final String VERSION_FILE_NAME = "/VERSION.txt";
     public static final String ABOUT = "Projekt Zeiterfassung im Modul Programmieren in Java";
-    public static final String[] TEAM = {"Christiane", "Philipp", "Anton", "Jonas", "Nils"};
+    public static final String[] TEAM = {"Christina", "Philipp", "Anton", "Jonas", "Nils"};
+    private boolean isLoaded = false;
+
     private HashMap<String, Consumer<String>> parameterMap = new HashMap<>();
     private String commitHash;
     private String branchName;
+
+    public boolean isLoaded() {
+        return isLoaded;
+    }
+
+    public void setLoaded(boolean loaded) {
+        isLoaded = loaded;
+    }
+
 
     public String getCreationTime() {
         return creationTime;
@@ -44,9 +55,9 @@ public class VersionInfo {
         branchName = "undefined";
         creationTime = "undefined";
         try {
-            loadFromResourceFile();
+            isLoaded = loadFromResourceFile();
         } catch (IOException ex) {
-            ex.printStackTrace();
+            System.err.println("error closing file");
         }
     }
 
@@ -109,7 +120,7 @@ public class VersionInfo {
         return sBuilder.toString();
     }
 
-    void loadFromResourceFile() throws IOException {
+    boolean loadFromResourceFile() throws IOException {
         URI uri = null;
         File file = null;
         BufferedReader reader = null;
@@ -118,9 +129,8 @@ public class VersionInfo {
             file = new File(uri);
             reader = new BufferedReader(new FileReader(file));
         } catch(Exception e) {
-            e.printStackTrace();
             if(reader != null) reader.close();
-            return;
+            return false;
         }
         String line = null;
         try {
@@ -140,10 +150,11 @@ public class VersionInfo {
             } while(true);
 
         } catch(Exception e) {
-            e.printStackTrace();
+            return false;
         } finally {
             reader.close();
         }
+        return true;
     }
 
 
