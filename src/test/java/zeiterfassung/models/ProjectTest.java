@@ -69,11 +69,19 @@ public class ProjectTest {
 
     @Test
     public void testGetDuration(){
-        task.start();
-        task.stop();
+        int duration = 20;
+        task.addWorkChunk(new WorkChunk(LocalDateTime.now(), LocalDateTime.now().plusHours(duration), "Test"));
         subProject.addTask(task);
         project.addSubProject(subProject);
-        assertEquals(true, project.getDuration(LocalDateTime.MIN, MAX)!=null);
+        assertEquals(duration, project.getDuration(LocalDateTime.MIN, MAX).toHours());
+    }
 
+    @Test
+    public void testGetCosts(){
+        int duration = 20;
+        task.addWorkChunk(new WorkChunk(LocalDateTime.now(), LocalDateTime.now().plusHours(duration), "Test"));
+        subProject.addTask(task);
+        project.addSubProject(subProject);
+        assertEquals(duration*role.getHourlyWage(), project.getCosts(LocalDateTime.MIN, MAX));
     }
 }
