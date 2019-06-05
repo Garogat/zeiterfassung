@@ -5,6 +5,7 @@ import static htmlProducer.HtmlFactory.*;
 
 import htmlProducer.HtmlElement;
 import htmlProducer.HtmlTagElement;
+import htmlProducer.HtmlValuePair;
 import zeiterfassung.models.Task;
 import zeiterfassung.models.WorkChunk;
 
@@ -17,6 +18,8 @@ public class TaskContent implements Reportable {
     LocalDateTime start;
     LocalDateTime stop;
 
+    HtmlValuePair borderStyle = new HtmlValuePair("style", "border:1px solid black;");
+
     @Override
     public HtmlTagElement getHtmlNode() {
 
@@ -24,7 +27,7 @@ public class TaskContent implements Reportable {
                 H3.build().addText(task.getName())
         );
 
-        HtmlTagElement rootTable = TABLE.build().addElement(
+        HtmlTagElement rootTable = TABLE.build().addProperty(borderStyle).addElement(
                 TR.build().addElement(
                         TH.build().addText("Start"),
                         TH.build().addText("Ende"),

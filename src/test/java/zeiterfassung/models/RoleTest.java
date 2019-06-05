@@ -6,11 +6,27 @@ import org.junit.Test;
 import static junit.framework.TestCase.assertEquals;
 
 public class RoleTest {
+
     private Role role;
 
+
     @Before
-    public void setUp(){
+    public void setUp() {
         role = new Role();
+    }
+
+    /**
+     * Test for checking if the name is returned correctly
+     */
+    @Test
+    public void getName() {
+        role.setName("Werkstudent");
+
+        assertEquals("Werkstudent", role.getName());
+    }
+
+    @Test
+    public void setName() {
     }
 
     @Test
@@ -39,5 +55,19 @@ public class RoleTest {
         String id = "431014";
         role.setId(id);
         assertEquals(id, role.getId());
+    }
+
+    /**
+     * Test for checking if the role description is returned correctly
+     */
+    @Test
+    public void getDescription() {
+        role.setDescription("Maedchen fuer alles");
+
+        assertEquals("Maedchen fuer alles", role.getDescription());
+    }
+
+    @Test
+    public void setDescription() {
     }
 }
