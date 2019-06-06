@@ -108,6 +108,11 @@ public class BaseController {
                 SubProject subProject = (SubProject) task.getParent();
                 subProject.removeTask(task);
 
+                // unset active task
+                if (store.getRoot().getActiveTask().equals(task)) {
+                    store.getRoot().setActiveTask(null);
+                }
+
                 // open parent
                 openView(subProject);
             }
