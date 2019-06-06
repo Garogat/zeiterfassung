@@ -40,6 +40,8 @@ public class TreeContextItem {
         void onImportDatabase();
 
         void onExportDatabase();
+
+        void onOpenActiveTask();
     }
 
     /**
@@ -201,6 +203,10 @@ public class TreeContextItem {
         MenuItem exportDatabase = new MenuItem("Datenbank exportieren");
         exportDatabase.setOnAction(event -> listener.onExportDatabase());
         contextMenu.add(exportDatabase);
+
+        MenuItem openActiveTask = new MenuItem("Aktive Aufgabe öffnen");
+        openActiveTask.setOnAction(event -> listener.onOpenActiveTask());
+        contextMenu.add(openActiveTask);
 
         contextMenu.add(addArea());
     }

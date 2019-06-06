@@ -27,6 +27,9 @@ public class SubProjectController {
     private Text timeSpent;
 
     @FXML
+    private Text costs;
+
+    @FXML
     private ProgressBar time;
 
     public void setSubProject(SubProject subProject) {
@@ -47,5 +50,7 @@ public class SubProjectController {
         timeSpent.setText(Utils.formatDuration(duration) + " (" + percentage + "%)");
         time.setProgress(percentage / 100.0);
         time.setMaxWidth(Double.MAX_VALUE);
+
+        costs.setText(Utils.formatCosts(subProject.getCosts(LocalDateTime.MIN, LocalDateTime.MAX)));
     }
 }

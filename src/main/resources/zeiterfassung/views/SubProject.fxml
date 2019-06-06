@@ -18,6 +18,7 @@
                 <RowConstraints vgrow="NEVER"/>
                 <RowConstraints vgrow="NEVER"/>
                 <RowConstraints vgrow="NEVER"/>
+                <RowConstraints vgrow="NEVER"/>
             </rowConstraints>
             <children>
                 <Label text="Name"/>
@@ -47,6 +48,8 @@
                         </GridPane>
                     </children>
                 </VBox>
+                <Label text="Kosten" GridPane.rowIndex="3"/>
+                <Text fx:id="costs" text="100€" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
             </children>
         </GridPane>
     </content>

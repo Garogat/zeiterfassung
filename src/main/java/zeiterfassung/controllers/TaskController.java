@@ -10,11 +10,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
 import javafx.util.StringConverter;
 import zeiterfassung.Utils;
-import zeiterfassung.components.ActiveWorkChunk;
-import zeiterfassung.models.Project;
-import zeiterfassung.models.Role;
-import zeiterfassung.models.Task;
-import zeiterfassung.models.WorkChunk;
+import zeiterfassung.models.*;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -24,8 +20,6 @@ import java.time.LocalDateTime;
  */
 public class TaskController {
     private Task task;
-    private ActiveWorkChunk activeWorkChunk;
-    private WorkChunk editWorkChunk;
 
     @FXML
     private TextArea descriptionTextArea;
@@ -74,35 +68,29 @@ public class TaskController {
      * It shows and enables the buttons so that you can not start a second WorkChunk
      */
     private void setEditWorkChunk() {
-        boolean editable = ActiveWorkChunk.isWorkChunkInTask(this.activeWorkChunk.getActiveWorkChunk(), task) || this.activeWorkChunk.getActiveWorkChunk() == null;
-        if (editable) {
-            editWorkChunk = this.activeWorkChunk.getActiveWorkChunk();
+        WorkChunk chunk = task.getActiveWorkChunk();
+        TimeRegistrationRoot root = (TimeRegistrationRoot) task.getParentByType(TimeRegistrationRoot.class);
+
+        boolean isRunning = chunk != null;
+
+        if (isRunning) {
+            workchuncDescription.textProperty().bindBidirectional(chunk.descriptionProperty());
         } else {
-            editWorkChunk = null;
+            workchuncDescription.setText(null);
         }
 
-        startBtn.setVisible(editable);
-        stopBtn.setVisible(editable);
-        descriptionTextArea.setVisible(editable);
-        if (editWorkChunk != null) {
-            workchuncDescription.textProperty().bindBidirectional(editWorkChunk.descriptionProperty());
-        } else {
-            workchuncDescription.setText("");
-        }
-        startBtn.setDisable(!editable || editWorkChunk != null);
-        stopBtn.setDisable(editWorkChunk == null);
-        workchuncDescription.setDisable(editWorkChunk == null);
+        startBtn.setDisable(isRunning || root.isTaskActive());
+        stopBtn.setDisable(!isRunning);
+        workchuncDescription.setDisable(!isRunning);
     }
 
     /**
      * Initializes the Controller with a Task
      *
-     * @param task            This Task is handled by the Controller
-     * @param activeWorkChunk Is needed to determine, if a Task is running
+     * @param task This Task is handled by the Controller
      */
-    public void setTask(Task task, ActiveWorkChunk activeWorkChunk) {
+    public void setTask(Task task) {
         this.task = task;
-        this.activeWorkChunk = activeWorkChunk;
 
         /* Bindings */
 
@@ -165,10 +153,11 @@ public class TaskController {
             @Override
             protected void updateItem(LocalDateTime item, boolean empty) {
                 super.updateItem(item, empty);
-                if (empty)
+                if (empty) {
                     setText(null);
-                else
+                } else {
                     setText(Utils.formatLocalDateTime(item));
+                }
             }
         });
         endCol.setCellValueFactory(new PropertyValueFactory<>("endTime"));
@@ -210,10 +199,7 @@ public class TaskController {
     private void updateCostDuration() {
         costsLabel.setText(Utils.formatCosts(task.getCosts(LocalDateTime.MIN, LocalDateTime.MAX)));
         durationLabel.setText(Utils.formatDuration(task.getDuration(LocalDateTime.MIN, LocalDateTime.MAX)));
-    }
-
-    public Task getTask() {
-        return task;
+        workchunkTable.refresh();
     }
 
     /**
@@ -221,10 +207,9 @@ public class TaskController {
      *
      * @param actionEvent
      */
+    @FXML
     public void onStartBtn(ActionEvent actionEvent) {
-        WorkChunk newWc = new WorkChunk();
-        newWc.setStartTime(LocalDateTime.now());
-        task.addWorkChunk(newWc);
+        task.start();
         setEditWorkChunk();
     }
 
@@ -233,9 +218,10 @@ public class TaskController {
      *
      * @param actionEvent
      */
+    @FXML
     public void onStopBtn(ActionEvent actionEvent) {
-        workchuncDescription.textProperty().unbindBidirectional(editWorkChunk.descriptionProperty());
-        editWorkChunk.setEndTime(LocalDateTime.now());
+        workchuncDescription.textProperty().unbindBidirectional(task.getActiveWorkChunk().descriptionProperty());
+        task.stop();
         setEditWorkChunk();
         updateCostDuration();
     }

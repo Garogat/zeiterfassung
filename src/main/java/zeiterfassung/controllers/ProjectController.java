@@ -90,8 +90,6 @@ public class ProjectController {
         descCol.setCellValueFactory(new PropertyValueFactory<>("description"));
         wageCol.setCellValueFactory(new PropertyValueFactory<>("hourlyWage"));
 
-        costLabel.setText("" + project.getCosts(LocalDateTime.MIN, LocalDateTime.MAX) + "€");
-
         roleTable.setItems(project.roleListProperty());
         roleTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
@@ -118,12 +116,11 @@ public class ProjectController {
             }
         });
         reportMonth.setValue(LocalDate.now());
+
+        updateCosts();
     }
 
-    public Project getProject() {
-        return project;
-    }
-
+    @FXML
     public void onAddRole(ActionEvent event) {
         if ((newRoleName.getText() != null) && (newRoleDescription.getText() != null) && (newRoleWage.getText() != null)) {
             Role role = new Role(newRoleName.getText(), newRoleDescription.getText(), Double.parseDouble(newRoleWage.getText()));
@@ -134,6 +131,7 @@ public class ProjectController {
         }
     }
 
+    @FXML
     public void onRemoveRole(ActionEvent event) {
         // prevent removing our first "default" role
         if (project.getRolesSize() == 1) {
@@ -143,6 +141,8 @@ public class ProjectController {
 
         project.removeRole(roleTable.getSelectionModel().getSelectedItem());
         roleTable.setItems(project.roleListProperty());
+
+        updateCosts();
     }
 
     @FXML
@@ -157,5 +157,12 @@ public class ProjectController {
     @FXML
     private void createInvoice() {
         Utils.createInvoice(this.project, nameTextField.getScene().getWindow());
+    }
+
+    /**
+     * update coast label
+     */
+    private void updateCosts() {
+        costLabel.setText(Utils.formatCosts(project.getCosts(LocalDateTime.MIN, LocalDateTime.MAX)));
     }
 }

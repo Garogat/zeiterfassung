@@ -26,7 +26,7 @@ public class Utils {
      * @return formatted price string
      */
     public static String formatCosts(double costs) {
-        return costs + "€";
+        return String.format("%.2f", costs) + "€";
     }
 
     /**

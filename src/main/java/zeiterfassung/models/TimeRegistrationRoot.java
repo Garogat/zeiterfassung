@@ -5,6 +5,7 @@ import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
 
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlIDREF;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name = "Root")
@@ -12,6 +13,9 @@ public class TimeRegistrationRoot extends BaseModel {
 
     @XmlElement(name = "Area")
     private ListProperty<Area> areaList = new SimpleListProperty(FXCollections.observableArrayList());
+
+    @XmlIDREF
+    private Task activeTask;
 
     public void addArea(Area newArea) {
         newArea.setParent(this);
@@ -36,5 +40,21 @@ public class TimeRegistrationRoot extends BaseModel {
 
     public TimeRegistrationRoot() {
         super();
+    }
+
+    public Task getActiveTask() {
+        return activeTask;
+    }
+
+    public void setActiveTask(Task activeTask) {
+        this.activeTask = activeTask;
+    }
+
+    public boolean isTaskActive() {
+        if (activeTask == null) {
+            return false;
+        }
+
+        return activeTask.isWorkActive();
     }
 }

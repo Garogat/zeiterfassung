@@ -13,6 +13,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 @XmlAccessorType(XmlAccessType.NONE)
 @XmlRootElement
@@ -82,10 +83,6 @@ public class Project extends SubProject {
         return getDefaultRole();
     }
 
-    public Role getRoleByIdx(int idx) {
-        return roleList.get(idx);
-    }
-
     public Role getDefaultRole() {
         if (roleList.size() > 0) {
             return roleList.get(0);
@@ -93,13 +90,20 @@ public class Project extends SubProject {
         return null;
     }
 
-    public boolean addRole(Role newRole) {
-        newRole.setParent(this);
-        return roleList.add(newRole);
+    public boolean addRole(Role role) {
+        role.setParent(this);
+        return roleList.add(role);
     }
 
-    public boolean removeRole(Role newRole) {
-        return roleList.remove(newRole);
+    public boolean removeRole(Role role) {
+        // remove role from tasks as well
+        for (Task task : getAllTasks()) {
+            if (task.getRole().equals(role)) {
+                task.setRole(null);
+            }
+        }
+
+        return roleList.remove(role);
     }
 
     public boolean hasRole(Role role) {
@@ -153,5 +157,19 @@ public class Project extends SubProject {
             costs += sp.getCosts(start, stop);
         }
         return costs;
+    }
+
+    public ArrayList<Task> getAllTasks() {
+        ArrayList<Task> res = new ArrayList<>();
+
+        getSubProjects(subProjects -> {
+            for (SubProject subProject : subProjects) {
+                subProject.getTasks(tasks -> res.addAll(tasks));
+            }
+        });
+
+        getTasks(tasks -> res.addAll(tasks));
+
+        return res;
     }
 }

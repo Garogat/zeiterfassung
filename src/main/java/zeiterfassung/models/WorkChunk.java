@@ -84,4 +84,8 @@ public class WorkChunk extends BaseModel {
     public ObjectProperty<LocalDateTime> endTimeProperty() {
         return endTime;
     }
+
+    public boolean isRunning() {
+        return startTime.get() != null && endTime.get() == null;
+    }
 }
