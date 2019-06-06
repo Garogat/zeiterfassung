@@ -11,6 +11,12 @@
     -fx-background-color: #cecece;
 }
 
+.grid-pane {
+    -fx-padding: 10;
+    -fx-hgap: 10;
+    -fx-vgap: 10;
+}
+
 .root {
     -fx-body-color: #F5F5F5;
     -fx-outer-border: #cecece;

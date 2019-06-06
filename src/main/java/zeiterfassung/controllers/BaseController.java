@@ -51,10 +51,24 @@ public class BaseController {
     private TreeContextItem.Listener contextMenuListener;
 
     /**
+     * Injector for {@link DataStore} and initial tree rendering
+     *
+     * @param store Currently loaded {@link DataStore}
+     */
+    public void setDataStore(DataStore store) {
+        this.store = store;
+
+        tree = new Tree(store.getRoot());
+        projectTree.setRoot(tree.getTree());
+
+        openStart();
+    }
+
+    /**
      * Initilaizes the controller
      */
     @FXML
-    public void initialize() {
+    private void initialize() {
         // TODO: add resize listener to correctly set divider position
         splitPane.setDividerPositions(0.3);
 
@@ -199,11 +213,7 @@ public class BaseController {
         });
     }
 
-    /**
-     * @param view
-     * @return
-     */
-    public Object setContent(String view) {
+    private Object setContent(String view) {
         Node node = null;
 
         FXMLLoader loader = new FXMLLoader(Charset.forName("UTF-8"));
@@ -221,20 +231,6 @@ public class BaseController {
         }
 
         return null;
-    }
-
-    /**
-     * Injector for {@link DataStore} and initial tree rendering
-     *
-     * @param store Currently loaded {@link DataStore}
-     */
-    public void setDataStore(DataStore store) {
-        this.store = store;
-
-        tree = new Tree(store.getRoot());
-        projectTree.setRoot(tree.getTree());
-
-        openStart();
     }
 
     private AreaController openView(Area area) {
