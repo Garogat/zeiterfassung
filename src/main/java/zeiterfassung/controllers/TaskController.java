@@ -10,10 +10,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
 import javafx.util.StringConverter;
 import zeiterfassung.Utils;
-import zeiterfassung.models.Project;
-import zeiterfassung.models.Role;
-import zeiterfassung.models.Task;
-import zeiterfassung.models.WorkChunk;
+import zeiterfassung.models.*;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -72,8 +69,8 @@ public class TaskController {
      */
     private void setEditWorkChunk() {
         WorkChunk chunk = task.getActiveWorkChunk();
+        TimeRegistrationRoot root = (TimeRegistrationRoot) task.getParentByType(TimeRegistrationRoot.class);
 
-        // TODO: set running globally
         boolean isRunning = chunk != null;
 
         if (isRunning) {
@@ -82,7 +79,7 @@ public class TaskController {
             workchuncDescription.setText(null);
         }
 
-        startBtn.setDisable(isRunning);
+        startBtn.setDisable(isRunning || root.isTaskActive());
         stopBtn.setDisable(!isRunning);
         workchuncDescription.setDisable(!isRunning);
     }
@@ -202,10 +199,7 @@ public class TaskController {
     private void updateCostDuration() {
         costsLabel.setText(Utils.formatCosts(task.getCosts(LocalDateTime.MIN, LocalDateTime.MAX)));
         durationLabel.setText(Utils.formatDuration(task.getDuration(LocalDateTime.MIN, LocalDateTime.MAX)));
-    }
-
-    public Task getTask() {
-        return task;
+        workchunkTable.refresh();
     }
 
     /**
@@ -213,6 +207,7 @@ public class TaskController {
      *
      * @param actionEvent
      */
+    @FXML
     public void onStartBtn(ActionEvent actionEvent) {
         task.start();
         setEditWorkChunk();
@@ -223,6 +218,7 @@ public class TaskController {
      *
      * @param actionEvent
      */
+    @FXML
     public void onStopBtn(ActionEvent actionEvent) {
         workchuncDescription.textProperty().unbindBidirectional(task.getActiveWorkChunk().descriptionProperty());
         task.stop();
