@@ -26,6 +26,9 @@ import java.io.PrintWriter;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 
+/**
+ * This is the main controller which manages the tree view, menu and loads the model controllers
+ */
 public class BaseController {
 
     @FXML
@@ -47,6 +50,9 @@ public class BaseController {
     private Tree tree;
     private TreeContextItem.Listener contextMenuListener;
 
+    /**
+     * Initilaizes the controller
+     */
     @FXML
     public void initialize() {
         // TODO: add resize listener to correctly set divider position
@@ -159,33 +165,6 @@ public class BaseController {
             });
         }
         aboutMenu.getItems().add(versionInfoMenu);
-    }
-
-    public Object setContent(String view) {
-        Node node = null;
-
-        FXMLLoader loader = new FXMLLoader(Charset.forName("UTF-8"));
-        loader.setLocation(getClass().getResource("/zeiterfassung/views/" + view + ".fxml"));
-
-        try {
-            node = loader.load();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        if (node != null) {
-            content.getChildren().setAll(node);
-            return loader.getController();
-        }
-
-        return null;
-    }
-
-    public void setDataStore(DataStore store) {
-        this.store = store;
-
-        tree = new Tree(store.getRoot());
-        projectTree.setRoot(tree.getTree());
 
         projectTree.setCellFactory(t -> new TreeCell<TreeContextItem>() {
             @Override
@@ -218,6 +197,42 @@ public class BaseController {
                 }
             }
         });
+    }
+
+    /**
+     * @param view
+     * @return
+     */
+    public Object setContent(String view) {
+        Node node = null;
+
+        FXMLLoader loader = new FXMLLoader(Charset.forName("UTF-8"));
+        loader.setLocation(getClass().getResource("/zeiterfassung/views/" + view + ".fxml"));
+
+        try {
+            node = loader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        if (node != null) {
+            content.getChildren().setAll(node);
+            return loader.getController();
+        }
+
+        return null;
+    }
+
+    /**
+     * Injector for {@link DataStore} and initial tree rendering
+     *
+     * @param store Currently loaded {@link DataStore}
+     */
+    public void setDataStore(DataStore store) {
+        this.store = store;
+
+        tree = new Tree(store.getRoot());
+        projectTree.setRoot(tree.getTree());
 
         openStart();
     }
