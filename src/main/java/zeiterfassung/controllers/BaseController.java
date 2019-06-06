@@ -95,6 +95,7 @@ public class BaseController {
                 Area area = new Area();
                 area.setName("Neuer Bereich");
                 store.getRoot().addArea(area);
+                openView(area);
             }
 
             @Override
@@ -102,6 +103,7 @@ public class BaseController {
                 Project project = new Project();
                 project.setName("Neues Projekt");
                 area.addProject(project);
+                openView(project);
             }
 
             @Override
@@ -109,6 +111,7 @@ public class BaseController {
                 SubProject subProject = new SubProject();
                 subProject.setName("Neues Unterprojekt");
                 project.addSubProject(subProject);
+                openView(subProject);
             }
 
             @Override
@@ -116,6 +119,7 @@ public class BaseController {
                 Task task = new Task();
                 task.setName("Neuer Task");
                 subProject.addTask(task);
+                openView(task);
             }
 
             @Override
@@ -126,6 +130,17 @@ public class BaseController {
             @Override
             public void onExportDatabase() {
                 exportDatabase();
+            }
+
+            @Override
+            public void onOpenActiveTask() {
+                Task task = store.getRoot().getActiveTask();
+
+                if (task == null) {
+                    Utils.alertWarning("Zur Zeit ist kein Task in Bearbeitung.");
+                } else {
+                    openView(task);
+                }
             }
         };
         VersionInfo vInfo = new VersionInfo();
