@@ -6,7 +6,7 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
-import java.io.File;
+import java.io.*;
 
 public class DataStore {
     public static final String XMLFilePath = "ZeitErfassung.xml";
@@ -23,7 +23,7 @@ public class DataStore {
 
         try {
             root = loadFromXML(file);
-        } catch (JAXBException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -45,13 +45,17 @@ public class DataStore {
     public void saveToXML(File file) throws JAXBException {
         Marshaller jaxbMarshaller = getXMlContext().createMarshaller();
         jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+        jaxbMarshaller.setProperty(Marshaller.JAXB_ENCODING, "UTF-8");
 
         jaxbMarshaller.marshal(root, file);
     }
 
-    private TimeRegistrationRoot loadFromXML(File file) throws JAXBException {
+    private TimeRegistrationRoot loadFromXML(File file) throws JAXBException, UnsupportedEncodingException, FileNotFoundException {
         Unmarshaller jaxbUnmarshaller = getXMlContext().createUnmarshaller();
-        return (TimeRegistrationRoot) jaxbUnmarshaller.unmarshal(file);
+        InputStream inputStream = new FileInputStream(file);
+        Reader reader = new InputStreamReader(inputStream, "UTF-8");
+
+        return (TimeRegistrationRoot) jaxbUnmarshaller.unmarshal(reader);
     }
 
     private JAXBContext getXMlContext() throws JAXBException {
