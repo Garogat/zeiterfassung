@@ -13,6 +13,9 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * Provides the interface between area View and {@link Area} model
+ */
 public class AreaController {
 
     private Area area;
@@ -26,7 +29,11 @@ public class AreaController {
     @FXML
     private DatePicker reportMonth;
 
-
+    /**
+     * Initializes the Controller with an Area
+     *
+     * @param area This Area is handled by the Controller
+     */
     public void setArea(Area area) {
         this.area = area;
 
@@ -59,6 +66,10 @@ public class AreaController {
         reportMonth.setValue(LocalDate.now());
     }
 
+
+    /**
+     * Create a new report
+     */
     @FXML
     private void createReport() {
         LocalDateTime date = reportMonth.getValue().atStartOfDay();

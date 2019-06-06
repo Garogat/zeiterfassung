@@ -3,6 +3,9 @@ package zeiterfassung.xml;
 import javax.xml.bind.annotation.adapters.XmlAdapter;
 import java.time.LocalDateTime;
 
+/**
+ * XML Adapter for {@link LocalDateTime}
+ */
 public class LocalDateTimeAdapter extends XmlAdapter<String, LocalDateTime> {
 
     @Override

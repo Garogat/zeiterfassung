@@ -1,6 +1,5 @@
 package zeiterfassung.controllers;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -17,6 +16,9 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * Provides the interface between project View and {@link Project} model
+ */
 public class ProjectController {
     private Project project;
 
@@ -65,6 +67,11 @@ public class ProjectController {
     @FXML
     private DatePicker reportMonth;
 
+    /**
+     * Initializes the Controller with a Project
+     *
+     * @param project This Project is handled by the Controller
+     */
     public void setProject(Project project) {
         this.project = project;
         nameTextField.textProperty().bindBidirectional(project.nameProperty());
@@ -120,8 +127,11 @@ public class ProjectController {
         updateCosts();
     }
 
+    /**
+     * Add a new role
+     */
     @FXML
-    public void onAddRole(ActionEvent event) {
+    private void onAddRole() {
         if ((newRoleName.getText() != null) && (newRoleDescription.getText() != null) && (newRoleWage.getText() != null)) {
             Role role = new Role(newRoleName.getText(), newRoleDescription.getText(), Double.parseDouble(newRoleWage.getText()));
             if (!(project.hasRole(role))) {
@@ -131,8 +141,11 @@ public class ProjectController {
         }
     }
 
+    /**
+     * Remove the currently selected role
+     */
     @FXML
-    public void onRemoveRole(ActionEvent event) {
+    private void onRemoveRole() {
         // prevent removing our first "default" role
         if (project.getRolesSize() == 1) {
             Utils.alertWarning("Es muss mindestens eine Rolle existieren.");
@@ -145,6 +158,9 @@ public class ProjectController {
         updateCosts();
     }
 
+    /**
+     * Create a report
+     */
     @FXML
     private void createReport() {
         LocalDateTime date = reportMonth.getValue().atStartOfDay();
@@ -154,6 +170,9 @@ public class ProjectController {
         Utils.createReport(report, nameTextField.getScene().getWindow());
     }
 
+    /**
+     * Create an invoice
+     */
     @FXML
     private void createInvoice() {
         Utils.createInvoice(this.project, nameTextField.getScene().getWindow());

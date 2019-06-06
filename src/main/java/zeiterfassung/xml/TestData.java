@@ -4,8 +4,16 @@ import zeiterfassung.models.*;
 
 import java.time.LocalDateTime;
 
+/**
+ * Test data generator
+ */
 public class TestData {
 
+    /**
+     * Get some sample data
+     *
+     * @return Sample {@link TimeRegistrationRoot}
+     */
     public static TimeRegistrationRoot getData() {
         TimeRegistrationRoot root = new TimeRegistrationRoot();
 

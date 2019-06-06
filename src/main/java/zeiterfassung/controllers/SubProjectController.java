@@ -11,6 +11,10 @@ import zeiterfassung.models.SubProject;
 import java.time.Duration;
 import java.time.LocalDateTime;
 
+
+/**
+ * Provides the interface between subProject View and {@link SubProject} model
+ */
 public class SubProjectController {
     private SubProject subProject;
 
@@ -32,6 +36,11 @@ public class SubProjectController {
     @FXML
     private ProgressBar time;
 
+    /**
+     * Initializes the Controller with a SubProject
+     *
+     * @param subProject This SubProject is handled by the Controller
+     */
     public void setSubProject(SubProject subProject) {
         this.subProject = subProject;
         name.textProperty().bindBidirectional(subProject.nameProperty());

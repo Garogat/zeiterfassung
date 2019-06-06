@@ -3,6 +3,9 @@ package zeiterfassung.xml;
 import javax.xml.bind.annotation.adapters.XmlAdapter;
 import java.time.Duration;
 
+/**
+ * XML Adapter for {@link Duration}
+ */
 public class DurationAdapter extends XmlAdapter<String, Duration> {
 
     @Override

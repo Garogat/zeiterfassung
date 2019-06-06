@@ -9,9 +9,15 @@ import javax.xml.bind.Unmarshaller;
 import java.io.*;
 
 public class DataStore {
+    /**
+     * Path to main xml file (database)
+     */
     public static final String XMLFilePath = "ZeitErfassung.xml";
     private TimeRegistrationRoot root;
 
+    /**
+     * Load database from xml file
+     */
     public void load() {
         File file = new File(XMLFilePath);
 
@@ -30,6 +36,9 @@ public class DataStore {
         System.out.println("XML DataStore successfully loaded");
     }
 
+    /**
+     * Save database to xml file
+     */
     public void unload() {
         try {
             saveToXML(new File(XMLFilePath));
@@ -38,10 +47,21 @@ public class DataStore {
         }
     }
 
+    /**
+     * Get root model of database
+     *
+     * @return root model
+     */
     public TimeRegistrationRoot getRoot() {
         return root;
     }
 
+    /**
+     * Save database to xml file
+     *
+     * @param file database file (.xml)
+     * @throws JAXBException
+     */
     public void saveToXML(File file) throws JAXBException {
         Marshaller jaxbMarshaller = getXMlContext().createMarshaller();
         jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
