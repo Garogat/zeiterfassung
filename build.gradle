@@ -40,6 +40,10 @@ def getCommitHash = { ->
     }
     return stdout.toString().trim()
 }
+def deleteTmpResources = { ->
+    delete "${rootDir}/ZeitErfassung.xml"
+    delete "${rootDir}/src/main/resources/VERSION.txt"
+}
 tasks.register("showVersion"){
     group = "help"
     description = "commit  from git"
@@ -51,12 +55,12 @@ tasks.register("showVersion"){
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
-clean.doLast {
-    delete "ZeitErfassung.xml"
+clean.doFirst {
+    deleteTmpResources()
 }
 
 assemble.doLast {
-    delete "ZeitErfassung.xml"
+    deleteTmpResources()
     def versionData =  [branchName: "undefined", commitHash: "undefined"]
     File file = new File("src/main/resources/VERSION.txt")
     try {
@@ -66,14 +70,14 @@ assemble.doLast {
     } catch(Exception e) {
         println "git error = no version info (did you add git to your environment variables)?!"
     }
-    
+
     if(DEVELOP_INFO) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
         file.write( ("branchName = " + versionData.branchName + "\n")
-                + ("commitHash = " + versionData.commitHash + "\n")
-                + ("active = true\n")
-                + ("time = "+ LocalDateTime.now().format(formatter)).toString()
+            + ("commitHash = " + versionData.commitHash + "\n")
+            + ("active = true\n")
+            + ("time = "+ LocalDateTime.now().format(formatter)).toString()
         )
     }
 
