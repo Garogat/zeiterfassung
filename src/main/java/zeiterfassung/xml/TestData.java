@@ -15,6 +15,8 @@ public class TestData {
      * @return Sample {@link TimeRegistrationRoot}
      */
     public static TimeRegistrationRoot getData() {
+        LocalDateTime startTime = LocalDateTime.of(2017, 6, 5, 12, 35);
+        TaskRandomizedTimeFiller taskFiller = new TaskRandomizedTimeFiller(startTime, 0, 1, 60);
         TimeRegistrationRoot root = new TimeRegistrationRoot();
 
         Area area = new Area("Privat", "Hier findet man alle meine privaten Projekte");
@@ -30,6 +32,7 @@ public class TestData {
         project.addSubProject(subProject);
 
         Task task = new Task("Äpfel plücken", "Nur die schönen dicken Äpfel dürfen gepflückt werden.");
+        taskFiller.fill(task);
         task.addWorkChunk(new WorkChunk(LocalDateTime.now(), LocalDateTime.now().plusHours(4), "Toll"));
         task.addWorkChunk(new WorkChunk(LocalDateTime.now(), null, "1"));
         subProject.addTask(task);
@@ -38,9 +41,12 @@ public class TestData {
         project.addSubProject(subProject1);
 
         Task task1 = new Task("Stall ausmisten", "");
+        taskFiller.fill(task1);
+
         subProject1.addTask(task1);
 
         Task task2 = new Task("Eier sammeln", "");
+        taskFiller.fill(task2);
         subProject1.addTask(task2);
 
         Area areaFH = new Area("FH", "Hier findet man FH Kram");
