@@ -16,7 +16,7 @@ public class TestData {
      */
     public static TimeRegistrationRoot getData() {
         LocalDateTime startTime = LocalDateTime.of(2017, 6, 5, 12, 35);
-        TaskRandomizedTimeFiller taskFiller = new TaskRandomizedTimeFiller(startTime, 0, 50);
+        TaskRandomizedTimeFiller taskFiller = new TaskRandomizedTimeFiller(startTime, 0, 1, 60);
         TimeRegistrationRoot root = new TimeRegistrationRoot();
 
         Area area = new Area("Privat", "Hier findet man alle meine privaten Projekte");
