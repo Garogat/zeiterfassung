@@ -102,6 +102,13 @@ public class Task extends DescribableModel implements TimeableWork {
         if (getActiveWorkChunk() != null) {
             throw new IllegalStateException("Task already started");
         }
+
+        TimeRegistrationRoot root = (TimeRegistrationRoot) getParentByType(TimeRegistrationRoot.class);
+        if (root.isTaskActive()) {
+            throw new IllegalStateException("An other task is already running");
+        }
+
+        root.setActiveTask(this);
         workActive.set(true);
         WorkChunk chunk = new WorkChunk();
         chunk.setStartTime(LocalDateTime.now());
@@ -116,6 +123,10 @@ public class Task extends DescribableModel implements TimeableWork {
         if (getActiveWorkChunk() == null) {
             throw new IllegalStateException("Task can't be stopped, without being started");
         }
+
+        TimeRegistrationRoot root = (TimeRegistrationRoot) getParentByType(TimeRegistrationRoot.class);
+        root.setActiveTask(null);
+
         workActive.set(false);
         getActiveWorkChunk().setEndTime(LocalDateTime.now());
     }
