@@ -1,6 +1,8 @@
 package zeiterfassung.models;
 
+import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -17,9 +19,8 @@ public class Task extends DescribableModel implements TimeableWork {
     @XmlElement(name = "WorkChunk")
     private ObservableList<WorkChunk> workList = FXCollections.observableArrayList();
 
-    private LocalDateTime workStartTime;
-    private LocalDateTime workEndTime;
-    private String workDescription;
+    @XmlTransient
+    private BooleanProperty workActive = new SimpleBooleanProperty(false);
 
     @XmlIDREF
     private Role role;
@@ -37,11 +38,10 @@ public class Task extends DescribableModel implements TimeableWork {
         super(name, description);
     }
 
-    public Task(String name, String description, String workDescription, Role role) {
+    public Task(String name, String description, Role role) {
         super();
         setName(name);
         setDescription(description);
-        setWorkDescription(workDescription);
         setRole(role);
     }
 
@@ -82,6 +82,12 @@ public class Task extends DescribableModel implements TimeableWork {
     }
 
     public Role getRole() {
+        // return default role if none is set
+        if (this.role == null) {
+            Project project = (Project) this.getParentByType(Project.class);
+            return project.getDefaultRole();
+        }
+
         return this.role;
     }
 
@@ -89,47 +95,29 @@ public class Task extends DescribableModel implements TimeableWork {
         this.role = role;
     }
 
-    public boolean hasWorkStarted() {
-        return workStartTime != null;
-    }
-
-    public boolean hasWorkEnded() {
-        return workEndTime != null;
-    }
-
-    public void setWorkDescription(String description) {
-        this.workDescription = description;
-    }
-
-    public String getWorkDescription() {
-        return workDescription;
-    }
-
     /**
      * throws IllegalStateException
      */
     public void start() {
-        if (hasWorkStarted()) {
+        if (getActiveWorkChunk() != null) {
             throw new IllegalStateException("Task already started");
-        } else {
-            workStartTime = LocalDateTime.now();
         }
+        workActive.set(true);
+        WorkChunk chunk = new WorkChunk();
+        chunk.setStartTime(LocalDateTime.now());
+        chunk.setParent(this);
+        addWorkChunk(chunk);
     }
 
     /**
      * throws IllegalStateException
      */
     public void stop() {
-        if (!hasWorkStarted()) {
+        if (getActiveWorkChunk() == null) {
             throw new IllegalStateException("Task can't be stopped, without being started");
         }
-        if (hasWorkEnded()) {
-            throw new IllegalStateException("Task already ended");
-        }
-        workEndTime = LocalDateTime.now();
-        WorkChunk newWork = new WorkChunk(workStartTime, workEndTime, workDescription);
-        newWork.setParent(this);
-        workList.add(newWork);
+        workActive.set(false);
+        getActiveWorkChunk().setEndTime(LocalDateTime.now());
     }
 
     @XmlJavaTypeAdapter(DurationAdapter.class)
@@ -139,5 +127,23 @@ public class Task extends DescribableModel implements TimeableWork {
 
     public void setEstimatedDuration(Duration estimatedTime) {
         this.estimatedDuration.setValue(estimatedTime);
+    }
+
+    @XmlElement(name = "active")
+    public boolean isWorkActive() {
+        return workActive.get();
+    }
+
+    public BooleanProperty workActiveProperty() {
+        return workActive;
+    }
+
+    public WorkChunk getActiveWorkChunk() {
+        for (WorkChunk chunk : this.workList) {
+            if (chunk.isRunning()) {
+                return chunk;
+            }
+        }
+        return null;
     }
 }

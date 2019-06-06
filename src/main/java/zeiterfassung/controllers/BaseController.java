@@ -12,7 +12,6 @@ import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import zeiterfassung.Main;
 import zeiterfassung.Utils;
-import zeiterfassung.components.ActiveWorkChunk;
 import zeiterfassung.components.Tree;
 import zeiterfassung.components.TreeContextItem;
 import zeiterfassung.components.VersionInfo;
@@ -45,7 +44,6 @@ public class BaseController {
     private ContextMenu contextMenu;
     private Tree tree;
     private TreeContextItem.Listener contextMenuListener;
-    private ActiveWorkChunk activeWorkChunk;
 
     @FXML
     public void initialize() {
@@ -133,18 +131,18 @@ public class BaseController {
         VersionInfo vInfo = new VersionInfo();
         MenuItem versionInfoMenu = new MenuItem(vInfo.info());
         //copy commit  hash to the clipboard
-        if(vInfo.isActive()) {
+        if (vInfo.isActive()) {
             versionInfoMenu.setOnAction(event -> {
                 final Clipboard clipboard = Clipboard.getSystemClipboard();
                 final ClipboardContent content = new ClipboardContent();
                 content.putString(vInfo.getCommitHash());
                 clipboard.setContent(content);
                 Utils.alertInfo("Der Commit Hash ist nun im Clipboard");
-
             });
         }
         aboutMenu.getItems().add(versionInfoMenu);
     }
+
     public Object setContent(String view) {
         Node node = null;
 
@@ -167,7 +165,6 @@ public class BaseController {
         this.store = store;
 
         tree = new Tree(store.getRoot());
-        activeWorkChunk = new ActiveWorkChunk(store.getRoot());
         projectTree.setRoot(tree.getTree());
 
         projectTree.setCellFactory(t -> new TreeCell<TreeContextItem>() {
@@ -177,6 +174,7 @@ public class BaseController {
 
                 textProperty().unbind();
                 graphicProperty().unbind();
+                underlineProperty().unbind();
 
                 if (empty) {
                     setText(null);
@@ -185,6 +183,10 @@ public class BaseController {
                     // bind text value to model
                     textProperty().bind(item.textProperty());
                     setGraphic(item.getIcon());
+                    if (item.getType() == TreeContextItem.Type.TASK) {
+                        Task task = (Task) item.getItem();
+                        underlineProperty().bindBidirectional(task.workActiveProperty());
+                    }
                 }
             }
         });
@@ -212,7 +214,7 @@ public class BaseController {
 
     private TaskController openView(Task task) {
         TaskController taskController = (TaskController) setContent("Task");
-        taskController.setTask(task, activeWorkChunk);
+        taskController.setTask(task);
         return taskController;
     }
 

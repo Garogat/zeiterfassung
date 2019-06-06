@@ -22,6 +22,8 @@ public class TestData {
         project.addSubProject(subProject);
 
         Task task = new Task("Äpfel plücken", "Nur die schönen dicken Äpfel dürfen gepflückt werden.");
+        task.addWorkChunk(new WorkChunk(LocalDateTime.now(), LocalDateTime.now().plusHours(4), "Toll"));
+        task.addWorkChunk(new WorkChunk(LocalDateTime.now(), null, "1"));
         subProject.addTask(task);
 
         SubProject subProject1 = new SubProject("Hühner", "");
@@ -55,7 +57,7 @@ public class TestData {
         SubProject sprint2 = new SubProject("2. Sprint", "Unser 2. einwöchiger Sprint");
         pij.addSubProject(sprint2);
 
-        Task xml = new Task("XML Import", "XML Datei erzeugen und auslesen", "Annotationen setzen und Adapter schreiben", new Role("Student", "Ein ganz normaler Student ohne besondere Qualifikationen", 8.5));
+        Task xml = new Task("XML Import", "XML Datei erzeugen und auslesen", new Role("Student", "Ein ganz normaler Student ohne besondere Qualifikationen", 8.5));
         xml.addWorkChunk(new WorkChunk(LocalDateTime.now(), LocalDateTime.now().plusHours(4), "Meine Beispielarbeit"));
         sprint2.addTask(xml);
 
