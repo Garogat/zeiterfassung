@@ -1,5 +1,6 @@
 package zeiterfassung.controllers;
 
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -143,9 +144,10 @@ public class BaseController {
                 }
             }
         };
+
         VersionInfo vInfo = new VersionInfo();
         MenuItem versionInfoMenu = new MenuItem(vInfo.info());
-        //copy commit  hash to the clipboard
+        //copy commit hash to the clipboard
         if (vInfo.isActive()) {
             versionInfoMenu.setOnAction(event -> {
                 final Clipboard clipboard = Clipboard.getSystemClipboard();
@@ -189,7 +191,6 @@ public class BaseController {
 
                 textProperty().unbind();
                 graphicProperty().unbind();
-                underlineProperty().unbind();
 
                 if (empty) {
                     setText(null);
@@ -200,7 +201,16 @@ public class BaseController {
                     setGraphic(item.getIcon());
                     if (item.getType() == TreeContextItem.Type.TASK) {
                         Task task = (Task) item.getItem();
-                        underlineProperty().bindBidirectional(task.workActiveProperty());
+                        task.workActiveProperty().addListener((ObservableValue<? extends Boolean> observableValue, Boolean aBoolean, Boolean t1) -> {
+                            if (aBoolean) {
+                                getStyleClass().remove("active-task");
+                            } else {
+                                getStyleClass().add("active-task");
+                            }
+                        });
+                        if (task.isWorkActive()) {
+                            getStyleClass().add("active-task");
+                        }
                     }
                 }
             }

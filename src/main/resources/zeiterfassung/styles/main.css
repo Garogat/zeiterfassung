@@ -1,3 +1,16 @@
+.active-task {
+    -fx-text-fill: #5cb85c;
+}
+
+.tree-view {
+    -fx-border-color: transparent;
+    -fx-focus-color: transparent;
+}
+
+.tree-cell:selected {
+    -fx-background-color: #cecece;
+}
+
 .root {
     -fx-body-color: #F5F5F5;
     -fx-outer-border: #cecece;

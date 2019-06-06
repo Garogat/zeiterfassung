@@ -13,19 +13,18 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.time.Duration;
 import java.time.LocalDateTime;
 
-@XmlAccessorType(XmlAccessType.FIELD)
+@XmlAccessorType(XmlAccessType.NONE)
 @XmlRootElement
 public class Task extends DescribableModel implements TimeableWork {
     @XmlElement(name = "WorkChunk")
     private ObservableList<WorkChunk> workList = FXCollections.observableArrayList();
 
-    @XmlTransient
     private BooleanProperty workActive = new SimpleBooleanProperty(false);
 
+    @XmlElement(name = "Role")
     @XmlIDREF
     private Role role;
 
-    @XmlTransient
     private ObjectProperty<Duration> estimatedDuration = new SimpleObjectProperty<>(Duration.ZERO);
 
     public Task() {
@@ -109,7 +108,7 @@ public class Task extends DescribableModel implements TimeableWork {
         }
 
         root.setActiveTask(this);
-        workActive.set(true);
+        workActive.setValue(true);
         WorkChunk chunk = new WorkChunk();
         chunk.setStartTime(LocalDateTime.now());
         chunk.setParent(this);
@@ -143,6 +142,10 @@ public class Task extends DescribableModel implements TimeableWork {
     @XmlElement(name = "active")
     public boolean isWorkActive() {
         return workActive.get();
+    }
+
+    public void setWorkActive(boolean active) {
+        workActiveProperty().set(active);
     }
 
     public BooleanProperty workActiveProperty() {
