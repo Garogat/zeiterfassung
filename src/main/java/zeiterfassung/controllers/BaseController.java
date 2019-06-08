@@ -1,5 +1,6 @@
 package zeiterfassung.controllers;
 
+import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -64,6 +65,16 @@ public class BaseController {
 
         openStart();
     }
+
+    /**
+     * Listens to changes on the active workchunk
+     */
+    private ChangeListener<Boolean> activeTaskListener = new ChangeListener<Boolean>() {
+        @Override
+        public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+            projectTree.refresh();
+        }
+    };
 
     /**
      * Initilaizes the controller
@@ -203,10 +214,7 @@ public class BaseController {
                     setGraphic(item.getIcon());
                     if (item.getType() == TreeContextItem.Type.TASK) {
                         Task task = (Task) item.getItem();
-                        task.workActiveProperty().addListener((observable, oldValue, newValue) -> {
-                            param.refresh();
-
-                        });
+                        task.workActiveProperty().addListener(activeTaskListener);
                         if (task.isWorkActive()) {
                             getStyleClass().add("active-task");
                         }
