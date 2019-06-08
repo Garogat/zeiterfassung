@@ -74,14 +74,6 @@ public class Project extends SubProject {
         return roleList.size();
     }
 
-    public Role getRole(String id) {
-        for (Role role : roleList) {
-            if (role.getId().equals(id)) {
-                return role;
-            }
-        }
-        return getDefaultRole();
-    }
 
     public Role getDefaultRole() {
         if (roleList.size() > 0) {
@@ -108,15 +100,6 @@ public class Project extends SubProject {
 
     public boolean hasRole(Role role) {
         return roleList.contains(role);
-    }
-
-    public Role findRoleByID(String id) {
-        for (Role role : roleList) {
-            if (role.getId().equals(id)) {
-                return role;
-            }
-        }
-        return null;
     }
 
     @XmlElement(name = "Customer")

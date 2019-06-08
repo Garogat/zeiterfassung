@@ -70,46 +70,34 @@ public class TaskTest {
 
     @Test
     public void hasWorkStarted() {
-        assertEquals(false, task.hasWorkEnded());
+        assertEquals(false, task.isWorkActive());
         task.start();
-        assertEquals(true, task.hasWorkStarted());
+        assertEquals(true, task.isWorkActive());
     }
 
     @Test
     public void hasWorkEnded() {
         task.start();
-        assertEquals(false, task.hasWorkEnded());
+        assertEquals(false, task.isWorkActive());
         task.stop();
-        assertEquals(true, task.hasWorkEnded());
+        assertEquals(true, task.isWorkActive());
     }
 
-    @Test
-    public void setWorkDescription() {
-        String description = "Beschreibung1";
-        task.setWorkDescription(description);
-        assertEquals(description, task.getWorkDescription());
-    }
 
-    @Test
-    public void getWorkDescription() {
-        String description = "Beschreibung42";
-        task.setWorkDescription(description);
-        assertEquals(description, task.getWorkDescription());
-    }
 
     @Test
     public void start() {
         task.start();
-        assertEquals(true, task.hasWorkStarted());
+        assertEquals(true, task.isWorkActive());
     }
 
     @Test
     public void stop() {
-        assertEquals(false, task.hasWorkStarted());
+        assertEquals(false, task.isWorkActive());
         task.start();
-        assertEquals(true, task.hasWorkStarted());
+        assertEquals(true, task.isWorkActive());
         task.stop();
-        assertEquals(true, task.hasWorkEnded());
+        assertEquals(true, task.isWorkActive());
     }
 
     @Test

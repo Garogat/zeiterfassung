@@ -52,11 +52,7 @@ public class ProjectTest {
         assertEquals(true, project.hasSubProject(subProject));
     }
 
-    @Test
-    public void testGetRoleByIdx(){
-        project.addRole(role);
-        assertEquals(role, project.getRoleByIdx(1));
-    }
+
 
     @Test
     public void testGetEstimatedDuration(){

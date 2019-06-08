@@ -43,19 +43,6 @@ public class RoleTest {
         assertEquals(wage, role.getHourlyWage());
     }
 
-    @Test
-    public void getId() {
-        String id = "100132";
-        role.setId(id);
-        assertEquals(id, role.getId());
-    }
-
-    @Test
-    public void setId() {
-        String id = "431014";
-        role.setId(id);
-        assertEquals(id, role.getId());
-    }
 
     /**
      * Test for checking if the role description is returned correctly
