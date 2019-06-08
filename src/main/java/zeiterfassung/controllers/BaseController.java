@@ -209,13 +209,8 @@ public class BaseController {
                         });
                         if (task.isWorkActive()) {
                             getStyleClass().add("active-task");
-                        }else{
-                            getStyleClass().remove("active-task");
                         }
-                    }else{
-                        getStyleClass().remove("active-task");
                     }
-
                 }
             }
         });
