@@ -186,51 +186,7 @@ public class BaseController {
         }
         aboutMenu.getItems().add(versionInfoMenu);
 
-/*
-        projectTree.setCellFactory(new Callback<TreeView<TreeContextItem>, TreeCell<TreeContextItem>>() {
-            @Override
-            public TreeCell<TreeContextItem> call(TreeView<TreeContextItem> param) {
-                return new TreeCell<TreeContextItem>() {
-                    @Override
-                    public void updateItem(TreeContextItem item, boolean empty) {
-                        super.updateItem(item, empty);
-                        getStyleClass().remove("active-task");
-                        if (empty) {
-                            textProperty().unbind();
-                            graphicProperty().unbind();
-                            setText(null);
-                            setGraphic(null);
 
-                        } else {
-                            // bind text value to model
-                            textProperty().bind(item.textProperty());
-                            setGraphic(item.getIcon());
-                            if (item.getType() == TreeContextItem.Type.TASK) {
-                                Task task = (Task) item.getItem();
-                                task.workActiveProperty().addListener((observable, oldValue, newValue) -> {
-                                    param.refresh();
-                                    /*
-                                    if (newValue) {
-                                        getStyleClass().add("active-task");
-                                    } else {
-                                        getStyleClass().remove("active-task");
-                                    }
-                                });
-                                if (task.isWorkActive()) {
-                                    getStyleClass().add("active-task");
-                                }else{
-                                    getStyleClass().remove("active-task");
-                                }
-                            }else{
-                                getStyleClass().remove("active-task");
-                            }
-
-                        }
-                    }
-                };
-            }
-        });
-        */
         projectTree.setCellFactory(param -> new TreeCell<TreeContextItem>() {
             @Override
             public void updateItem(TreeContextItem item, boolean empty) {
