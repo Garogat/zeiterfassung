@@ -8,6 +8,9 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
+/**
+ * A base interface for all objects which must have a name and a description
+ */
 @XmlType(propOrder = {"name", "description"})
 @XmlAccessorType(XmlAccessType.NONE)
 public abstract class DescribableModel extends BaseModel {

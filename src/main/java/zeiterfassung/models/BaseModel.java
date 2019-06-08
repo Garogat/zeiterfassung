@@ -6,12 +6,22 @@ import java.util.UUID;
 @XmlAccessorType(XmlAccessType.NONE)
 public abstract class BaseModel {
 
-
+    @XmlAttribute(name = "id")
+    @XmlID
+    private String id;
 
     @XmlElement(name = "parent")
     @XmlIDREF
     private BaseModel parent;
 
+    /**
+     * Base consturctor to generate XML IDs
+     */
+    public BaseModel() {
+        if (id == null || id.isEmpty()) {
+            id = UUID.randomUUID().toString();
+        }
+    }
 
     public BaseModel getParent() {
         return parent;
@@ -29,4 +39,11 @@ public abstract class BaseModel {
         return tmpModel;
     }
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 }
