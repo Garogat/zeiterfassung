@@ -8,12 +8,21 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlIDREF;
 import javax.xml.bind.annotation.XmlRootElement;
 
+/**
+ * This is the RootNode of the data structure. It contains a list of areas
+ */
 @XmlRootElement(name = "Root")
 public class TimeRegistrationRoot extends BaseModel {
 
+    /**
+     * List of different areas
+     */
     @XmlElement(name = "Area")
     private ListProperty<Area> areaList = new SimpleListProperty(FXCollections.observableArrayList());
 
+    /**
+     * A reference to the task with the running work chunk if exists
+     */
     @XmlIDREF
     private Task activeTask;
 
@@ -50,6 +59,10 @@ public class TimeRegistrationRoot extends BaseModel {
         this.activeTask = activeTask;
     }
 
+    /**
+     * Checks if a running work chunk exists
+     * @return the task that contains the running work chunk or null
+     */
     public boolean isTaskActive() {
         if (activeTask == null) {
             return false;

@@ -3,6 +3,9 @@ package zeiterfassung;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
+/**
+ * Main class that contains the program entry point
+ */
 public class Main extends Application {
 
     private static ZeitErfassung tool;

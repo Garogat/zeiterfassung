@@ -10,6 +10,9 @@ import java.util.Scanner;
 
 import static htmlProducer.HtmlFactory.*;
 
+/**
+ * A html report for a project invoice
+ */
 public class ProjectInvoice implements Reportable {
 
     private Project project;

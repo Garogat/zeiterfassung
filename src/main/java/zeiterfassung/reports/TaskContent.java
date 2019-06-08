@@ -12,6 +12,10 @@ import zeiterfassung.models.WorkChunk;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+
+/**
+ * A html report for a task
+ */
 public class TaskContent implements Reportable {
 
     Task task;

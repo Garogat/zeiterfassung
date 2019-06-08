@@ -11,6 +11,9 @@ import zeiterfassung.xml.DataStore;
 import java.io.IOException;
 import java.nio.charset.Charset;
 
+/**
+ * The base class that contains the hole program instances
+ */
 public class ZeitErfassung {
     private Stage stage;
     private DataStore store;

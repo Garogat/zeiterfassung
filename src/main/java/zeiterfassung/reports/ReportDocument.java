@@ -9,6 +9,9 @@ import java.util.List;
 
 import static htmlProducer.HtmlFactory.*;
 
+/**
+ * A wrapper for html based reports. It provides the html header and base node
+ */
 public class ReportDocument implements Reportable {
 
     private String title;

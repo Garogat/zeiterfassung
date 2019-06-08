@@ -10,6 +10,9 @@ import java.time.LocalDateTime;
 
 import static htmlProducer.HtmlFactory.*;
 
+/**
+ * A html report for a project
+ */
 public class ProjectContent implements Reportable {
 
     Project project;
