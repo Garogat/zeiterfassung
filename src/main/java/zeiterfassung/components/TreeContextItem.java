@@ -89,7 +89,7 @@ public class TreeContextItem {
     /**
      * Model represented by {@link TreeItem}
      */
-    private Object item;
+    private BaseModel item;
 
     /**
      * Contextmenu action listener
@@ -275,7 +275,7 @@ public class TreeContextItem {
         return this.type;
     }
 
-    public Object getItem() {
+    public BaseModel getItem() {
         return item;
     }
 
