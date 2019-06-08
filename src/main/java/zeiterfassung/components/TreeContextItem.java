@@ -49,8 +49,6 @@ public class TreeContextItem {
      */
     public enum Type {ROOT, AREA, PROJECT, SUBPROJECT, TASK}
 
-    ;
-
     /**
      * Icon for {@link TimeRegistrationRoot}
      */
@@ -89,7 +87,7 @@ public class TreeContextItem {
     /**
      * Model represented by {@link TreeItem}
      */
-    private Object item;
+    private BaseModel item;
 
     /**
      * Contextmenu action listener
@@ -156,18 +154,33 @@ public class TreeContextItem {
         return result;
     }
 
+    /**
+     * "Delete project" menu item and set it's listener
+     *
+     * @return "Delete project" menu item
+     */
     private MenuItem deleteProject() {
         MenuItem result = new MenuItem("Projekt löschen");
         result.setOnAction(event -> listener.onDelete((Project) item));
         return result;
     }
 
+    /**
+     * "Delete SubProject" menu item and set it's listener
+     *
+     * @return "Delete SubProject" menu item
+     */
     private MenuItem deleteSubProject() {
         MenuItem result = new MenuItem("Unterprojekt löschen");
         result.setOnAction(event -> listener.onDelete((SubProject) item));
         return result;
     }
 
+    /**
+     * "Delete Task" menu item and set it's listener
+     *
+     * @return "Delete Task" menu item
+     */
     private MenuItem deleteTask() {
         MenuItem result = new MenuItem("Aufgabe löschen");
         result.setOnAction(event -> listener.onDelete((Task) item));
@@ -271,11 +284,15 @@ public class TreeContextItem {
         contextMenu.add(deleteTask());
     }
 
+    /**
+     * returns the type of the item
+     * @return Item type
+     */
     public Type getType() {
         return this.type;
     }
 
-    public Object getItem() {
+    public BaseModel getItem() {
         return item;
     }
 

@@ -30,7 +30,7 @@ public enum HtmlFactory implements HtmlBuilder{
     }
 
     /**
-     * Factory method to
+     * Factory method to build a new Tag item
      * @return
      */
     @Override

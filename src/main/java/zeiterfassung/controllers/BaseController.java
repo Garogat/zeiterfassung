@@ -1,5 +1,6 @@
 package zeiterfassung.controllers;
 
+import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -11,6 +12,7 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
+import javafx.util.Callback;
 import zeiterfassung.Main;
 import zeiterfassung.Utils;
 import zeiterfassung.components.Tree;
@@ -63,6 +65,16 @@ public class BaseController {
 
         openStart();
     }
+
+    /**
+     * Listens to changes on the active workchunk
+     */
+    private ChangeListener<Boolean> activeTaskListener = new ChangeListener<Boolean>() {
+        @Override
+        public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+            projectTree.refresh();
+        }
+    };
 
     /**
      * Initilaizes the controller
@@ -185,14 +197,14 @@ public class BaseController {
         }
         aboutMenu.getItems().add(versionInfoMenu);
 
-        projectTree.setCellFactory(t -> new TreeCell<TreeContextItem>() {
+
+        projectTree.setCellFactory(param -> new TreeCell<TreeContextItem>() {
             @Override
             public void updateItem(TreeContextItem item, boolean empty) {
                 super.updateItem(item, empty);
-
+                getStyleClass().remove("active-task");
                 textProperty().unbind();
                 graphicProperty().unbind();
-
                 if (empty) {
                     setText(null);
                     setGraphic(null);
@@ -202,13 +214,7 @@ public class BaseController {
                     setGraphic(item.getIcon());
                     if (item.getType() == TreeContextItem.Type.TASK) {
                         Task task = (Task) item.getItem();
-                        task.workActiveProperty().addListener((ObservableValue<? extends Boolean> observableValue, Boolean aBoolean, Boolean t1) -> {
-                            if (aBoolean) {
-                                getStyleClass().remove("active-task");
-                            } else {
-                                getStyleClass().add("active-task");
-                            }
-                        });
+                        task.workActiveProperty().addListener(activeTaskListener);
                         if (task.isWorkActive()) {
                             getStyleClass().add("active-task");
                         }
