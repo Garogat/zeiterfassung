@@ -6,7 +6,7 @@ package htmlProducer;
 public interface HtmlElement {
     /**
      * Returns the HTML Code of an element
-     * @return HtmlCode
+     * @return HtmlCode of the node
      */
     String getHTMLCode();
 }

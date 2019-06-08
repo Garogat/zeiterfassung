@@ -29,6 +29,10 @@ public enum HtmlFactory implements HtmlBuilder{
         attribute = hb;
     }
 
+    /**
+     * Factory method to
+     * @return
+     */
     @Override
     public HtmlTagElement build() {
         return attribute.build();
