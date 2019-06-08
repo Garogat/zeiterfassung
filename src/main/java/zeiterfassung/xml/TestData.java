@@ -34,8 +34,8 @@ public class TestData {
         Task task = new Task("Äpfel plücken", "Nur die schönen dicken Äpfel dürfen gepflückt werden.");
         taskFiller.fill(task);
         task.addWorkChunk(new WorkChunk(LocalDateTime.now(), LocalDateTime.now().plusHours(4), "Toll"));
-        task.addWorkChunk(new WorkChunk(LocalDateTime.now(), null, "1"));
         subProject.addTask(task);
+        task.start();
 
         SubProject subProject1 = new SubProject("Hühner", "");
         project.addSubProject(subProject1);
