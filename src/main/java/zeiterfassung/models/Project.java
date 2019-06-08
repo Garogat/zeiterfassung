@@ -15,22 +15,32 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
+/**
+ * Represents a project. A Project is part of an area and contains tasks and subprojects.
+ */
 @XmlAccessorType(XmlAccessType.NONE)
 @XmlRootElement
 public class Project extends SubProject {
+    /**
+     * The customer for to generate the invoice
+     */
     private StringProperty customer = new SimpleStringProperty();
 
+    /**
+     * A List of Roles which can be assigned to the tasks
+     */
     @XmlElement(name = "Role")
     private ObservableList<Role> roleList = FXCollections.observableArrayList();
 
+    /**
+     * Containing subproject
+     */
     @XmlElement(name = "SubProject")
     private ListProperty<SubProject> subProjectList = new SimpleListProperty(FXCollections.observableArrayList());
 
+
     public Project() {
-        super();
-        setName("Neues Projekt");
-        setDescription("Dies ist ein Projekt");
-        addRole(Role.DEFAULT_ROLE);
+        this("Neues Projekt", "Dies ist ein Projekt");
     }
 
     public Project(String name, String description) {
@@ -38,6 +48,10 @@ public class Project extends SubProject {
         addRole(Role.DEFAULT_ROLE);
     }
 
+    /**
+     * Iterates the list of subprojects
+     * @param subProjects Callback Interface
+     */
     public void getSubProjects(Listable<SubProject> subProjects) {
         subProjects.getList(subProjectList);
     }
@@ -50,9 +64,6 @@ public class Project extends SubProject {
         return subProjectList;
     }
 
-    /**
-     * @throws IllegalArgumentException
-     */
     public boolean addSubProject(SubProject newSubProject) {
         newSubProject.setParent(this);
         return subProjectList.add(newSubProject);
@@ -74,15 +85,10 @@ public class Project extends SubProject {
         return roleList.size();
     }
 
-    public Role getRole(String id) {
-        for (Role role : roleList) {
-            if (role.getId().equals(id)) {
-                return role;
-            }
-        }
-        return getDefaultRole();
-    }
-
+    /**
+     * Returns the default role. This is the first role
+     * @return the first role in list
+     */
     public Role getDefaultRole() {
         if (roleList.size() > 0) {
             return roleList.get(0);
@@ -102,21 +108,11 @@ public class Project extends SubProject {
                 task.setRole(null);
             }
         }
-
         return roleList.remove(role);
     }
 
     public boolean hasRole(Role role) {
         return roleList.contains(role);
-    }
-
-    public Role findRoleByID(String id) {
-        for (Role role : roleList) {
-            if (role.getId().equals(id)) {
-                return role;
-            }
-        }
-        return null;
     }
 
     @XmlElement(name = "Customer")
@@ -132,6 +128,12 @@ public class Project extends SubProject {
         return customer;
     }
 
+    /**
+     * Returns the overall duration from all tasks and subprojects in an interval
+     * @param start Start time of the interval
+     * @param stop End time of the interval
+     * @return the overall duration
+     */
     @Override
     public Duration getDuration(LocalDateTime start, LocalDateTime stop) {
         Duration duration = super.getDuration(start, stop);
@@ -141,6 +143,10 @@ public class Project extends SubProject {
         return duration;
     }
 
+    /**
+     * Returns the overall estimated duration from all tasks and subprojects
+     * @return the overall estimated duration
+     */
     @Override
     public Duration getEstimatedDuration() {
         Duration duration = super.getEstimatedDuration();
@@ -150,6 +156,12 @@ public class Project extends SubProject {
         return duration;
     }
 
+    /**
+     * Returns the overall cost from all tasks and subprojects in an interval
+     * @param start Start time of the interval
+     * @param stop End time of the interval
+     * @return the overall costs
+     */
     @Override
     public double getCosts(LocalDateTime start, LocalDateTime stop) {
         double costs = super.getCosts(start, stop);
@@ -159,6 +171,10 @@ public class Project extends SubProject {
         return costs;
     }
 
+    /**
+     * Returns a task list of all tasks and subprojects
+     * @return
+     */
     public ArrayList<Task> getAllTasks() {
         ArrayList<Task> res = new ArrayList<>();
 

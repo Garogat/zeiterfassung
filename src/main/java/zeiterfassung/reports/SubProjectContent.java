@@ -9,6 +9,9 @@ import java.time.LocalDateTime;
 
 import static htmlProducer.HtmlFactory.*;
 
+/**
+ * A html report for a subproject
+ */
 public class SubProjectContent implements Reportable{
 
     private SubProject subProject;

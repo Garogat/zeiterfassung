@@ -14,6 +14,9 @@ public abstract class BaseModel {
     @XmlIDREF
     private BaseModel parent;
 
+    /**
+     * Base consturctor to generate XML IDs
+     */
     public BaseModel() {
         if (id == null || id.isEmpty()) {
             id = UUID.randomUUID().toString();

@@ -9,7 +9,9 @@ import zeiterfassung.models.Project;
 
 import java.time.LocalDateTime;
 
-
+/**
+ * A html report for an area
+ */
 public class AreaContent implements Reportable  {
 
     Area area;

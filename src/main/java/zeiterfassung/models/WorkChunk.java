@@ -14,13 +14,25 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.time.Duration;
 import java.time.LocalDateTime;
 
+/**
+ * Represents a workchunk. A workchunk is a measured timespan the user has worked on a task
+ */
 @XmlAccessorType(XmlAccessType.NONE)
 @XmlRootElement
 public class WorkChunk extends BaseModel {
+    /**
+     * Start time of timespan
+     */
     private ObjectProperty<LocalDateTime> startTime = new SimpleObjectProperty<>();
 
+    /**
+     * Stop time of timespan
+     */
     private ObjectProperty<LocalDateTime> endTime = new SimpleObjectProperty<>();
 
+    /**
+     * A description to this workchunk
+     */
     private StringProperty description = new SimpleStringProperty();
 
     public WorkChunk() {

@@ -4,11 +4,17 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 
+/**
+ * Represents a Role that is assigned to a task and managed in the project
+ */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement
 public class Role extends DescribableModel {
     public static final Role DEFAULT_ROLE = new Role("Standard", "Die ist die standard Rolle", 0);
 
+    /**
+     * The costs for one hour of work
+     */
     private double hourlyWage;
 
     public Role() {

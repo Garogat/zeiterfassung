@@ -13,9 +13,15 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.time.Duration;
 import java.time.LocalDateTime;
 
+/**
+ * Represents a task. A task belongs to a project or a subproject and contains workchunks
+ */
 @XmlAccessorType(XmlAccessType.NONE)
 @XmlRootElement
 public class Task extends DescribableModel implements TimeableWork {
+    /**
+     * A list of workchunks to count the time the user is working on a task
+     */
     @XmlElement(name = "WorkChunk")
     private ObservableList<WorkChunk> workList = FXCollections.observableArrayList();
 
@@ -25,6 +31,9 @@ public class Task extends DescribableModel implements TimeableWork {
     @XmlIDREF
     private Role role;
 
+    /**
+     * The user can set a estimated time for the task to control his progress
+     */
     private ObjectProperty<Duration> estimatedDuration = new SimpleObjectProperty<>(Duration.ZERO);
 
     public Task() {
@@ -95,6 +104,7 @@ public class Task extends DescribableModel implements TimeableWork {
     }
 
     /**
+     * Starts a workchunk to measure the wroking hours
      * throws IllegalStateException
      */
     public void start() {
@@ -116,6 +126,7 @@ public class Task extends DescribableModel implements TimeableWork {
     }
 
     /**
+     * Stops measuring the wroking hours
      * throws IllegalStateException
      */
     public void stop() {
@@ -130,6 +141,7 @@ public class Task extends DescribableModel implements TimeableWork {
         getActiveWorkChunk().setEndTime(LocalDateTime.now());
     }
 
+
     @XmlJavaTypeAdapter(DurationAdapter.class)
     public Duration getEstimatedDuration() {
         return estimatedDuration.get();
@@ -139,6 +151,10 @@ public class Task extends DescribableModel implements TimeableWork {
         this.estimatedDuration.setValue(estimatedTime);
     }
 
+    /**
+     * Checks, if this task contains the open workchunk
+     * @return
+     */
     @XmlElement(name = "active")
     public boolean isWorkActive() {
         return workActive.get();
@@ -152,6 +168,10 @@ public class Task extends DescribableModel implements TimeableWork {
         return workActive;
     }
 
+    /**
+     * Returns the running work chunk
+     * @return the running work chunk or null if no work chunk is running
+     */
     public WorkChunk getActiveWorkChunk() {
         for (WorkChunk chunk : this.workList) {
             if (chunk.isRunning()) {
