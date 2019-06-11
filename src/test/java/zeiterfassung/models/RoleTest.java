@@ -19,25 +19,27 @@ public class RoleTest {
      * Test for checking if the name is returned correctly
      */
     @Test
-    public void getName() {
+    public void testGetName() {
         role.setName("Werkstudent");
-
         assertEquals("Werkstudent", role.getName());
     }
 
     @Test
-    public void setName() {
+    public void testSetName() {
+        String expectedResult = "Student";
+        role.setName("Student");
+        assertEquals(expectedResult, role.getName());
     }
 
     @Test
-    public void getHourlyWage() {
+    public void testGetHourlyWage() {
         double wage = 20;
         role.setHourlyWage(wage);
         assertEquals(wage, role.getHourlyWage());
     }
 
     @Test
-    public void setHourlyWage() {
+    public void testSetHourlyWage() {
         double wage = 42;
         role.setHourlyWage(wage);
         assertEquals(wage, role.getHourlyWage());
@@ -48,13 +50,16 @@ public class RoleTest {
      * Test for checking if the role description is returned correctly
      */
     @Test
-    public void getDescription() {
+    public void testGetDescription() {
+        String expectedResult = "Maedchen fuer alles";
         role.setDescription("Maedchen fuer alles");
-
-        assertEquals("Maedchen fuer alles", role.getDescription());
+        assertEquals(expectedResult, role.getDescription());
     }
 
     @Test
-    public void setDescription() {
+    public void testSetDescription() {
+        String expectedResult = "Maedchen fuer alles";
+        role.setDescription("Maedchen fuer alles");
+        assertEquals(expectedResult, role.getDescription());
     }
 }

@@ -3,6 +3,8 @@ package zeiterfassung.models;
 import org.junit.*;
 
 import static junit.framework.TestCase.assertEquals;
+import static junit.framework.TestCase.assertTrue;
+import static org.junit.Assert.assertFalse;
 
 public class AreaTest {
     private Area area;
@@ -31,12 +33,19 @@ public class AreaTest {
     @Test
     public void testHasProject(){
         area.addProject(project);
-        assertEquals(true, area.hasProject(project));
+        assertTrue(area.hasProject(project));
     }
 
     @Test
     public void testRemoveProject(){
         area.removeProject(project);
-        assertEquals(false, area.hasProject(project));
+        assertFalse(area.hasProject(project));
     }
+
+    @Test
+    public void testGetProjectList() {
+        //@Todo
+        Assert.fail();
+    }
+
 }

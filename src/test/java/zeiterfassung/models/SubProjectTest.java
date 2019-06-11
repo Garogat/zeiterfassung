@@ -1,12 +1,15 @@
 package zeiterfassung.models;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
-import static junit.framework.TestCase.assertEquals;
+import static junit.framework.TestCase.*;
 
 public class SubProjectTest {
     private SubProject subProject;
@@ -20,59 +23,63 @@ public class SubProjectTest {
     }
 
     @Test
-    public void getDuration() throws InterruptedException {
-        task.start();
-        task.stop();
+    public void testGetDuration() throws InterruptedException {
+        int duration = 42;
+        WorkChunk workChunk = new WorkChunk(LocalDateTime.now(), LocalDateTime.now().plusHours(duration), "Testing");
+        task.addWorkChunk(workChunk);
         subProject.addTask(task);
-        assertEquals(true, subProject.getDuration(LocalDateTime.MIN, LocalDateTime.MAX).toNanos()>=0);
+        assertEquals(duration, subProject.getDuration(LocalDateTime.MIN, LocalDateTime.MAX).toHours());
     }
 
     @Test
-    public void getEstimatedDuration() {
-        task.setEstimatedDuration(Duration.ofHours(22));
+    public void testGetEstimatedDuration() {
+        int durationLength = 42;
+        task.setEstimatedDuration(Duration.ofHours(durationLength));
         subProject.addTask(task);
-        assertEquals(22, subProject.getEstimatedDuration().toHours());
+        assertEquals(durationLength, subProject.getEstimatedDuration().toHours());
     }
 
     @Test
-    public void getCosts() {
-        long wage = 1000000000;
+    public void testGetCosts() {
+        int duration = 42;
+        WorkChunk workChunk = new WorkChunk(LocalDateTime.now(), LocalDateTime.now().plusHours(duration), "Testing");
+        long wage = 15;
         Role role = new Role("Name", "Beschreibung", wage);
         task.setRole(role);
-        task.start();
+        task.addWorkChunk(workChunk);
         long hours = 10;
         task.setEstimatedDuration(Duration.ofHours(hours));
         subProject.addTask(task);
-        task.stop();
-        assertEquals(true, subProject.getCosts(LocalDateTime.MIN, LocalDateTime.MAX)>=0);
+        assertEquals((double)duration*wage, subProject.getCosts(LocalDateTime.MIN, LocalDateTime.MAX));
     }
 
     @Test
-    public void getTasks() {
-
+    public void testGetTasks() {
+        //@Todo
+        Assert.fail();
     }
 
     @Test
-    public void addTask() {
+    public void testAddTask() {
         subProject.addTask(task);
-        assertEquals(true, subProject.hasTask(task));
+        assertTrue(subProject.hasTask(task));
     }
 
     @Test
-    public void removeTask() {
+    public void testRemoveTask() {
         subProject.removeTask(task);
-        assertEquals(false, subProject.hasTask(task));
+        assertFalse(subProject.hasTask(task));
     }
 
     @Test
-    public void hasTask() {
+    public void testHasTask() {
         subProject.addTask(task);
-        assertEquals(true, subProject.hasTask(task));
+        assertTrue(subProject.hasTask(task));
     }
 
     @Test
-    public void taskListProperty() {
+    public void testTaskListProperty() {
         subProject.addTask(task);
-        assertEquals(true, subProject.taskListProperty().contains(task));
+        assertTrue(subProject.taskListProperty().contains(task));
     }
 }

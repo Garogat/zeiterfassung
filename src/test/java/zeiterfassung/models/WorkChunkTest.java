@@ -1,69 +1,84 @@
 package zeiterfassung.models;
 
 import org.junit.Test;
+
+import java.time.Duration;
 import java.time.LocalDateTime;
 
 
 import static org.junit.Assert.*;
 
 public class WorkChunkTest {
-    private WorkChunk chunkTest1  = new WorkChunk(LocalDateTime.now(), LocalDateTime.now().plusHours(8) , "Hecke schneiden");
-    private WorkChunk chunkTest2 = new WorkChunk(LocalDateTime.now().plusDays(1),LocalDateTime.now().plusDays(1).plusHours(7), "Rasen maehen");
+    private String description = "Hecke schneiden";
+    private LocalDateTime start = LocalDateTime.now();
+    private LocalDateTime stop = LocalDateTime.now().plusHours(13);
+    private WorkChunk workChunk  = new WorkChunk(start, stop,description);
 
     @Test
-    public void getStartTime() {
-
-        assertNotNull(chunkTest1.getStartTime());
-//        assertEquals("2019-04-03T10:15:30", chunkTest2.getStartTime());
+    public void testGetStartTime() {
+        assertEquals(start, workChunk.getStartTime());
     }
 
     @Test
-    public void setStartTime() {
-        LocalDateTime tmp = LocalDateTime.now();
-        chunkTest1.setStartTime(tmp);
-        assertTrue(chunkTest1.getStartTime().toString().equals(tmp.toString()));
+    public void testSetStartTime() {
+        LocalDateTime startTime = LocalDateTime.now().plusHours(91);
+        workChunk.setStartTime(startTime);
+        assertEquals(startTime, workChunk.getStartTime());
     }
 
     @Test
-    public void getEndTime() {
-        assertNotNull(chunkTest1.getEndTime());
-       // assertEquals("...", chunk1.getEndTime());
-//        assertEquals("2019-04-03T12:11:45", chunkTest2.getEndTime());
+    public void testGetEndTime() {
+        assertEquals(stop, workChunk.getEndTime());
     }
 
     @Test
-    public void setEndTime() {
-        LocalDateTime tmp = LocalDateTime.now().plusHours(9);
-        chunkTest1.setEndTime(tmp);
-        assertTrue(chunkTest1.getEndTime().toString().equals(tmp.toString()));
+    public void testSetEndTime() {
+        LocalDateTime endTime = LocalDateTime.now().plusHours(104);
+        workChunk.setEndTime(endTime);
+        assertEquals(endTime, workChunk.getEndTime());
     }
 
     @Test
-    public void getDescription() {
-
-        assertEquals("Hecke schneiden", chunkTest1.getDescription());
-        assertEquals("Rasen maehen", chunkTest2.getDescription());
+    public void testGetDescription() {
+        assertEquals(description, workChunk.getDescription());
     }
 
     @Test
-    public void setDescription() {
-
+    public void testSetDescription() {
+        String newDescription = "Pfusch aufm Bau";
+        workChunk.setDescription(newDescription);
+        assertEquals(newDescription, workChunk.getDescription());
     }
 
     @Test
-    public void getDuration() {
+    public void testGetDuration() {
+        int duration = 7;
+        start = LocalDateTime.now();
+        stop = start.plusHours(duration);
+        workChunk.setStartTime(start);
+        workChunk.setEndTime(stop);
+        assertEquals(workChunk.getDuration().toHours(), duration);
     }
 
     @Test
-    public void testIsValidStartTime() {
-  //      assertEquals("yyyy-MM-ddT00:00:00", chunkTest1.isValidStartTime(chunkTest1.getStartTime());
-
+    public void testDescriptionProperty() {
+        assertEquals(description, workChunk.descriptionProperty().getValue());
     }
 
     @Test
-    public void testIsValidEndTime() {
-
-
+    public void testStartTimeProperty() {
+        assertEquals(start, workChunk.startTimeProperty().getValue());
     }
 
+    @Test
+    public void testEndTimeProperty() {
+        assertEquals(stop, workChunk.endTimeProperty().getValue());
+    }
+
+    @Test
+    public void testIsRunning() {
+        assertFalse(workChunk.isRunning());
+        workChunk.setEndTime(null);
+        assertTrue(workChunk.isRunning());
+    }
 }
