@@ -85,8 +85,8 @@ public class ZeitErfassung {
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                 alert.setTitle("Aktiver Task");
                 Task task = root.getActiveTask();
-                alert.setHeaderText("Soll der aktive Task beendet werden?\n"
-                    + "aktiver Task = " + task.getName());
+                alert.setHeaderText("Soll der aktive Task ("+ task.getName()+") beendet werden?\n"
+                    + "\n\n(aktive Tasks werden auch gemessen, wenn das Programm aus ist)");
                 ButtonType button_ja = new ButtonType("JA");
                 ButtonType button_nein = new ButtonType("NEIN");
                 alert.getButtonTypes().setAll(button_ja, button_nein);
