@@ -21,7 +21,6 @@
     <top>
         <MenuBar BorderPane.alignment="CENTER">
             <menus>
-                <Menu mnemonicParsing="false" text="File"/>
                 <Menu mnemonicParsing="false" text="Datenbank">
                     <items>
                         <MenuItem mnemonicParsing="false" text="Importien" onAction="#importDatabase"/>
