@@ -20,7 +20,7 @@ public enum HtmlFactory implements HtmlBuilder{
     UL(()->{return new HtmlTagElement("ul");}),
     LI(()->{return new HtmlTagElement("li");}),
     BR(()->{return new HtmlTagElement("br");}),
-    STYLE(()->{return new HtmlTagElement("br");});
+    STYLE(()->{return new HtmlTagElement("style");});
 
     private HtmlBuilder attribute;
 
