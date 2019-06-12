@@ -7,6 +7,7 @@ import org.junit.Test;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
 
 import static java.time.LocalDateTime.MAX;
 import static junit.framework.TestCase.*;
@@ -27,8 +28,11 @@ public class ProjectTest {
 
     @Test
     public void testGetSubProjects() {
-        //@Todo
-        Assert.fail();
+        assertFalse(project.hasSubProject(subProject));
+        project.getSubProjects(subProjects -> {
+            project.addSubProject(subProject);
+        });
+        assertTrue(project.hasSubProject(subProject));
     }
 
     @Test
@@ -94,8 +98,11 @@ public class ProjectTest {
 
     @Test
     public void testGetRoles() {
-        //@Todo
-        Assert.fail();
+        assertFalse(project.hasRole(role));
+        project.getRoles(roles -> {
+            project.addRole(role);
+        });
+        assertTrue(project.hasRole(role));
     }
 
     @Test

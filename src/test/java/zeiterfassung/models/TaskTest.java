@@ -7,6 +7,8 @@ import org.junit.Test;
 import java.sql.Time;
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import static junit.framework.TestCase.*;
 
@@ -20,7 +22,7 @@ public class TaskTest {
     private WorkChunk workChunk;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         root.addArea(area);
         area.addProject(project);
         project.addSubProject(subProject);
@@ -53,8 +55,11 @@ public class TaskTest {
 
     @Test
     public void testGetWorkList() {
-        //@Todo
-        Assert.fail();
+        assertFalse(task.workListProperty().contains(workChunk));
+        task.getWorkList(workChunks -> {
+            task.addWorkChunk(workChunk);
+        });
+        assertTrue(task.workListProperty().contains(workChunk));
     }
 
     @Test
@@ -83,9 +88,9 @@ public class TaskTest {
 
     @Test
     public void testSetRole() {
-        assertFalse(task.getRole()==role);
+        assertNotSame(task.getRole(), role);
         task.setRole(role);
-        assertTrue(task.getRole()!=null);
+        assertNotNull(task.getRole());
     }
 
     @Test

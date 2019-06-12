@@ -15,15 +15,14 @@ public class SubProjectTest {
     private SubProject subProject;
     private Task task;
 
-
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         subProject = new SubProject();
         task = new Task();
     }
 
     @Test
-    public void testGetDuration() throws InterruptedException {
+    public void testGetDuration() {
         int duration = 42;
         WorkChunk workChunk = new WorkChunk(LocalDateTime.now(), LocalDateTime.now().plusHours(duration), "Testing");
         task.addWorkChunk(workChunk);
@@ -55,8 +54,11 @@ public class SubProjectTest {
 
     @Test
     public void testGetTasks() {
-        //@Todo
-        Assert.fail();
+        assertFalse(subProject.hasTask(task));
+        subProject.getTasks(tasks -> {
+            subProject.addTask(task);
+        });
+        assertTrue(subProject.hasTask(task));
     }
 
     @Test

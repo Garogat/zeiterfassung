@@ -2,6 +2,9 @@ package zeiterfassung.models;
 
 import org.junit.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertFalse;
@@ -44,8 +47,12 @@ public class AreaTest {
 
     @Test
     public void testGetProjectList() {
-        //@Todo
-        Assert.fail();
+        assertFalse(area.hasProject(project));
+        Project newProject = new Project();
+        area.getProjectList(projectList -> {
+            projectList.add(newProject);
+        });
+        assertTrue(area.hasProject(newProject));
     }
 
 }

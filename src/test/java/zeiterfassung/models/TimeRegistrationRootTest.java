@@ -41,8 +41,11 @@ public class TimeRegistrationRootTest {
 
     @Test
     public void testGetAreas() {
-        //@Todo
-        Assert.fail();
+        assertFalse(timeRegistrationRoot.hasArea(area));
+        timeRegistrationRoot.getAreas(areas -> {
+            timeRegistrationRoot.addArea(area);
+        });
+        assertTrue(timeRegistrationRoot.hasArea(area));
     }
 
     @Test
