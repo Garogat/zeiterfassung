@@ -82,7 +82,7 @@ public class Task extends DescribableModel implements TimeableWork {
     public Duration getDuration(LocalDateTime start, LocalDateTime stop) {
         Duration duration = Duration.ofSeconds(0);
         for (WorkChunk w : workList) {
-            if (w.getStartTime().isAfter(start) && w.getStartTime().isBefore(start)) {
+            if (w.getStartTime().isAfter(start) && w.getStartTime().isBefore(stop)) {
                 duration = duration.plus(w.getDuration());
             }
         }
