@@ -80,6 +80,13 @@ public class Project extends SubProject {
     public void getRoles(Listable<Role> roles) {
         roles.getList(roleList);
     }
+    public Role getRoleByName(String roleName) {
+            for(Role role: roleList) {
+                if(role.getName().equals(roleName))
+                    return role;
+            }
+            return null;
+    }
 
     public int getRolesSize() {
         return roleList.size();

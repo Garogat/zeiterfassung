@@ -2,6 +2,7 @@ package zeiterfassung.xml;
 
 import zeiterfassung.models.*;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
 
 /**
@@ -24,28 +25,32 @@ public class TestData {
 
         Project project = new Project("Garten", "Dieses Projekt ist für meine Garten Aufgaben");
         project.addRole(new Role("Angestellter", "Sklave", 5.8));
-        project.addRole(new Role("Chöf", "Benz", 17.3));
+        project.addRole(new Role("Chef", "Benz", 17.3));
 
         area.addProject(project);
 
         SubProject subProject = new SubProject("Baum Pflege", "");
         project.addSubProject(subProject);
-
-        Task task = new Task("Äpfel plücken", "Nur die schönen dicken Äpfel dürfen gepflückt werden.");
+        Task task = new Task("rotes Kugelobst ernten", "Only the big red ones are worth it.");
+        task.setEstimatedDuration(Duration.ofHours(333));
+        task.setRole(project.getRoleByName("Angestellter"));
         taskFiller.fill(task);
         task.addWorkChunk(new WorkChunk(LocalDateTime.now(), LocalDateTime.now().plusHours(4), "Toll"));
         subProject.addTask(task);
         task.start();
 
-        SubProject subProject1 = new SubProject("Hühner", "");
+        SubProject subProject1 = new SubProject("Federtiere", "");
         project.addSubProject(subProject1);
 
         Task task1 = new Task("Stall ausmisten", "");
+        task1.setRole(project.getRoleByName("Chef"));
+
         taskFiller.fill(task1);
 
         subProject1.addTask(task1);
 
         Task task2 = new Task("Eier sammeln", "");
+        task2.setRole(project.getRoleByName("Angestellter"));
         taskFiller.fill(task2);
         subProject1.addTask(task2);
 
