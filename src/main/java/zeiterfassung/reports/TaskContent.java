@@ -23,6 +23,8 @@ public class TaskContent implements Reportable {
     LocalDateTime stop;
 
     HtmlValuePair borderStyle = new HtmlValuePair("style", "border:1px solid black;");
+    HtmlValuePair backgroundColor = new HtmlValuePair("style", "background-color: lightblue");
+    HtmlValuePair fontColor = new HtmlValuePair("style", "color: blue");
 
     @Override
     public HtmlTagElement getHtmlNode() {
@@ -33,9 +35,9 @@ public class TaskContent implements Reportable {
 
         HtmlTagElement rootTable = TABLE.build().addProperty(borderStyle).addElement(
                 TR.build().addElement(
-                        TH.build().addText("Start"),
-                        TH.build().addText("Ende"),
-                        TH.build().addText("Beschreibung")
+                        TH.build().addProperty(backgroundColor).addText("Start"),
+                        TH.build().addProperty(backgroundColor).addText("Ende"),
+                        TH.build().addProperty(backgroundColor).addText("Beschreibung")
                 )
         );
 
@@ -45,18 +47,18 @@ public class TaskContent implements Reportable {
             for (WorkChunk workChunk: list){
                 rootTable.addElement(
                         TR.build().addElement(
-                                TD.build().addText(workChunk.getStartTime().format(frm)),
-                                TD.build().addText(workChunk.getEndTime().format(frm)),
-                                TD.build().addText(workChunk.getDescription())
+                                TD.build().addProperty(borderStyle).addText(workChunk.getStartTime().format(frm)),
+                                TD.build().addProperty(borderStyle).addText(workChunk.getEndTime().format(frm)),
+                                TD.build().addProperty(borderStyle).addText(workChunk.getDescription())
                         )
                 );
             }
         });
 
         root.addElement(rootTable)
-                .addText("Kosten Gesamt: "+task.getCosts(start, stop))
+                .addProperty(fontColor).addText("Kosten Gesamt: "+task.getCosts(start, stop))
                 .addElement(BR.build())
-                .addText("Zeit Gesamt: "+task.getDuration(start, stop).getSeconds()/(double)3600);
+                .addProperty(fontColor).addText("Zeit Gesamt: "+task.getDuration(start, stop).getSeconds()/(double)3600);
 
         return root;
     }
