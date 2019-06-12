@@ -63,6 +63,7 @@ public class Task extends DescribableModel implements TimeableWork {
     }
 
     public void addWorkChunk(WorkChunk workChunk) {
+        workChunk.setParent(this);
         workList.add(workChunk);
     }
 
@@ -82,7 +83,7 @@ public class Task extends DescribableModel implements TimeableWork {
     public Duration getDuration(LocalDateTime start, LocalDateTime stop) {
         Duration duration = Duration.ofSeconds(0);
         for (WorkChunk w : workList) {
-            if (w.getStartTime().compareTo(start) >= 0 && w.getEndTime().compareTo(stop) < 0) {
+            if (w.getStartTime().compareTo(start) >= 0 && w.getEndTime() != null) {
                 duration = duration.plus(w.getDuration());
             }
         }

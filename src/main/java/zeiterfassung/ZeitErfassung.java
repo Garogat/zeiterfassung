@@ -3,13 +3,18 @@ package zeiterfassung;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import zeiterfassung.controllers.BaseController;
+import zeiterfassung.models.Task;
+import zeiterfassung.models.TimeRegistrationRoot;
 import zeiterfassung.xml.DataStore;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.util.Optional;
 
 /**
  * The base class that contains the hole program instances
@@ -52,6 +57,13 @@ public class ZeitErfassung {
         stage.getIcons().add(new Image(getClass().getResourceAsStream("/zeiterfassung/icons/clipboard.png")));
         stage.setMaximized(true);
         stage.show();
+        if (this.store != null) {
+            TimeRegistrationRoot root = store.getRoot();
+            if (root.isTaskActive()) {
+                Task activeTask = root.getActiveTask();
+                Utils.alertInfo("der aktuell aktive Task ist:\n->"+ activeTask.getName());
+            }
+        }
     }
 
     /**
@@ -68,7 +80,24 @@ public class ZeitErfassung {
      */
     public void save() {
         if (this.store != null) {
-            this.store.unload();
+            TimeRegistrationRoot root = store.getRoot();
+            if(root.isTaskActive()) {
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Aktiver Task");
+                Task task = root.getActiveTask();
+                alert.setHeaderText("Soll der aktive Task beendet werden?\n"
+                    + "aktiver Task = " + task.getName());
+                ButtonType button_ja = new ButtonType("JA");
+                ButtonType button_nein = new ButtonType("NEIN");
+                alert.getButtonTypes().setAll(button_ja, button_nein);
+
+                Optional<ButtonType> result = alert.showAndWait();
+                if (result.get() == button_ja){
+                    task.stop();
+                }
+            }
         }
+        this.store.unload();
+
     }
 }
