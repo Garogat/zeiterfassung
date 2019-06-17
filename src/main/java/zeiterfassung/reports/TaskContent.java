@@ -1,9 +1,6 @@
 package zeiterfassung.reports;
 
 
-import static htmlProducer.HtmlFactory.*;
-
-import htmlProducer.HtmlElement;
 import htmlProducer.HtmlTagElement;
 import htmlProducer.HtmlValuePair;
 import zeiterfassung.models.Task;
@@ -11,6 +8,8 @@ import zeiterfassung.models.WorkChunk;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+
+import static htmlProducer.HtmlFactory.*;
 
 
 /**
@@ -30,40 +29,40 @@ public class TaskContent implements Reportable {
     public HtmlTagElement getHtmlNode() {
 
         HtmlTagElement root = SPAN.build().addElement(
-                H3.build().addText(task.getName())
+            H3.build().addText(task.getName())
         );
 
         HtmlTagElement rootTable = TABLE.build().addProperty(borderStyle).addElement(
-                TR.build().addElement(
-                        TH.build().addProperty(backgroundColor).addText("Start"),
-                        TH.build().addProperty(backgroundColor).addText("Ende"),
-                        TH.build().addProperty(backgroundColor).addText("Beschreibung")
-                )
+            TR.build().addElement(
+                TH.build().addProperty(backgroundColor).addText("Start"),
+                TH.build().addProperty(backgroundColor).addText("Ende"),
+                TH.build().addProperty(backgroundColor).addText("Beschreibung")
+            )
         );
 
         DateTimeFormatter frm = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
 
         task.getWorkList(list -> {
-            for (WorkChunk workChunk: list){
+            for (WorkChunk workChunk : list) {
                 rootTable.addElement(
-                        TR.build().addElement(
-                                TD.build().addProperty(borderStyle).addText(workChunk.getStartTime().format(frm)),
-                                TD.build().addProperty(borderStyle).addText(workChunk.getEndTime().format(frm)),
-                                TD.build().addProperty(borderStyle).addText(workChunk.getDescription())
-                        )
+                    TR.build().addElement(
+                        TD.build().addProperty(borderStyle).addText(workChunk.getStartTime().format(frm)),
+                        TD.build().addProperty(borderStyle).addText(workChunk.getEndTime() == null ? "---" : workChunk.getEndTime().format(frm)),
+                        TD.build().addProperty(borderStyle).addText(workChunk.getDescription())
+                    )
                 );
             }
         });
 
         root.addElement(rootTable)
-                .addProperty(fontColor).addText("Kosten Gesamt: "+task.getCosts(start, stop))
-                .addElement(BR.build())
-                .addProperty(fontColor).addText("Zeit Gesamt: "+task.getDuration(start, stop).getSeconds()/(double)3600);
+            .addProperty(fontColor).addText("Kosten Gesamt: " + task.getCosts(start, stop))
+            .addElement(BR.build())
+            .addProperty(fontColor).addText("Zeit Gesamt: " + task.getDuration(start, stop).getSeconds() / (double) 3600);
 
         return root;
     }
 
-    TaskContent(Task task, LocalDateTime start, LocalDateTime stop){
+    TaskContent(Task task, LocalDateTime start, LocalDateTime stop) {
         this.task = task;
         this.start = start;
         this.stop = stop;
