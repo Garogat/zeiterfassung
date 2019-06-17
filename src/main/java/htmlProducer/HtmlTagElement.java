@@ -17,10 +17,20 @@ public class HtmlTagElement implements HtmlElement {
      */
     private List<HtmlElement> content;
 
+    private boolean allowOneTag;
+
     /**
      * The Name of the tag
      */
     private String tag;
+
+    /**
+     * returns if the elements has content
+     * @return true if the element has content
+     */
+    public boolean hasContent(){
+        return content.size() != 0;
+    }
 
     private String getTag(){
         return tag;
@@ -40,7 +50,7 @@ public class HtmlTagElement implements HtmlElement {
         }
 
         // Close Tag with "/>" if there is no content
-        if (content.size() == 0){
+        if (content.size() == 0 && allowOneTag){
             result.append(" />\n");
         }else {
             result.append(">\n");
@@ -105,7 +115,7 @@ public class HtmlTagElement implements HtmlElement {
     @Override
     public String getHTMLCode() {
         {
-            if (content.size() == 0){
+            if (content.size() == 0 && allowOneTag){
                 return getStartTag();
             }else {
                 return getStartTag() + getContentString() + getEndTag();
@@ -116,11 +126,17 @@ public class HtmlTagElement implements HtmlElement {
     private HtmlTagElement(){
         properties = new ArrayList<>();
         content = new ArrayList<>();
+        allowOneTag = false;
     }
 
     protected HtmlTagElement(String tag, HtmlElement... elements){
         this();
         this.tag = tag;
         Collections.addAll(content,elements);
+    }
+
+    protected HtmlTagElement(String tag, boolean allowOneTag, HtmlElement... elements){
+        this(tag, elements);
+        this.allowOneTag = allowOneTag;
     }
 }

@@ -29,9 +29,8 @@ public class TaskContent implements Reportable {
     @Override
     public HtmlTagElement getHtmlNode() {
 
-        HtmlTagElement root = SPAN.build().addElement(
-            H3.build().addText(task.getName())
-        );
+        HtmlTagElement root = SPAN.build().addProperty(fontColor);
+        root.addElement(H4.build().addText(task.getName()));
 
         HtmlTagElement rootTable = TABLE.build().addProperty(borderStyle).addElement(
             TR.build().addElement(
@@ -45,20 +44,23 @@ public class TaskContent implements Reportable {
 
         task.getWorkList(list -> {
             for (WorkChunk workChunk : list) {
-                rootTable.addElement(
-                    TR.build().addElement(
-                        TD.build().addProperty(borderStyle).addText(workChunk.getStartTime().format(frm)),
-                        TD.build().addProperty(borderStyle).addText(workChunk.getEndTime() == null ? "---" : workChunk.getEndTime().format(frm)),
-                        TD.build().addProperty(borderStyle).addText(workChunk.getDescription())
-                    )
-                );
+                if (workChunk.getStartTime().isAfter(start) && workChunk.getStartTime().isBefore(stop)) {
+                    rootTable.addElement(
+                        TR.build().addElement(
+                            TD.build().addProperty(borderStyle).addText(workChunk.getStartTime().format(frm)),
+                            TD.build().addProperty(borderStyle).addText(workChunk.getEndTime() == null ? "---" : workChunk.getEndTime().format(frm)),
+                            TD.build().addProperty(borderStyle).addText(workChunk.getDescription())
+                        )
+                    );
+                }
             }
         });
 
-        root.addElement(rootTable)
-            .addProperty(fontColor).addText("Kosten Gesamt: " + Utils.formatCosts(task.getCosts(start, stop)))
+        root.addElement(rootTable).addElement(BR.build());
+
+        root.addText("Aufgabe Kosten Gesamt: " + Utils.formatCosts(task.getCosts(start, stop)))
             .addElement(BR.build())
-            .addProperty(fontColor).addText("Zeit Gesamt: " + Utils.formatDuration(task.getDuration(start, stop)));
+            .addText("Aufgabe Zeit Gesamt: " + Utils.formatDuration(task.getDuration(start, stop)));
 
         return root;
     }

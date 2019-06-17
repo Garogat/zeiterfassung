@@ -4,6 +4,8 @@ import htmlProducer.HtmlElement;
 import htmlProducer.HtmlTagElement;
 import static htmlProducer.HtmlFactory.*;
 
+import htmlProducer.HtmlValuePair;
+import zeiterfassung.Utils;
 import zeiterfassung.models.Area;
 import zeiterfassung.models.Project;
 
@@ -19,10 +21,10 @@ public class AreaContent implements Reportable  {
     LocalDateTime stop;
     @Override
     public HtmlElement getHtmlNode() {
-        HtmlTagElement root = SPAN.build();
+        HtmlTagElement root = SPAN.build().addProperty("style", "color: black");
 
         // Caption
-        root.addElement(H2.build().addText(area.getName()), BR.build());
+        root.addElement(H4.build().addText(area.getName()), BR.build());
 
 
         // All Tasks
@@ -34,6 +36,8 @@ public class AreaContent implements Reportable  {
         });
 
         root.addElement(ul);
+
+
 
         return root;
     }

@@ -24,9 +24,9 @@ public class SubProjectContent implements Reportable{
 
     @Override
     public HtmlElement getHtmlNode() {
-        HtmlTagElement root = SPAN.build().addElement(
-                H3.build().addText(subProject.getName())
-        );
+        HtmlTagElement root = SPAN.build().addProperty(fontColor);
+        root.addElement(H4.build().addText(subProject.getName()));
+
         HtmlTagElement list = UL.build();
 
         subProject.getTasks(tasks -> {
@@ -35,10 +35,11 @@ public class SubProjectContent implements Reportable{
             }
         });
 
-        root.addElement(list)
-                .addProperty(fontColor).addText("Kosten Gesamt: "+ Utils.formatCosts(subProject.getCosts(start, stop)))
+        root.addElement(list).addElement(BR.build());
+
+        root.addText("Unterprojekt Kosten Gesamt: "+ Utils.formatCosts(subProject.getCosts(start, stop)))
                 .addElement(BR.build())
-                .addProperty(fontColor).addText("Zeit Gesamt: "+Utils.formatDuration(subProject.getDuration(start, stop)));
+                .addText("Unterprojekt Zeit Gesamt: "+Utils.formatDuration(subProject.getDuration(start, stop)));
 
         return root;
     }
