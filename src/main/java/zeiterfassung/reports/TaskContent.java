@@ -3,6 +3,7 @@ package zeiterfassung.reports;
 
 import htmlProducer.HtmlTagElement;
 import htmlProducer.HtmlValuePair;
+import zeiterfassung.Utils;
 import zeiterfassung.models.Task;
 import zeiterfassung.models.WorkChunk;
 
@@ -55,9 +56,9 @@ public class TaskContent implements Reportable {
         });
 
         root.addElement(rootTable)
-            .addProperty(fontColor).addText("Kosten Gesamt: " + task.getCosts(start, stop))
+            .addProperty(fontColor).addText("Kosten Gesamt: " + Utils.formatCosts(task.getCosts(start, stop)))
             .addElement(BR.build())
-            .addProperty(fontColor).addText("Zeit Gesamt: " + task.getDuration(start, stop).getSeconds() / (double) 3600);
+            .addProperty(fontColor).addText("Zeit Gesamt: " + Utils.formatDuration(task.getDuration(start, stop)));
 
         return root;
     }

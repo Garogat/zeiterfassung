@@ -3,6 +3,7 @@ package zeiterfassung.reports;
 import htmlProducer.HtmlElement;
 import htmlProducer.HtmlTagElement;
 import htmlProducer.HtmlValuePair;
+import zeiterfassung.Utils;
 import zeiterfassung.models.SubProject;
 import zeiterfassung.models.Task;
 
@@ -35,9 +36,9 @@ public class SubProjectContent implements Reportable{
         });
 
         root.addElement(list)
-                .addProperty(fontColor).addText("Kosten Gesamt: "+subProject.getCosts(start, stop))
+                .addProperty(fontColor).addText("Kosten Gesamt: "+ Utils.formatCosts(subProject.getCosts(start, stop)))
                 .addElement(BR.build())
-                .addProperty(fontColor).addText("Zeit Gesamt: "+subProject.getDuration(start, stop).getSeconds()/(double)3600);
+                .addProperty(fontColor).addText("Zeit Gesamt: "+Utils.formatDuration(subProject.getDuration(start, stop)));
 
         return root;
     }
@@ -50,3 +51,4 @@ public class SubProjectContent implements Reportable{
 
 
 }
+

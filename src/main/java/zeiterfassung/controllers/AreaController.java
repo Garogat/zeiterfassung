@@ -74,10 +74,11 @@ public class AreaController {
     @FXML
     private void createReport() {
         LocalDateTime date = reportMonth.getValue().atStartOfDay();
+        date = date.minusDays(date.getDayOfMonth()-1);
 
         String title = "Stundenzettel " + this.area.getName() + " " + date.format(DateTimeFormatter.ofPattern("MMMM yyyy"));
 
-        ReportDocument report = new ReportDocument(title, new AreaContent(this.area, date.minusMonths(1), date));
+        ReportDocument report = new ReportDocument(title, new AreaContent(this.area, date, date.plusMonths(1)));
         Utils.createReport(report, name.getScene().getWindow());
     }
 }

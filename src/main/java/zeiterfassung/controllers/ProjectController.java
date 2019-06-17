@@ -164,9 +164,10 @@ public class ProjectController {
     @FXML
     private void createReport() {
         LocalDateTime date = reportMonth.getValue().atStartOfDay();
+        date = date.minusDays(date.getDayOfMonth()-1);
 
         String title = "Stundenzettel " + this.project.getName() + " " + date.format(DateTimeFormatter.ofPattern("MMMM yyyy"));
-        ReportDocument report = new ReportDocument(title, new ProjectContent(this.project, date.minusMonths(1), date));
+        ReportDocument report = new ReportDocument(title, new ProjectContent(this.project, date, date.plusMonths(1)));
         Utils.createReport(report, nameTextField.getScene().getWindow());
     }
 
