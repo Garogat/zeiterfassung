@@ -118,12 +118,14 @@ public class BaseController {
             @Override
             public void onDelete(Task task) {
                 SubProject subProject = (SubProject) task.getParent();
-                subProject.removeTask(task);
 
                 // unset active task
                 if (store.getRoot().getActiveTask().equals(task)) {
                     store.getRoot().setActiveTask(null);
                 }
+
+                subProject.removeTask(task);
+
 
                 // open parent
                 openView(subProject);
