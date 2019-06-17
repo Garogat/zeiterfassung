@@ -5,6 +5,7 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.util.StringConverter;
+import zeiterfassung.Utils;
 import zeiterfassung.models.Area;
 import zeiterfassung.reports.AreaContent;
 import zeiterfassung.reports.ReportDocument;
@@ -77,6 +78,6 @@ public class AreaController {
         String title = "Stundenzettel " + this.area.getName() + " " + date.format(DateTimeFormatter.ofPattern("MMMM yyyy"));
 
         ReportDocument report = new ReportDocument(title, new AreaContent(this.area, date.minusMonths(1), date));
-
+        Utils.createReport(report, name.getScene().getWindow());
     }
 }
