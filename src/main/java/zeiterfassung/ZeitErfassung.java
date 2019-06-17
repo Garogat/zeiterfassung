@@ -8,6 +8,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import zeiterfassung.controllers.BaseController;
+import zeiterfassung.controllers.TaskController;
 import zeiterfassung.models.Task;
 import zeiterfassung.models.TimeRegistrationRoot;
 import zeiterfassung.xml.DataStore;
@@ -57,13 +58,8 @@ public class ZeitErfassung {
         stage.getIcons().add(new Image(getClass().getResourceAsStream("/zeiterfassung/icons/clipboard.png")));
         stage.setMaximized(true);
         stage.show();
-        if (this.store != null) {
-            TimeRegistrationRoot root = store.getRoot();
-            if (root.isTaskActive()) {
-                Task activeTask = root.getActiveTask();
-                Utils.alertInfo("der aktuell aktive Task ist:\n->"+ activeTask.getName());
-            }
-        }
+
+        baseController.setActiveTask();
     }
 
     /**

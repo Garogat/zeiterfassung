@@ -244,27 +244,59 @@ public class BaseController {
         return null;
     }
 
+    /**
+     * Sets the fokus on the open task, if it's exists
+     */
+    public void setActiveTask(){
+        Task task = store.getRoot().getActiveTask();
+
+        if (task != null) {
+            openView(task);
+        }
+    }
+
+    /**
+     * selects the treeelement that is or contains the item
+     * @param root root object
+     * @param obj object to find
+     */
+    private void setSelectionByItem(TreeItem<TreeContextItem> root, Object obj){
+        if (root != null && (root.getValue().equals(obj) || root.getValue().getItem().equals(obj))){
+            projectTree.getSelectionModel().select(root);
+
+        }else{
+            for (TreeItem<TreeContextItem> child : root.getChildren()) {
+                setSelectionByItem(child, obj);
+
+            }
+        }
+    }
+
     private AreaController openView(Area area) {
         AreaController areaController = (AreaController) setContent("Area");
         areaController.setArea(area);
+        setSelectionByItem(projectTree.getRoot(), area);
         return areaController;
     }
 
     private ProjectController openView(Project project) {
         ProjectController projectController = (ProjectController) setContent("Project");
         projectController.setProject(project);
+        setSelectionByItem(projectTree.getRoot(), project);
         return projectController;
     }
 
     private SubProjectController openView(SubProject subProject) {
         SubProjectController subProjectController = (SubProjectController) setContent("SubProject");
         subProjectController.setSubProject(subProject);
+        setSelectionByItem(projectTree.getRoot(), subProject);
         return subProjectController;
     }
 
     private TaskController openView(Task task) {
         TaskController taskController = (TaskController) setContent("Task");
         taskController.setTask(task);
+        setSelectionByItem(projectTree.getRoot(), task);
         return taskController;
     }
 

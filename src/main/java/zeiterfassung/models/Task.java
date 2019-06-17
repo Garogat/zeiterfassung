@@ -63,6 +63,7 @@ public class Task extends DescribableModel implements TimeableWork {
     }
 
     public void addWorkChunk(WorkChunk workChunk) {
+        workChunk.setParent(this);
         workList.add(workChunk);
     }
 

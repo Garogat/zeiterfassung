@@ -44,7 +44,7 @@ public class ProjectInvoice implements Reportable {
         }
 
 
-        root.addElement(BR.build(), BR.build(), BR.build(), BR.build());
+        //root.addElement(BR.build(), BR.build(), BR.build(), BR.build());
 
         root.addElement(TABLE.build().addProperty(border).addElement(
 
@@ -62,6 +62,8 @@ public class ProjectInvoice implements Reportable {
                         TD.build().addProperty(fontColor).addText(Utils.formatCosts(project.getCosts(LocalDateTime.MIN, LocalDateTime.MAX)))
                 )
         ));
+
+
 
         return root;
     }
