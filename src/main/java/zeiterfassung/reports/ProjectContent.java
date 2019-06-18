@@ -30,21 +30,21 @@ public class ProjectContent implements Reportable {
         root.addElement(H4.build().addText(project.getName()), BR.build());
 
 
-        // All Tasks
         HtmlTagElement ul = UL.build();
 
+        // All Tasks
         project.getTasks(list -> {
             for (Task iter: list) {
                 ul.addElement(LI.build().addElement(new TaskContent(iter, start, stop).getHtmlNode()));
             }
         });
 
+        // All Subprojects
         project.getSubProjects(list ->{
             for (SubProject iter: list){
                 ul.addElement(LI.build().addElement(new SubProjectContent(iter, start, stop).getHtmlNode()));
             }
         });
-
 
         root.addElement(ul).addElement(BR.build());
 

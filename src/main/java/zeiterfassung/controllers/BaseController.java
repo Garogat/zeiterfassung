@@ -120,7 +120,7 @@ public class BaseController {
                 SubProject subProject = (SubProject) task.getParent();
 
                 // unset active task
-                if (store.getRoot().getActiveTask().equals(task)) {
+                if (store.getRoot().getActiveTask() != null && store.getRoot().getActiveTask().equals(task)) {
                     store.getRoot().setActiveTask(null);
                 }
 
