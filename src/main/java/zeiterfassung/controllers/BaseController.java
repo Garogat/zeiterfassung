@@ -12,7 +12,6 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
-import javafx.util.Callback;
 import zeiterfassung.Main;
 import zeiterfassung.Utils;
 import zeiterfassung.components.Tree;
@@ -27,6 +26,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
+import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * This is the main controller which manages the tree view, menu and loads the model controllers
@@ -77,6 +78,70 @@ public class BaseController {
     };
 
     /**
+     * checks if a workchunk is active
+     * @param wc workchunk to test
+     * @return returns if the workchunk is active
+     */
+    private boolean isWorkChunkActive(WorkChunk wc){
+        return (wc.getStartTime() != null && wc.getEndTime()==null);
+    }
+
+    /**
+     * Finds the active task in an task list
+     * @param taskList tasklist to check
+     * @return the task
+     */
+    private Task findTaskInTaskList(List<Task> taskList){
+        AtomicReference<Task> result = new AtomicReference<>(null);
+        for (Task task : taskList) {
+            task.getWorkList(workChunkList -> {
+                for (WorkChunk workChunk : workChunkList) {
+                    if (isWorkChunkActive(workChunk)) {
+                        result.set(task);
+
+                    }
+                }
+            });
+        }
+        return result.get();
+    }
+
+    /**
+     * Finds the active task in the model
+     * @return the task
+     */
+    private Task findActiveTask(){
+        AtomicReference<Task> result = new AtomicReference<>(null);
+        store.getRoot().getAreas(areaList -> {
+            for (Area area : areaList) {
+                area.getProjectList(projectList -> {
+                    for (Project project : projectList) {
+                        project.getTasks(taskList -> {
+                            Task at = findTaskInTaskList(taskList);
+                            if (at != null){
+                                result.set(at);
+                            }
+
+                        });
+                        project.getSubProjects(subProjectList -> {
+                            for (SubProject subProject : subProjectList) {
+                                subProject.getTasks(taskList -> {
+                                    Task at = findTaskInTaskList(taskList);
+                                    if (at != null){
+                                        result.set(at);
+                                    }
+                                });
+                            }
+
+                        });
+                    }
+                });
+            }
+        });
+        return result.get();
+    }
+
+    /**
      * Initilaizes the controller
      */
     @FXML
@@ -92,6 +157,7 @@ public class BaseController {
             public void onDelete(Area area) {
                 TimeRegistrationRoot root = (TimeRegistrationRoot) area.getParent();
                 root.removeArea(area);
+                store.getRoot().setActiveTask(findActiveTask());
 
                 // open parent (start)
                 openStart();
@@ -101,7 +167,7 @@ public class BaseController {
             public void onDelete(Project project) {
                 Area area = (Area) project.getParent();
                 area.removeProject(project);
-
+                store.getRoot().setActiveTask(findActiveTask());
                 // open parent
                 openView(area);
             }
@@ -111,6 +177,9 @@ public class BaseController {
                 Project project = (Project) subProject.getParent();
                 project.removeSubProject(subProject);
 
+                store.getRoot().setActiveTask(findActiveTask());
+
+
                 // open parent
                 openView(project);
             }
@@ -119,13 +188,8 @@ public class BaseController {
             public void onDelete(Task task) {
                 SubProject subProject = (SubProject) task.getParent();
 
-                // unset active task
-                if (store.getRoot().getActiveTask() != null && store.getRoot().getActiveTask().equals(task)) {
-                    store.getRoot().setActiveTask(null);
-                }
-
                 subProject.removeTask(task);
-
+                store.getRoot().setActiveTask(findActiveTask());
 
                 // open parent
                 openView(subProject);
